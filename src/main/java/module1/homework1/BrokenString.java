@@ -4,6 +4,10 @@ public class BrokenString {
     private BrokenString() {}
 
     public static String fixString(String brokenString) {
+        if (brokenString == null) {
+            return null;
+        }
+
         int len = brokenString.length();
 
         if (len == 0) {
