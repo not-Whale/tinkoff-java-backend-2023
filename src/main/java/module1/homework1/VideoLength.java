@@ -22,9 +22,8 @@ public class VideoLength {
     }
 
     private static int[] parseLengthString(String videoLength) {
-        int[] minutesAndSeconds = new int[2];
-
         String[] minutesAndSecondsStrings = videoLength.split(":");
+        int[] minutesAndSeconds = new int[minutesAndSecondsStrings.length];
 
         int idx = 0;
         for (String elem : minutesAndSecondsStrings) {
