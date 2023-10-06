@@ -4,6 +4,18 @@ public class NestedArray {
     private NestedArray() {}
 
     public static boolean isNestable(int[] first, int[] second) {
+        if (first == null || second == null) {
+            return false;
+        }
+
+        if (first.length == 0) {
+            return false;
+        }
+
+        if (second.length == 0) {
+            return true;
+        }
+
         int firstMin = getMin(first);
         int firstMax = getMax(first);
 
