@@ -10,10 +10,6 @@ public class BrokenString {
 
         int len = brokenString.length();
 
-        if (len == 0) {
-            return brokenString;
-        }
-
         StringBuilder fixedString = new StringBuilder();
 
         int idx = 0;
