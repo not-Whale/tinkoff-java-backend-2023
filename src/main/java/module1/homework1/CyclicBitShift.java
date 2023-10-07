@@ -11,6 +11,10 @@ public class CyclicBitShift {
             return -1;
         }
 
+        if (shift < 0) {
+            return rotateRight(n, -shift);
+        }
+
         String[] binaryN = Integer.toBinaryString(n).split("");
 
         // двигаем влево через отображение правого сдвига
@@ -24,6 +28,10 @@ public class CyclicBitShift {
     public static int rotateRight(int n, int shift) {
         if (n < 0) {
             return -1;
+        }
+
+        if (shift < 0) {
+            return rotateLeft(n, -shift);
         }
 
         String[] binaryN = Integer.toBinaryString(n).split("");
