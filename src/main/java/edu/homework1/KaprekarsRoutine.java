@@ -29,7 +29,9 @@ public final class KaprekarsRoutine {
                 break;
             }
         }
-        if (isEqual) { return -1; }
+        if (isEqual) {
+            return -1;
+        }
 
         // получение возрастающего числа
         Arrays.sort(digitArray);
@@ -40,7 +42,7 @@ public final class KaprekarsRoutine {
         int decreaseSeqNumber = digitArrayToNumber(digitArray);
 
         // шаг рекурсии
-        return countKaprekarRec(decreaseSeqNumber - increaseSeqNumber, ++count);
+        return countKaprekarRec(decreaseSeqNumber - increaseSeqNumber, count + 1);
     }
 
     private static int[] reverseArray(int[] array) {
@@ -56,11 +58,12 @@ public final class KaprekarsRoutine {
 
     private static int[] numberToDigitArray(int number) {
         int[] digitArray = new int[4];
+        int currentNumber = number;
 
         int idx = 0;
-        while (number != 0) {
-            digitArray[3 - idx] = number % 10;
-            number /= 10;
+        while (currentNumber != 0) {
+            digitArray[3 - idx] = currentNumber % 10;
+            currentNumber /= 10;
             idx++;
         }
 
