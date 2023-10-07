@@ -36,13 +36,8 @@ public class CyclicBitShift {
         int len = binaryArray.length;
         String[] shiftedArray = Arrays.copyOf(binaryArray, len);
 
-        for (int i = 0; i < shift; i++) {
-            String current = shiftedArray[0];
-            for (int j = 0; j < len; j++) {
-                String tmp = current;
-                current = shiftedArray[(j + 1) % len];
-                shiftedArray[(j + 1) % len] = tmp;
-            }
+        for (int i = 0; i < len; i++) {
+            shiftedArray[(i + shift) % len] = binaryArray[i];
         }
 
         return shiftedArray;
