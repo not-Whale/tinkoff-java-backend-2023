@@ -7,6 +7,10 @@ public class CyclicBitShift {
     private CyclicBitShift() {}
 
     public static int rotateLeft(int n, int shift) {
+        if (n < 0) {
+            return -1;
+        }
+
         String[] binaryN = Integer.toBinaryString(n).split("");
 
         // двигаем влево через отображение правого сдвига
