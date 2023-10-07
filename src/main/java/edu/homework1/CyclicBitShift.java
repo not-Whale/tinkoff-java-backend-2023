@@ -1,6 +1,5 @@
 package edu.homework1;
 
-import java.lang.Math;
 import java.util.Arrays;
 
 public final class CyclicBitShift {
