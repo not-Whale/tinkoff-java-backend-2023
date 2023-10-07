@@ -3,10 +3,15 @@ package edu.homework1;
 import java.util.Arrays;
 
 public final class KaprekarsRoutine {
+    private static final int MIN_VALUE = 1001;
+    private static final int MAX_VALUE = 9998;
+    private static final int KAPREKARS_CONSTANT = 6174;
+    private static final int NUMBER_LENGTH = 4;
+
     private KaprekarsRoutine() {}
 
     public static int countKaprekar(int number) {
-        if (number < 1001 || number > 9998) {
+        if (number < MIN_VALUE || number > MAX_VALUE) {
             return -1;
         }
 
@@ -15,7 +20,7 @@ public final class KaprekarsRoutine {
 
     private static int countKaprekarRec(int number, int count) {
         // условие выхода из рекурсии
-        if (number == 6174) {
+        if (number == KAPREKARS_CONSTANT) {
             return count;
         }
 
@@ -57,12 +62,12 @@ public final class KaprekarsRoutine {
     }
 
     private static int[] numberToDigitArray(int number) {
-        int[] digitArray = new int[4];
+        int[] digitArray = new int[NUMBER_LENGTH];
         int currentNumber = number;
 
         int idx = 0;
         while (currentNumber != 0) {
-            digitArray[3 - idx] = currentNumber % 10;
+            digitArray[NUMBER_LENGTH - 1 - idx] = currentNumber % 10;
             currentNumber /= 10;
             idx++;
         }
