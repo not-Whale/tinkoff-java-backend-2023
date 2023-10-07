@@ -61,6 +61,7 @@ public final class KaprekarsRoutine {
         return reversedArray;
     }
 
+    @SuppressWarnings("MagicNumber")
     private static int[] numberToDigitArray(int number) {
         int[] digitArray = new int[NUMBER_LENGTH];
         int currentNumber = number;
@@ -75,6 +76,7 @@ public final class KaprekarsRoutine {
         return digitArray;
     }
 
+    @SuppressWarnings("MagicNumber")
     private static int digitArrayToNumber(int[] digitArray) {
         int number = 0;
         int len = digitArray.length;
