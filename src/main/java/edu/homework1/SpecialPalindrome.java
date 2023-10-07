@@ -24,6 +24,7 @@ public final class SpecialPalindrome {
         return isPalindromeDescendantRec(getDescendant(digitArray));
     }
 
+    @SuppressWarnings("MagicNumber")
     private static int[] getDescendant(int[] parent) {
         int descendantLen = parent.length;
 
@@ -62,6 +63,7 @@ public final class SpecialPalindrome {
         return true;
     }
 
+    @SuppressWarnings("MagicNumber")
     private static int[] numberToDigitArray(int number) {
         int len = NumberOfDigits.countDigits(number);
         int[] digitArray = new int[len];
