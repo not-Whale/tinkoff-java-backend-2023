@@ -1,6 +1,6 @@
 package edu.homework1;
 
-public class BrokenString {
+public final class BrokenString {
     private BrokenString() {}
 
     public static String fixString(String brokenString) {

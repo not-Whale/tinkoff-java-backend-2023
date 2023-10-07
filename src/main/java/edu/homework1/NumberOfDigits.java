@@ -1,6 +1,6 @@
 package edu.homework1;
 
-public class NumberOfDigits {
+public final class NumberOfDigits {
     private NumberOfDigits() {}
 
     public static int countDigits(int inputNumber) {

@@ -1,6 +1,6 @@
 package edu.homework1;
 
-public class SpecialPalindrome {
+public final class SpecialPalindrome {
     private SpecialPalindrome() {}
 
     public static boolean isPalindromeDescendant(int number) {

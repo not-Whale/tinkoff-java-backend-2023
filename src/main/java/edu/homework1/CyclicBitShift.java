@@ -3,7 +3,7 @@ package edu.homework1;
 import java.lang.Math;
 import java.util.Arrays;
 
-public class CyclicBitShift {
+public final class CyclicBitShift {
     private CyclicBitShift() {}
 
     public static int rotateLeft(int n, int shift) {

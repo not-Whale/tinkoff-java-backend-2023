@@ -2,7 +2,7 @@ package edu.homework1;
 
 import java.util.Arrays;
 
-public class KaprekarsRoutine {
+public final class KaprekarsRoutine {
     private KaprekarsRoutine() {}
 
     public static int countKaprekar(int number) {
