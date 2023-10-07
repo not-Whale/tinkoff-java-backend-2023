@@ -7,8 +7,14 @@ public class Knights {
     private Knights() {}
 
     public static boolean knightBoardCapture(int[][] board) {
-        if (board.length != n || board[0].length != m) {
+        if (board == null || board.length != n) {
             return false;
+        }
+
+        for (int[] line : board) {
+            if (line == null || line.length != m) {
+                return false;
+            }
         }
 
         for (int i = 0; i < n; i++) {
