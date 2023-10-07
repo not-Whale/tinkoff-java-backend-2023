@@ -1,6 +1,6 @@
 package edu.homework1;
 
-public class NestedArray {
+public final class NestedArray {
     private NestedArray() {}
 
     public static boolean isNestable(int[] first, int[] second) {

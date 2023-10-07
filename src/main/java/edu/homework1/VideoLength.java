@@ -1,6 +1,6 @@
 package edu.homework1;
 
-public class VideoLength {
+public final class VideoLength {
     private VideoLength() {}
 
     public static int minutesToSeconds(String videoLength) {

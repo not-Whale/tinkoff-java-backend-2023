@@ -1,6 +1,6 @@
 package edu.homework1;
 
-public class Knights {
+public final class Knights {
     private static final int n = 8;
     private static final int m = 8;
 
