@@ -1,4 +1,4 @@
-package module1.homework1;
+package edu.homework1;
 
 public class VideoLength {
     private VideoLength() {}

@@ -1,4 +1,4 @@
-package module1.homework1;
+package edu.homework1;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
