@@ -22,6 +22,10 @@ public class CyclicBitShift {
     }
 
     public static int rotateRight(int n, int shift) {
+        if (n < 0) {
+            return -1;
+        }
+
         String[] binaryN = Integer.toBinaryString(n).split("");
 
         binaryN = rightShift(binaryN, shift);
