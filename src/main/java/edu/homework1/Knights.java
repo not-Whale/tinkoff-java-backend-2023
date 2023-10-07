@@ -7,15 +7,7 @@ public final class Knights {
     private Knights() {}
 
     public static boolean knightBoardCapture(int[][] board) throws IllegalArgumentException {
-        if (board == null || board.length != N) {
-            throw new IllegalArgumentException("Null or incorrect size board!");
-        }
-
-        for (int[] line : board) {
-            if (line == null || line.length != M) {
-                throw new IllegalArgumentException("Null or incorrect size board!");
-            }
-        }
+        validateBoard(board);
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -37,6 +29,20 @@ public final class Knights {
         }
 
         return true;
+    }
+
+    private static void validateBoard(int[][] board) throws IllegalArgumentException {
+        String errorMessage = "Null or incorrect size board!";
+
+        if (board == null || board.length != N) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+
+        for (int[] line : board) {
+            if (line == null || line.length != M) {
+                throw new IllegalArgumentException(errorMessage);
+            }
+        }
     }
 
     private static boolean isBeaten(int x, int y, int[][]board) {
