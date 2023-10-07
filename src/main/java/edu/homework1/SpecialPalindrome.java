@@ -65,11 +65,12 @@ public final class SpecialPalindrome {
     private static int[] numberToDigitArray(int number) {
         int len = NumberOfDigits.countDigits(number);
         int[] digitArray = new int[len];
+        int currentNumber = number;
 
         int idx = 0;
-        while (number != 0) {
-            digitArray[len - 1 - idx] = number % 10;
-            number /= 10;
+        while (currentNumber != 0) {
+            digitArray[len - 1 - idx] = currentNumber % 10;
+            currentNumber /= 10;
             idx++;
         }
 

@@ -5,9 +5,10 @@ public final class NumberOfDigits {
 
     public static int countDigits(int inputNumber) {
         int numberOfDigits = 0;
+        int currentNumber = inputNumber;
 
-        while (inputNumber != 0) {
-            inputNumber /= 10;
+        while (currentNumber != 0) {
+            currentNumber /= 10;
             numberOfDigits++;
         }
 
