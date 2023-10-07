@@ -1,6 +1,8 @@
 package edu.homework1;
 
 public final class VideoLength {
+    private static final int SECONDS_IN_ONE_MINUTE = 60;
+
     private VideoLength() {}
 
     public static int minutesToSeconds(String videoLength) {
@@ -14,11 +16,11 @@ public final class VideoLength {
         // проверка на корректность значений
         int minutes = minutesAndSeconds[0];
         int seconds = minutesAndSeconds[1];
-        if (seconds > 59 || seconds < 0 || minutes < 0) {
+        if (seconds >= SECONDS_IN_ONE_MINUTE || seconds < 0 || minutes < 0) {
             return -1;
         }
 
-        return minutesAndSeconds[0] * 60 + minutesAndSeconds[1];
+        return minutesAndSeconds[0] * SECONDS_IN_ONE_MINUTE + minutesAndSeconds[1];
     }
 
     private static int[] parseLengthString(String videoLength) {
