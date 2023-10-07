@@ -6,6 +6,10 @@ public class KaprekarsRoutine {
     private KaprekarsRoutine() {}
 
     public static int countKaprekar(int number) {
+        if (number < 1001 || number > 9998) {
+            return -1;
+        }
+
         return countKaprekarRec(number, 0);
     }
 
@@ -15,8 +19,19 @@ public class KaprekarsRoutine {
             return count;
         }
 
-        // получение возрастающего числа
         int[] digitArray = numberToDigitArray(number);
+
+        // проверка на то что не все цифры одинаковые
+        boolean isEqual = true;
+        for (int i = 0; i < digitArray.length; i++) {
+            if (digitArray[i] != digitArray[(i + 1) % digitArray.length]) {
+                isEqual = false;
+                break;
+            }
+        }
+        if (isEqual) { return -1; }
+
+        // получение возрастающего числа
         Arrays.sort(digitArray);
         int increaseSeqNumber = digitArrayToNumber(digitArray);
 
