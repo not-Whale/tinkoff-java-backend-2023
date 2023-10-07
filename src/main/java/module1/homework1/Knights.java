@@ -6,14 +6,14 @@ public class Knights {
 
     private Knights() {}
 
-    public static boolean knightBoardCapture(int[][] board) {
+    public static boolean knightBoardCapture(int[][] board) throws IllegalArgumentException {
         if (board == null || board.length != n) {
-            return false;
+            throw new IllegalArgumentException("Null or incorrect size board!");
         }
 
         for (int[] line : board) {
             if (line == null || line.length != m) {
-                return false;
+                throw new IllegalArgumentException("Null or incorrect size board!");
             }
         }
 
