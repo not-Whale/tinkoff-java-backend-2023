@@ -3,9 +3,9 @@ package edu.homework1;
 public final class NestedArray {
     private NestedArray() {}
 
-    public static boolean isNestable(int[] first, int[] second) {
+    public static boolean isNestable(int[] first, int[] second) throws IllegalArgumentException {
         if (first == null || second == null) {
-            return false;
+            throw new IllegalArgumentException("Null array!");
         }
 
         if (first.length == 0) {
