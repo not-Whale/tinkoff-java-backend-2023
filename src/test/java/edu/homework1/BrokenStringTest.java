@@ -1,5 +1,6 @@
 package edu.homework1;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -72,15 +73,18 @@ public class BrokenStringTest {
     }
 
     @Test
-    @DisplayName("Null-строка. Ввод: \"0123456\", вывод: \"1032546\".")
+    @DisplayName("Null-строка. Ввод: \"null\". Ожидается IllegalArgumentException..")
     void fixStringNull() {
         // given
         String brokenString = null;
 
         // when
-        String fixedString = BrokenString.fixString(brokenString);
+        Exception exception = Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> BrokenString.fixString(brokenString)
+        );
 
         // then
-        assertThat(fixedString).isEqualTo(null);
+        assertThat(exception.getMessage()).isEqualTo("Null string!");
     }
 }
