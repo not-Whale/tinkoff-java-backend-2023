@@ -1,5 +1,6 @@
 package edu.homework1;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -97,17 +98,36 @@ public class NestedArrayTest {
     }
 
     @Test
-    @DisplayName("Один из массивов (или оба) не задан(-ы). Ввод: ([0, 5], null), вывод: false")
-    void isNestableNullArray() {
+    @DisplayName("Первый массив не задан. Ввод: (null, [0, 5]). Ожидается IllegalArgumentException.")
+    void isNestableNullFirstArray() {
         // given
-        int[] firstArray = new int[]{0, 5};
+        int[] firstArray = null;
+        int[] secondArray = new int[]{0, 5};
+
+        // when
+        Exception exception = Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> NestedArray.isNestable(firstArray, secondArray)
+        );
+
+        // then
+        assertThat(exception.getMessage()).isEqualTo("Null array!");
+    }
+
+    @Test
+    @DisplayName("Второй массив не задан. Ввод: ([10, 20], null). Ожидается IllegalArgumentException.")
+    void isNestableNullSecondArray() {
+        // given
+        int[] firstArray = new int[]{10, 20};
         int[] secondArray = null;
 
         // when
-        boolean isNestable = NestedArray.isNestable(firstArray, secondArray);
+        Exception exception = Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> NestedArray.isNestable(firstArray, secondArray)
+        );
 
         // then
-        assertThat(isNestable).isEqualTo(false);
-
+        assertThat(exception.getMessage()).isEqualTo("Null array!");
     }
 }
