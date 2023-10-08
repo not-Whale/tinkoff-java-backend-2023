@@ -3,9 +3,9 @@ package edu.homework1;
 public final class BrokenString {
     private BrokenString() {}
 
-    public static String fixString(String brokenString) {
+    public static String fixString(String brokenString) throws IllegalArgumentException {
         if (brokenString == null) {
-            return null;
+            throw new IllegalArgumentException("Null string!");
         }
 
         int len = brokenString.length();
