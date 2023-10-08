@@ -5,7 +5,11 @@ public final class VideoLength {
 
     private VideoLength() {}
 
-    public static int minutesToSeconds(String videoLength) {
+    public static int minutesToSeconds(String videoLength) throws IllegalArgumentException {
+        if (videoLength == null) {
+            throw new IllegalArgumentException("Null string!");
+        }
+
         int[] minutesAndSeconds = parseLengthString(videoLength);
 
         // проверка на фотмат входных данных

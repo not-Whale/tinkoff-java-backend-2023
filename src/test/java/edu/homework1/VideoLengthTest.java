@@ -113,4 +113,20 @@ public class VideoLengthTest {
         // then
         assertThat(seconds).isEqualTo(-1);
     }
+
+    @Test
+    @DisplayName("Null вместо строки. Ввод: \"null\". Ожидается IllegalArgumentException.")
+    void minutesToSecondsNullString() {
+        // given
+        String videoLength = null;
+
+        // when
+        Exception exception = Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> VideoLength.minutesToSeconds(videoLength)
+        );
+
+        // then
+        assertThat(exception.getMessage()).isEqualTo("Null string!");
+    }
 }
