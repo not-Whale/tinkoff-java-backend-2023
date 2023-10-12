@@ -1,39 +1,32 @@
 package edu.homework2;
 
 public class Square extends Rectangle {
-    private final int width;
-    private final int height;
-
-    public Square(int width, int height) {
-        super(width, height);
-
-        if (width != height) {
-            throw new IllegalArgumentException("Измерения квадрата должны быть равны!");
-        }
-
-        this.width = width;
-        this.height = height;
-    }
+    private final int dimension;
 
     public Square(int dimension) {
-        this(dimension, dimension);
+        super(dimension, dimension);
+        this.dimension = dimension;
+    }
+
+    Square setDimension(int dimension) {
+        return new Square(dimension);
     }
 
     @Override
     Rectangle setWidth(int width) {
-        if (this.height == width) {
+        if (this.dimension == width) {
             return new Square(width);
         }
 
-        return new Rectangle(width, this.height);
+        return new Rectangle(width, this.dimension);
     }
 
     @Override
     Rectangle setHeight(int height) {
-        if (this.width == height) {
+        if (this.dimension == height) {
             return new Square(height);
         }
 
-        return new Rectangle(this.width, height);
+        return new Rectangle(this.dimension, height);
     }
 }
