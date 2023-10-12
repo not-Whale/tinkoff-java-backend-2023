@@ -5,6 +5,10 @@ public class Rectangle {
     private final int height;
 
     public Rectangle(int width, int height) {
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("Измерения прямоугольника должны быть положительные!");
+        }
+
         this.width = width;
         this.height = height;
     }
