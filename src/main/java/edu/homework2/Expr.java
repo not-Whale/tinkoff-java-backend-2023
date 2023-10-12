@@ -14,7 +14,7 @@ public sealed interface Expr {
             return this.value;
         }
     }
-    
+
     public record Negate(double value) implements Expr {
 
         public Negate(Expr exprValue) {
