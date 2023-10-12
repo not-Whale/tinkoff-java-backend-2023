@@ -6,14 +6,23 @@ public class Square extends Rectangle {
 
     public Square(int width, int height) {
         super(width, height);
+
+        if (width != height) {
+            throw new IllegalArgumentException("Измерения квадрата должны быть равны!");
+        }
+
         this.width = width;
         this.height = height;
+    }
+
+    public Square(int dimension) {
+        this(dimension, dimension);
     }
 
     @Override
     Rectangle setWidth(int width) {
         if (this.height == width) {
-            return new Square(width, this.height);
+            return new Square(width);
         }
 
         return new Rectangle(width, this.height);
@@ -22,7 +31,7 @@ public class Square extends Rectangle {
     @Override
     Rectangle setHeight(int height) {
         if (this.width == height) {
-            return new Square(this.width, height);
+            return new Square(height);
         }
 
         return new Rectangle(this.width, height);
