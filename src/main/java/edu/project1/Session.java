@@ -18,7 +18,7 @@ class Session {
     }
 
     public GuessResult guess(char guess) {
-        if (userAnswerContains(guess)) {
+        if (isUserAnswerContainsSymbol(guess)) {
             return new GuessResult.RepeatedGuess(
                 this.userAnswer,
                 this.attempts,
@@ -107,7 +107,7 @@ class Session {
 
     }
 
-    private boolean userAnswerContains(char symbol) {
+    private boolean isUserAnswerContainsSymbol(char symbol) {
         for (char current : this.userAnswer) {
             if (current == symbol) {
                 return true;
