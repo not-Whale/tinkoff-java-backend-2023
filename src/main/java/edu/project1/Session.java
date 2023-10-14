@@ -29,13 +29,14 @@ class Session {
 
         int guessIndex = this.answer.indexOf(guess);
         if (guessIndex != -1) {
-            openNewSymbol(guess);
+            int symbolsOpened = openNewSymbol(guess);
 
             if (isAnswerGuessed()) {
                 return new GuessResult.Win(
                     this.userAnswer,
                     this.attempts,
                     this.maxAttempts,
+                    symbolsOpened,
                     "Вы победили!"
                 );
             }
@@ -95,7 +96,7 @@ class Session {
         return true;
     }
 
-    private void openNewSymbol(char symbol) {
+    private int openNewSymbol(char symbol) {
         int symbolsOpened = 0;
 
         for (int i = 0; i < this.answer.length(); i++) {
@@ -105,6 +106,7 @@ class Session {
             }
         }
 
+        return symbolsOpened;
     }
 
     private boolean isUserAnswerContainsSymbol(char symbol) {

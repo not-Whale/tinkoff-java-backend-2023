@@ -11,7 +11,7 @@ sealed interface GuessResult {
 
     record Defeat(char[] state, int attempt, int maxAttempts, String message) implements GuessResult {}
 
-    record Win(char[] state, int attempt, int maxAttempts, String message) implements GuessResult {}
+    record Win(char[] state, int attempt, int maxAttempts, int symbolsOpened, String message) implements GuessResult {}
 
     record SuccessfulGuess(char[] state, int attempt, int maxAttempts, String message) implements GuessResult {}
 
