@@ -31,22 +31,22 @@ class Session {
         if (guessIndex != -1) {
             int symbolsOpened = openNewSymbol(guess);
 
-            if (isAnswerGuessed()) {
-                return new GuessResult.Win(
+            return isAnswerGuessed() ?
+                new GuessResult.Win(
                     this.userAnswer,
                     this.attempts,
                     this.maxAttempts,
                     symbolsOpened,
                     "Вы победили!"
+                )
+                :
+                new GuessResult.SuccessfulGuess(
+                    this.userAnswer,
+                    this.attempts,
+                    this.maxAttempts,
+                    symbolsOpened,
+                    "Символ \"" + guess + "\" открыт!"
                 );
-            }
-
-            return new GuessResult.SuccessfulGuess(
-                this.userAnswer,
-                this.attempts,
-                this.maxAttempts,
-                "Символ \"" + guess + "\" открыт!"
-            );
         }
 
         this.attempts++;
