@@ -6,11 +6,21 @@ class Session {
     private final int maxAttempts;
     private int attempts;
 
-    public Session(String answer, int maxAttempts) {
+    private final String repeatedGuessMessage = "Вы уже открывали данный символ!";
+
+    private final String winMessage = "Вы победили!";
+
+    private final String defeatMessage = "Вы проиграли!";
+
+    private final String giveUpMessage = "Вы сдались!";
+
+    private final char unknownSymbol = '*';
+
+    Session(String answer, int maxAttempts) {
         this.answer = answer;
         this.userAnswer = new char[this.answer.length()];
         for (int i = 0; i < answer.length(); i++) {
-            userAnswer[i] = '*';
+            userAnswer[i] = unknownSymbol;
         }
 
         this.maxAttempts = maxAttempts;
@@ -23,7 +33,7 @@ class Session {
                 this.userAnswer,
                 this.attempts,
                 this.maxAttempts,
-                "Вы уже открывали данный символ!"
+                repeatedGuessMessage
             );
         }
 
@@ -31,13 +41,14 @@ class Session {
         if (guessIndex != -1) {
             int symbolsOpened = openNewSymbol(guess);
 
-            return isAnswerGuessed() ?
+            return isAnswerGuessed()
+                ?
                 new GuessResult.Win(
                     this.userAnswer,
                     this.attempts,
                     this.maxAttempts,
                     symbolsOpened,
-                    "Вы победили!"
+                    winMessage
                 )
                 :
                 new GuessResult.SuccessfulGuess(
@@ -45,7 +56,7 @@ class Session {
                     this.attempts,
                     this.maxAttempts,
                     symbolsOpened,
-                    "Символ \"" + guess + "\" открыт!"
+                    getSuccessfulGuessString(guess)
                 );
         }
 
@@ -57,7 +68,7 @@ class Session {
                 this.answer.toCharArray(),
                 this.attempts,
                 this.maxAttempts,
-                "Вы проиграли!"
+                defeatMessage
             )
             :
             new GuessResult.FailedGuess(
@@ -73,8 +84,12 @@ class Session {
             this.answer.toCharArray(),
             this.attempts,
             this.maxAttempts,
-            "Вы сдались!"
+            giveUpMessage
         );
+    }
+
+    private String getSuccessfulGuessString(char symbol) {
+        return "Символ \"" + symbol + "\" открыт!";
     }
 
     private String getFailedGuessString() {
@@ -88,7 +103,7 @@ class Session {
 
     private boolean isAnswerGuessed() {
         for (char current : this.userAnswer) {
-            if (current == '*') {
+            if (current == unknownSymbol) {
                 return false;
             }
         }
