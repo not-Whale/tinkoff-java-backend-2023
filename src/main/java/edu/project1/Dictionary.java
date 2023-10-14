@@ -15,10 +15,16 @@ class Dictionary {
 
     private static final String KEY = "word";
 
+    private static final String DEFAULT_WORD = "тинькофф";
+
     private Dictionary() {}
 
-    public static String randomWord() throws IOException, InterruptedException {
-        return parseRandomWordFromJSON(getJSON());
+    public static String randomWord() {
+        try {
+            return parseRandomWordFromJSON(getJSON());
+        } catch (IOException | InterruptedException e) {
+            return DEFAULT_WORD;
+        }
     }
 
     private static String getJSON() throws IOException, InterruptedException {
