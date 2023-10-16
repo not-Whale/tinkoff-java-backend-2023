@@ -61,7 +61,7 @@ class Session {
     }
 
     public GuessResult giveUp() {
-        return new GuessResult.Defeat(this.answer.toCharArray());
+        return new GuessResult.GiveUp(this.answer.toCharArray());
     }
 
     private boolean isAttemptsGone() {
