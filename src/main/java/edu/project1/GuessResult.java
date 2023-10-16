@@ -15,6 +15,6 @@ sealed interface GuessResult {
     record FailedGuess(char[] state, int attempts, int maxAttempts)
         implements GuessResult {}
 
-    record RepeatedGuess(char[] state)
+    record RepeatedGuess(char[] state, char[] attempts)
         implements GuessResult {}
 }
