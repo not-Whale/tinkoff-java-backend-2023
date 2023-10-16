@@ -1,5 +1,6 @@
 package edu.project1;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
@@ -12,15 +13,15 @@ public class HangmanCLI {
 
     private static final char BAD_INPUT_CHAR = '*';
 
-    private static final String badInputMessage = "Некорректный ввод! Введите символ кириллического алфавита...";
-
-    private static final String repeatedGuessMessage = "Вы уже открывали данный символ!";
+    private static final String badInputMessage = "Некорректный ввод: введите символ кириллического алфавита!";
 
     private static final String winMessage = "Вы победили!";
 
     private static final String defeatMessage = "Вы проиграли!";
 
     private static final String giveUpMessage = "Вы сдались!";
+
+    private static final String somethingWrongMessage = "Упс... Что-то пошло не так!";
 
     private HangmanCLI() {}
 
@@ -67,7 +68,7 @@ public class HangmanCLI {
                 return 2;
             }
             case GuessResult.RepeatedGuess repeatedGuess -> {
-                LOGGER.info(repeatedGuessMessage);
+                LOGGER.info(getRepeatedGuessMessage(repeatedGuess));
                 printAnswerState(guessResult);
             }
             case GuessResult.SuccessfulGuess successfulGuess -> {
@@ -79,23 +80,27 @@ public class HangmanCLI {
                 printAnswerState(guessResult);
             }
             default -> {
-                LOGGER.info("Упс... Что-то пошло не так!");
+                LOGGER.info(somethingWrongMessage);
                 return -1;
             }
         }
         return 0;
     }
 
+    private static String getRepeatedGuessMessage(GuessResult.RepeatedGuess repeatedGuess) {
+        return "Вы уже открывали данный символ! Ваши попытки: " + Arrays.toString(repeatedGuess.attempts()) + ".";
+    }
+
     private static String getFailedGuessMessage(GuessResult.FailedGuess failedGuess) {
         int attemptsLeft = failedGuess.maxAttempts() - failedGuess.attempts();
-        return "Ошибка! Осталось " + attemptsLeft + " попыток из " + failedGuess.maxAttempts();
+        return "Неверно! Доступное количество попыток: " + attemptsLeft + " из " + failedGuess.maxAttempts() + ".";
     }
 
     private static String getSuccessfulGuessMessage(GuessResult.SuccessfulGuess successfulGuess) {
-        return "Символ \"" + successfulGuess.symbol() + "\" открыт (" + successfulGuess.symbolsOpened() + " раз)!";
+        return "Символ \"" + successfulGuess.symbol() + "\" открыт " + successfulGuess.symbolsOpened() + " раз(-а)!";
     }
 
     private static void printAnswerState(GuessResult guessResult) {
-        LOGGER.info("Слово: " + String.valueOf(guessResult.state()));
+        LOGGER.info("Слово: " + String.valueOf(guessResult.state()) + ".");
     }
 }

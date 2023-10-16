@@ -1,5 +1,7 @@
 package edu.project1;
 
+import java.util.Arrays;
+
 class Session {
     private final String answer;
 
@@ -32,7 +34,10 @@ class Session {
 
     public GuessResult guess(char guess) {
         if (isUserRepeatGuess(guess)) {
-            return new GuessResult.RepeatedGuess(this.userAnswer);
+            return new GuessResult.RepeatedGuess(
+                this.userAnswer,
+                Arrays.copyOfRange(this.userAttempts, 0, this.attempts)
+            );
         }
         addNewAttempt(guess);
 
