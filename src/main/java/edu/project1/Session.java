@@ -6,14 +6,6 @@ class Session {
     private final int maxAttempts;
     private int attempts;
 
-    private final String repeatedGuessMessage = "Вы уже открывали данный символ!";
-
-    private final String winMessage = "Вы победили!";
-
-    private final String defeatMessage = "Вы проиграли!";
-
-    private final String giveUpMessage = "Вы сдались!";
-
     private final char unknownSymbol = '*';
 
     Session(String answer, int maxAttempts) {
@@ -30,10 +22,7 @@ class Session {
     public GuessResult guess(char guess) {
         if (isUserAnswerContainsSymbol(guess)) {
             return new GuessResult.RepeatedGuess(
-                this.userAnswer,
-                this.attempts,
-                this.maxAttempts,
-                repeatedGuessMessage
+                this.userAnswer
             );
         }
 
@@ -44,19 +33,13 @@ class Session {
             return isAnswerGuessed()
                 ?
                 new GuessResult.Win(
-                    this.userAnswer,
-                    this.attempts,
-                    this.maxAttempts,
-                    symbolsOpened,
-                    winMessage
+                    this.userAnswer
                 )
                 :
                 new GuessResult.SuccessfulGuess(
                     this.userAnswer,
-                    this.attempts,
-                    this.maxAttempts,
-                    symbolsOpened,
-                    getSuccessfulGuessString(guess)
+                    guess,
+                    symbolsOpened
                 );
         }
 
@@ -65,36 +48,20 @@ class Session {
         return isAttemptsGone()
             ?
             new GuessResult.Defeat(
-                this.answer.toCharArray(),
-                this.attempts,
-                this.maxAttempts,
-                defeatMessage
+                this.answer.toCharArray()
             )
             :
             new GuessResult.FailedGuess(
                 this.userAnswer,
                 this.attempts,
-                this.maxAttempts,
-                getFailedGuessString()
+                this.maxAttempts
             );
     }
 
     public GuessResult giveUp() {
         return new GuessResult.Defeat(
-            this.answer.toCharArray(),
-            this.attempts,
-            this.maxAttempts,
-            giveUpMessage
+            this.answer.toCharArray()
         );
-    }
-
-    private String getSuccessfulGuessString(char symbol) {
-        return "Символ \"" + symbol + "\" открыт!";
-    }
-
-    private String getFailedGuessString() {
-        int attemptsLeft = this.maxAttempts - this.attempts;
-        return "Ошибка! Осталось " + attemptsLeft + " попыток из " + this.maxAttempts;
     }
 
     private boolean isAttemptsGone() {
