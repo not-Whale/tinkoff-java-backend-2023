@@ -3,20 +3,20 @@ package edu.project1;
 class Session {
     private final String answer;
     private final char[] userAnswer;
-    private final int maxAttempts;
-    private int attempts;
+    private final int maxMistakes;
+    private int mistakes;
 
     private final char unknownSymbol = '*';
 
-    Session(String answer, int maxAttempts) {
+    Session(String answer, int maxMistakes) {
         this.answer = answer;
         this.userAnswer = new char[this.answer.length()];
         for (int i = 0; i < answer.length(); i++) {
             userAnswer[i] = unknownSymbol;
         }
 
-        this.maxAttempts = maxAttempts;
-        this.attempts = 0;
+        this.maxMistakes = maxMistakes;
+        this.mistakes = 0;
     }
 
     public GuessResult guess(char guess) {
@@ -43,7 +43,7 @@ class Session {
                 );
         }
 
-        this.attempts++;
+        this.mistakes++;
 
         return isAttemptsGone()
             ?
@@ -53,8 +53,8 @@ class Session {
             :
             new GuessResult.FailedGuess(
                 this.userAnswer,
-                this.attempts,
-                this.maxAttempts
+                this.mistakes,
+                this.maxMistakes
             );
     }
 
@@ -65,7 +65,7 @@ class Session {
     }
 
     private boolean isAttemptsGone() {
-        return this.attempts == this.maxAttempts;
+        return this.mistakes == this.maxMistakes;
     }
 
     private boolean isAnswerGuessed() {
