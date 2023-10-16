@@ -13,6 +13,8 @@ public class HangmanCLI {
 
     private static final char BAD_INPUT_CHAR = '*';
 
+    private static final String alphabetRegex = "[а-яА-Я]";
+
     private static final String badInputMessage = "Некорректный ввод: введите символ кириллического алфавита!";
 
     private static final String winMessage = "Вы победили!";
@@ -22,6 +24,10 @@ public class HangmanCLI {
     private static final String giveUpMessage = "Вы сдались!";
 
     private static final String somethingWrongMessage = "Упс... Что-то пошло не так!";
+
+    private static final String guessSymbolMessage = "Угадайте букву: ";
+
+    private static final String endGame = "Спасибо за игру!";
 
     private HangmanCLI() {}
 
@@ -42,15 +48,16 @@ public class HangmanCLI {
             int code = checkAndPrintState(guessResult);
 
             if (code != 0) {
-                return;
+                isGameOver = true;
             }
         }
+        LOGGER.info(endGame);
     }
 
     private static char readUserGuess(Scanner scanner) {
-        LOGGER.info("Угадайте букву:");
+        LOGGER.info(guessSymbolMessage);
         String userInput = scanner.nextLine().strip().toLowerCase();
-        if (userInput.length() != 1 || !Pattern.matches("[а-яА-Я]", userInput)) {
+        if (userInput.length() != 1 || !Pattern.matches(alphabetRegex, userInput)) {
             return BAD_INPUT_CHAR;
         }
         return userInput.charAt(0);
