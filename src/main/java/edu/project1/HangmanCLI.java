@@ -92,7 +92,7 @@ public class HangmanCLI {
     }
 
     private static String getSuccessfulGuessMessage(GuessResult.SuccessfulGuess successfulGuess) {
-        return "Символ \"" + successfulGuess.symbol() + "\" открыт (" + successfulGuess.symbolsOpened() +" раз)!";
+        return "Символ \"" + successfulGuess.symbol() + "\" открыт (" + successfulGuess.symbolsOpened() + " раз)!";
     }
 
     private static void printAnswerState(GuessResult guessResult) {

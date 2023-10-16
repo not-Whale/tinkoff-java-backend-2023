@@ -2,8 +2,11 @@ package edu.project1;
 
 class Session {
     private final String answer;
+
     private final char[] userAnswer;
+
     private final int maxMistakes;
+
     private int mistakes;
 
     private final char unknownSymbol = '*';
@@ -21,9 +24,7 @@ class Session {
 
     public GuessResult guess(char guess) {
         if (isUserAnswerContainsSymbol(guess)) {
-            return new GuessResult.RepeatedGuess(
-                this.userAnswer
-            );
+            return new GuessResult.RepeatedGuess(this.userAnswer);
         }
 
         int guessIndex = this.answer.indexOf(guess);
@@ -32,36 +33,22 @@ class Session {
 
             return isAnswerGuessed()
                 ?
-                new GuessResult.Win(
-                    this.userAnswer
-                )
+                new GuessResult.Win(this.userAnswer)
                 :
-                new GuessResult.SuccessfulGuess(
-                    this.userAnswer,
-                    guess,
-                    symbolsOpened
-                );
+                new GuessResult.SuccessfulGuess(this.userAnswer, guess, symbolsOpened);
         }
 
         this.mistakes++;
 
         return isAttemptsGone()
             ?
-            new GuessResult.Defeat(
-                this.answer.toCharArray()
-            )
+            new GuessResult.Defeat(this.answer.toCharArray())
             :
-            new GuessResult.FailedGuess(
-                this.userAnswer,
-                this.mistakes,
-                this.maxMistakes
-            );
+            new GuessResult.FailedGuess(this.userAnswer, this.mistakes, this.maxMistakes);
     }
 
     public GuessResult giveUp() {
-        return new GuessResult.Defeat(
-            this.answer.toCharArray()
-        );
+        return new GuessResult.Defeat(this.answer.toCharArray());
     }
 
     private boolean isAttemptsGone() {
@@ -74,7 +61,6 @@ class Session {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -97,7 +83,6 @@ class Session {
                 return true;
             }
         }
-
         return false;
     }
 }
