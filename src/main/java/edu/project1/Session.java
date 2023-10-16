@@ -5,27 +5,36 @@ class Session {
 
     private final char[] userAnswer;
 
+    private final char[] userAttempts;
+
     private final int maxMistakes;
 
     private int mistakes;
 
+    private int attempts;
+
     private final char unknownSymbol = '*';
+
+    private final int alphabetLength = 33;
 
     Session(String answer, int maxMistakes) {
         this.answer = answer;
         this.userAnswer = new char[this.answer.length()];
         for (int i = 0; i < answer.length(); i++) {
-            userAnswer[i] = unknownSymbol;
+            this.userAnswer[i] = unknownSymbol;
         }
 
+        this.attempts = 0;
+        this.userAttempts = new char[alphabetLength];
         this.maxMistakes = maxMistakes;
         this.mistakes = 0;
     }
 
     public GuessResult guess(char guess) {
-        if (isUserAnswerContainsSymbol(guess)) {
+        if (isUserRepeatGuess(guess)) {
             return new GuessResult.RepeatedGuess(this.userAnswer);
         }
+        addNewAttempt(guess);
 
         int guessIndex = this.answer.indexOf(guess);
         if (guessIndex != -1) {
@@ -37,7 +46,6 @@ class Session {
                 :
                 new GuessResult.SuccessfulGuess(this.userAnswer, guess, symbolsOpened);
         }
-
         this.mistakes++;
 
         return isAttemptsGone()
@@ -77,12 +85,17 @@ class Session {
         return symbolsOpened;
     }
 
-    private boolean isUserAnswerContainsSymbol(char symbol) {
-        for (char current : this.userAnswer) {
+    private boolean isUserRepeatGuess(char symbol) {
+        for (char current : this.userAttempts) {
             if (current == symbol) {
                 return true;
             }
         }
         return false;
+    }
+
+    private void addNewAttempt(char symbol) {
+        this.userAttempts[this.attempts] = symbol;
+        this.attempts++;
     }
 }
