@@ -1,6 +1,7 @@
 package edu.project1;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
@@ -38,16 +39,24 @@ public class HangmanCLI {
 
         boolean isGameOver = false;
         while (!isGameOver) {
-            char userGuess = readUserGuess(scanner);
-            if (userGuess == BAD_INPUT_CHAR) {
-                LOGGER.info(badInputMessage);
-                continue;
+            int status = 0;
+
+            try {
+                char userGuess = readUserGuess(scanner);
+                if (userGuess == BAD_INPUT_CHAR) {
+                    LOGGER.info(badInputMessage);
+                    continue;
+                }
+
+                GuessResult guessResult = session.guess(userGuess);
+                status = checkAndPrintState(guessResult);
+
+            } catch (NoSuchElementException e) {
+                GuessResult guessResult = session.giveUp();
+                status = checkAndPrintState(guessResult);
             }
 
-            GuessResult guessResult = session.guess(userGuess);
-            int code = checkAndPrintState(guessResult);
-
-            if (code != 0) {
+            if (status != 0) {
                 isGameOver = true;
             }
         }
@@ -64,34 +73,40 @@ public class HangmanCLI {
     }
 
     private static int checkAndPrintState(GuessResult guessResult) {
+        int returnCode = 0;
         switch (guessResult) {
             case GuessResult.Win win -> {
                 LOGGER.info(winMessage);
-                return 1;
+                returnCode = 1;
             }
             case GuessResult.Defeat defeat -> {
                 LOGGER.info(defeatMessage);
-                printAnswerState(guessResult);
-                return 2;
+                printAnswerState(defeat);
+                returnCode = 2;
+            }
+            case GuessResult.GiveUp giveUp -> {
+                LOGGER.info(giveUpMessage);
+                printAnswerState(giveUp);
+                returnCode = 2;
             }
             case GuessResult.RepeatedGuess repeatedGuess -> {
                 LOGGER.info(getRepeatedGuessMessage(repeatedGuess));
-                printAnswerState(guessResult);
+                printAnswerState(repeatedGuess);
             }
             case GuessResult.SuccessfulGuess successfulGuess -> {
                 LOGGER.info(getSuccessfulGuessMessage(successfulGuess));
-                printAnswerState(guessResult);
+                printAnswerState(successfulGuess);
             }
             case GuessResult.FailedGuess failedGuess -> {
                 LOGGER.info(getFailedGuessMessage(failedGuess));
-                printAnswerState(guessResult);
+                printAnswerState(failedGuess);
             }
             default -> {
                 LOGGER.info(somethingWrongMessage);
-                return -1;
+                returnCode = -1;
             }
         }
-        return 0;
+        return returnCode;
     }
 
     private static String getRepeatedGuessMessage(GuessResult.RepeatedGuess repeatedGuess) {
