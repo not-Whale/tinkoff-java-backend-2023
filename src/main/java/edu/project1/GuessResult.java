@@ -3,24 +3,18 @@ package edu.project1;
 sealed interface GuessResult {
     char[] state();
 
-    int attempt();
-
-    int maxAttempts();
-
-    String message();
-
-    record Defeat(char[] state, int attempt, int maxAttempts, String message)
+    record Defeat(char[] state)
         implements GuessResult {}
 
-    record Win(char[] state, int attempt, int maxAttempts, int symbolsOpened, String message)
+    record Win(char[] state)
         implements GuessResult {}
 
-    record SuccessfulGuess(char[] state, int attempt, int maxAttempts, int symbolsOpened, String message)
+    record SuccessfulGuess(char[] state, char symbol, int symbolsOpened)
         implements GuessResult {}
 
-    record FailedGuess(char[] state, int attempt, int maxAttempts, String message)
+    record FailedGuess(char[] state, int attempts, int maxAttempts)
         implements GuessResult {}
 
-    record RepeatedGuess(char[] state, int attempt, int maxAttempts, String message)
+    record RepeatedGuess(char[] state)
         implements GuessResult {}
 }
