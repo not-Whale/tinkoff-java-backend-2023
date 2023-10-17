@@ -1,4 +1,4 @@
-package edu.homework2;
+package edu.homework2.tracer;
 
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +13,7 @@ public class TracerTest {
         CallingInfo callingInfo = Tracer.getCallingInfo();
 
         // then
-        assertThat(callingInfo.className()).isEqualTo("edu.homework2.TracerTest");
+        assertThat(callingInfo.className()).isEqualTo("edu.homework2.tracer.TracerTest");
         assertThat(callingInfo.methodName()).isEqualTo("callingInfoTest");
     }
 
@@ -30,7 +30,7 @@ public class TracerTest {
         CallingInfo callingInfo = StaticMethodCaller.staticMethod();
 
         // then
-        assertThat(callingInfo.className()).isEqualTo("edu.homework2.TracerTest$1StaticMethodCaller");
+        assertThat(callingInfo.className()).isEqualTo("edu.homework2.tracer.TracerTest$1StaticMethodCaller");
         assertThat(callingInfo.methodName()).isEqualTo("staticMethod");
     }
 
@@ -48,7 +48,7 @@ public class TracerTest {
         CallingInfo callingInfo = nonStaticMethodCaller.nonStaticMethod();
 
         // then
-        assertThat(callingInfo.className()).isEqualTo("edu.homework2.TracerTest$1NonStaticMethodCaller");
+        assertThat(callingInfo.className()).isEqualTo("edu.homework2.tracer.TracerTest$1NonStaticMethodCaller");
         assertThat(callingInfo.methodName()).isEqualTo("nonStaticMethod");
     }
 }

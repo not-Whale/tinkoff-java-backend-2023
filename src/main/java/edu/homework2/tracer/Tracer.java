@@ -1,4 +1,4 @@
-package edu.homework2;
+package edu.homework2.tracer;
 
 public class Tracer {
     private Tracer() {}

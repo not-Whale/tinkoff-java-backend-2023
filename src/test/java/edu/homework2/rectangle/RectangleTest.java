@@ -1,4 +1,4 @@
-package edu.homework2;
+package edu.homework2.rectangle;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

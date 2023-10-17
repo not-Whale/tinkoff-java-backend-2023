@@ -1,4 +1,4 @@
-package edu.homework2;
+package edu.homework2.rectangle;
 
 public class Square extends Rectangle {
     private final int dimension;

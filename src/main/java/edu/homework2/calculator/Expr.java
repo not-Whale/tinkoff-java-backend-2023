@@ -1,4 +1,4 @@
-package edu.homework2;
+package edu.homework2.calculator;
 
 public sealed interface Expr {
     double evaluate();
