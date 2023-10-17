@@ -1,4 +1,4 @@
-package edu.homework2;
+package edu.homework2.rectangle;
 
 public class Rectangle {
     private final int width;
