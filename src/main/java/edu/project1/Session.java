@@ -65,7 +65,7 @@ class Session {
     }
 
     private boolean isAttemptsGone() {
-        return this.mistakes > this.maxMistakes;
+        return this.mistakes >= this.maxMistakes;
     }
 
     private boolean isAnswerGuessed() {
