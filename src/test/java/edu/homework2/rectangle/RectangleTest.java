@@ -1,5 +1,6 @@
 package edu.homework2.rectangle;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -105,6 +106,38 @@ public class RectangleTest {
         // then
         assertThat(square.area()).isEqualTo(100);
         assertThat(rectangle.area()).isEqualTo(100);
+    }
+
+    @Test
+    @DisplayName("Передача отрицательных значений в конструктор прямоугольника")
+    void rectangleBadDimensions() {
+        // given
+        // --
+
+        // when
+        Exception exception = Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> new Rectangle(5, -10)
+        );
+
+        // then
+        assertThat(exception.getMessage()).isEqualTo("Измерения прямоугольника должны быть положительные!");
+    }
+
+    @Test
+    @DisplayName("Передача отрицательных значений в конструктор квадрата")
+    void squareBadDimensions() {
+        // given
+        // --
+
+        // when
+        Exception exception = Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> new Square(-5)
+        );
+
+        // then
+        assertThat(exception.getMessage()).isEqualTo("Измерения прямоугольника должны быть положительные!");
     }
 
     static Arguments[] rectangles() {
