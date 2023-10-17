@@ -114,8 +114,8 @@ public class HangmanCLI {
     }
 
     private String getFailedGuessMessage(GuessResult.FailedGuess failedGuess) {
-        int attemptsLeft = failedGuess.maxAttempts() - failedGuess.attempts();
-        return "Неверно! Доступное количество попыток: " + attemptsLeft + " из " + failedGuess.maxAttempts() + ".";
+        int attemptsLeft = failedGuess.maxMistakes() - failedGuess.mistakes();
+        return "Неверно! Доступное количество попыток: " + attemptsLeft + " из " + failedGuess.maxMistakes() + ".";
     }
 
     private String getSuccessfulGuessMessage(GuessResult.SuccessfulGuess successfulGuess) {
