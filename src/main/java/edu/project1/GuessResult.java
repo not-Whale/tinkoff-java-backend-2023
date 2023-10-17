@@ -9,7 +9,7 @@ sealed interface GuessResult {
 
     record SuccessfulGuess(char[] state, char symbol, int symbolsOpened) implements GuessResult {}
 
-    record FailedGuess(char[] state, int attempts, int maxAttempts) implements GuessResult {}
+    record FailedGuess(char[] state, int mistakes, int maxMistakes) implements GuessResult {}
 
     record RepeatedGuess(char[] state, char[] attempts) implements GuessResult {}
 
