@@ -1,10 +1,13 @@
 package edu.homework2.tracer;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("Кто вызвал функцию?")
 public class TracerTest {
     @Test
+    @DisplayName("Вызов функции из тестового метода")
     void callingInfoTest() {
         // given
         // --
@@ -18,6 +21,7 @@ public class TracerTest {
     }
 
     @Test
+    @DisplayName("Вызов функции из статического метода класса")
     void callingInfoStaticMethod() {
         // given
         class StaticMethodCaller {
@@ -35,6 +39,7 @@ public class TracerTest {
     }
 
     @Test
+    @DisplayName("Вызов функции из нестатического метода класса")
     void callingInfoNonStaticMethod() {
         // given
         class NonStaticMethodCaller {
