@@ -17,7 +17,7 @@ public class DefaultConnectionManager implements ConnectionManager {
     public Connection getConnection() {
         attempt = (attempt + 1) % FAULTY_CONNECTION_RETURN_CYCLE_BASE;
 
-        if (attempt == 1) {
+        if (attempt == 0) {
             return new FaultyConnection();
         }
 
