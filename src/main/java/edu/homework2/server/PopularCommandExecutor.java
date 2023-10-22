@@ -28,13 +28,12 @@ public final class PopularCommandExecutor {
 
     private void tryExecute(String command) {
         int attempts = 0;
-        boolean executeStatus = false;
         Connection connection = this.manager.getConnection();
         Throwable cause = null;
 
-        while (!executeStatus || attempts != this.maxAttempts) {
+        while (attempts != this.maxAttempts && cause == null) {
             try (connection) {
-                executeStatus = executeStatus || connection.execute(command);
+                connection.execute(command);
                 attempts++;
 
             } catch (ConnectionException connectionException) {
@@ -45,7 +44,7 @@ public final class PopularCommandExecutor {
             }
         }
 
-        if (!executeStatus) {
+        if (cause != null) {
             throw new ConnectionException(
                 "Failed to execute command after " + maxAttempts + " attempts!",
                 cause

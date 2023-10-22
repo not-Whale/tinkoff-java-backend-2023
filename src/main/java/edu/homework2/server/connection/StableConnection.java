@@ -7,9 +7,8 @@ public class StableConnection implements Connection {
     private final static Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public boolean execute(String command) {
+    public void execute(String command) {
         LOGGER.info("Command " + command + " executed!");
-        return true;
     }
 
     @Override
