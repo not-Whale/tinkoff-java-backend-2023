@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class FaultyConnection implements Connection {
     private final static Logger LOGGER = LogManager.getLogger();
 
-    private static int attempt = 0;
+    private int attempt = 0;
 
     private static final int EXCEPTION_THROW_CYCLE_BASE = 3;
 

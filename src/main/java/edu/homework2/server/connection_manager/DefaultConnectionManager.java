@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 public class DefaultConnectionManager implements ConnectionManager {
     private final static Logger LOGGER = LogManager.getLogger();
 
-    private static int attempt = 0;
+    private int attempt = 0;
 
     private static final int FAULTY_CONNECTION_RETURN_CYCLE_BASE = 5;
 
