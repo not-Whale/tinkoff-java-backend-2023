@@ -12,7 +12,7 @@ public class FaultyConnection implements Connection {
     private static final int EXCEPTION_THROW_CYCLE_BASE = 3;
 
     @Override
-    public boolean execute(String command) {
+    public void execute(String command) {
         attempt = (attempt + 1) % EXCEPTION_THROW_CYCLE_BASE;
 
         if (attempt == 1) {
@@ -20,7 +20,6 @@ public class FaultyConnection implements Connection {
         }
 
         LOGGER.info("Command " + command + " executed!");
-        return true;
     }
 
     @Override
