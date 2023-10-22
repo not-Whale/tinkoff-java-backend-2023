@@ -15,7 +15,7 @@ public final class PopularCommandExecutor {
 
     public PopularCommandExecutor(ConnectionManager manager, int maxAttempts) {
         if (maxAttempts < 1) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Number of attempts must be positive!");
         }
 
         this.manager = manager;
@@ -28,12 +28,14 @@ public final class PopularCommandExecutor {
 
     private void tryExecute(String command) {
         int attempts = 0;
-        Connection connection = this.manager.getConnection();
         Throwable cause = null;
+        boolean isExecuted = false;
+        Connection connection = this.manager.getConnection();
 
-        while (attempts != this.maxAttempts && cause == null) {
+        while (attempts != this.maxAttempts && !isExecuted) {
             try (connection) {
                 connection.execute(command);
+                isExecuted = true;
                 attempts++;
 
             } catch (ConnectionException connectionException) {
