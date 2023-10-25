@@ -1,5 +1,6 @@
-package edu.homework3;
+package edu.homework3.parethesis_cluster;
 
+import edu.homework3.parenthesis_cluster.ParenthesisCluster;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;

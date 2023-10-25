@@ -1,4 +1,4 @@
-package edu.homework3;
+package edu.homework3.frequency_dictionary;
 
 import java.util.HashMap;
 

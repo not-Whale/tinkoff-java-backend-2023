@@ -1,4 +1,4 @@
-package edu.homework3;
+package edu.homework3.roman_numerals;
 
 import java.util.LinkedHashMap;
 

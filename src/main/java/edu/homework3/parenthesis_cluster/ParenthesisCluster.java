@@ -1,4 +1,4 @@
-package edu.homework3;
+package edu.homework3.parenthesis_cluster;
 
 import java.util.ArrayList;
 import java.util.Stack;

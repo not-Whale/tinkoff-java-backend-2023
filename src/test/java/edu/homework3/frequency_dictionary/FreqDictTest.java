@@ -1,5 +1,6 @@
-package edu.homework3;
+package edu.homework3.frequency_dictionary;
 
+import edu.homework3.frequency_dictionary.FreqDict;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
