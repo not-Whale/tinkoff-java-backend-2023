@@ -24,7 +24,7 @@ public class RomanNumerals {
 
     private static final int MAX_NUMBER = 3999;
 
-    private static final int MIN_NUMBER = 1;
+    private static final int MIN_NUMBER = 0;
 
     private RomanNumerals() {}
 
