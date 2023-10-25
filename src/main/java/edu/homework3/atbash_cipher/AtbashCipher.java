@@ -1,4 +1,4 @@
-package edu.homework3;
+package edu.homework3.atbash_cipher;
 
 import java.util.HashMap;
 

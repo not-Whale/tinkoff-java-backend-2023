@@ -1,5 +1,6 @@
-package edu.homework3;
+package edu.homework3.atbash_cipher;
 
+import edu.homework3.atbash_cipher.AtbashCipher;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;

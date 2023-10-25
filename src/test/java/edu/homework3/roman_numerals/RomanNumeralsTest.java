@@ -1,5 +1,6 @@
-package edu.homework3;
+package edu.homework3.roman_numerals;
 
+import edu.homework3.roman_numerals.RomanNumerals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
