@@ -27,7 +27,6 @@ public class ParenthesisCluster {
             }
 
             if (elem.equals(RIGHT_PAREN)) {
-                System.out.println(stack);
                 if (stack.empty()) {
                     return null;
                 }
