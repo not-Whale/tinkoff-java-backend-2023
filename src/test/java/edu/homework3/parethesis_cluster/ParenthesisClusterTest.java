@@ -31,7 +31,7 @@ public class ParenthesisClusterTest {
 
     static class CorrectParenSeqProvider implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(
                 Arguments.of("()()()", new String[] {"()", "()", "()"}),
                 Arguments.of("((()))", new String[] {"((()))"}),
@@ -57,7 +57,7 @@ public class ParenthesisClusterTest {
 
     static class IncorrectParenSeqProvider implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+        public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(
                 Arguments.of("((()"),
                 Arguments.of("()))"),

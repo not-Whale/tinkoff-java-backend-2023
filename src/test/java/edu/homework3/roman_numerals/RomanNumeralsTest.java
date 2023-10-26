@@ -1,6 +1,5 @@
 package edu.homework3.roman_numerals;
 
-import edu.homework3.roman_numerals.RomanNumerals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -53,7 +52,7 @@ public class RomanNumeralsTest {
         int decimalNumber = input;
 
         // when
-        String romanNumber = RomanNumerals.convertToRoman(input);
+        String romanNumber = RomanNumerals.convertToRoman(decimalNumber);
 
         // then
         assertThat(romanNumber).isNull();

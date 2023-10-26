@@ -1,6 +1,5 @@
 package edu.homework3.frequency_dictionary;
 
-import edu.homework3.frequency_dictionary.FreqDict;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
@@ -67,7 +66,7 @@ public class FreqDictTest {
         // when
         Exception exception = assertThrows(
             IllegalArgumentException.class,
-            () -> new FreqDict<Byte>(inputSeq)
+            () -> new FreqDict<>(inputSeq)
         );
 
         // then
