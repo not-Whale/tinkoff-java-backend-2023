@@ -40,13 +40,8 @@ public class Contact implements Comparable<Contact> {
 
     @Override
     public int compareTo(Contact other) {
-        if (other == null) {
-            return 1;
-        }
-
         String thisCompare = this.surname == null ? this.name : this.surname;
         String otherCompare = other.surname == null ? other.name : other.surname;
-
         return thisCompare.compareTo(otherCompare);
     }
 }
