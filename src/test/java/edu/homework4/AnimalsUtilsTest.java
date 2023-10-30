@@ -4,9 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Список животных и операции над ним.")
@@ -320,7 +322,7 @@ public class AnimalsUtilsTest {
                 .isEqualTo(new HashMap<>(){{
                     put(Animal.Type.FISH, new Animal("Tamara Burton", Animal.Type.FISH, Animal.Sex.FEMALE, 10, 3, 55, false));
                     put(Animal.Type.DOG, new Animal("Albert Burgess", Animal.Type.DOG, Animal.Sex.MALE, 5, 35, 25000, false));
-                    put(Animal.Type.BIRD, new Animal("Michael Austin", Animal.Type.BIRD, Animal.Sex.MALE, 3, 5, 15, false));
+                    put(Animal.Type.BIRD, new Animal("Michael Austin", Animal.Type.BIRD, Animal.Sex.MALE, 3, 5, 250, false));
                 }});
         }
 
@@ -334,7 +336,7 @@ public class AnimalsUtilsTest {
             Map<Animal.Type, Animal> commonSex = AnimalsUtils.heaviestAnimalsByTypes(animals);
 
             // then
-            assertThat(commonSex).isNull();
+            assertThat(commonSex).isNotNull().isEmpty();
         }
 
         @Test
@@ -372,7 +374,7 @@ public class AnimalsUtilsTest {
             // then
             assertThat(oldestAnimal)
                 .isNotNull()
-                .isEqualTo(new Animal("Tamara Burton", Animal.Type.FISH, Animal.Sex.FEMALE, 10, 25, 55, false));
+                .isEqualTo(new Animal("Tamara Burton", Animal.Type.FISH, Animal.Sex.FEMALE, 10, 3, 55, false));
         }
 
         @Test
@@ -436,7 +438,7 @@ public class AnimalsUtilsTest {
             Optional<Animal> heaviestAnimalWithHeightBelowK = AnimalsUtils.heaviestAnimalWithHeightBelowK(animals, 20);
 
             // then
-            assertThat(heaviestAnimalWithHeightBelowK).isNull();
+            assertThat(heaviestAnimalWithHeightBelowK).isNotNull().isEmpty();
         }
 
         @Test
@@ -449,7 +451,7 @@ public class AnimalsUtilsTest {
             Optional<Animal> heaviestAnimalWithHeightBelowK = AnimalsUtils.heaviestAnimalWithHeightBelowK(animals, 20);
 
             // then
-            assertThat(heaviestAnimalWithHeightBelowK).isNull();
+            assertThat(heaviestAnimalWithHeightBelowK).isNotNull().isEmpty();
         }
     }
 
@@ -628,7 +630,7 @@ public class AnimalsUtilsTest {
             Integer countAnimalsWithWeightMoreThanHeight = AnimalsUtils.countAnimalsWithWeightMoreThanHeight(animals);
 
             // then
-            assertThat(countAnimalsWithWeightMoreThanHeight).isNotNull().isEqualTo(1);
+            assertThat(countAnimalsWithWeightMoreThanHeight).isNotNull().isEqualTo(5);
         }
 
         @Test
@@ -772,12 +774,12 @@ public class AnimalsUtilsTest {
                 new Animal("Donald Jackson", Animal.Type.FISH, Animal.Sex.MALE, 2, 2, 50, false),
                 new Animal("Tamara Burton", Animal.Type.FISH, Animal.Sex.FEMALE, 10, 3, 55, true),
                 new Animal("Albert Junior Burgess", Animal.Type.DOG, Animal.Sex.MALE, 4, 135, 25000, true),
-                new Animal("Michael Austin", Animal.Type.BIRD, Animal.Sex.MALE, 2, 5, 250, true),
-                new Animal("John Von Morton", Animal.Type.BIRD, Animal.Sex.MALE, 3, 3, 200, false)
+                new Animal("Michael Austin", Animal.Type.BIRD, Animal.Sex.MALE, 4, 5, 250, true),
+                new Animal("John Von Morton", Animal.Type.BIRD, Animal.Sex.MALE, 4, 3, 200, false)
             );
 
             // when
-            Map<Animal.Type, Integer> sumWeightByTypeBetweenKL = AnimalsUtils.sumWeightByTypeBetweenKL(animals, 3, 8);
+            Map<Animal.Type, Integer> sumWeightByTypeBetweenKL = AnimalsUtils.sumWeightByTypeBetweenKL(animals, 3, 12);
 
             // then
             assertThat(sumWeightByTypeBetweenKL)
@@ -912,7 +914,7 @@ public class AnimalsUtilsTest {
         @DisplayName("Правда ли, что пауки кусаются чаще, чем собаки. Null-список.")
         void isSpidersBitesOftenThanDogsNullList() {
             // given
-            List<Animal> animals = List.of();
+            List<Animal> animals = null;
 
             // when
             boolean spidersBitesOftenThanDogs = AnimalsUtils.isSpidersBitesOftenThanDogs(animals);
@@ -923,12 +925,266 @@ public class AnimalsUtilsTest {
     }
 
     @Nested
-    @DisplayName("")
+    @DisplayName("Найти самую тяжелую рыбку в 2-х или более списках.")
     class HeaviestFishMoreThanInTwoListsTest {
         @Test
-        @DisplayName("")
+        @DisplayName("Найти самую тяжелую рыбку в 2-х или более списках.")
         void heaviestFishMoreThanInTwoLists() {
+            // given
+            List<List<Animal>> animalsMatrix = List.of(
+                List.of(
+                    new Animal("Lynn Williamson", Animal.Type.FISH, Animal.Sex.FEMALE, 2, 4, 42, false),
+                    new Animal("Donna Bryant", Animal.Type.FISH, Animal.Sex.FEMALE, 3, 6, 58, false),
+                    new Animal("Lynn Wright", Animal.Type.FISH, Animal.Sex.FEMALE, 1, 2, 34, false)
+                ),
+                List.of(
+                    new Animal("Albert Junior Burgess", Animal.Type.DOG, Animal.Sex.MALE, 4, 135, 25000, false),
+                    new Animal("Michael Austin", Animal.Type.SPIDER, Animal.Sex.MALE, 2, 2, 10, true)
+                ),
+                List.of(
+                    new Animal("Donna Bryant", Animal.Type.FISH, Animal.Sex.FEMALE, 3, 6, 58, false),
+                    new Animal("Lori Flores", Animal.Type.CAT, Animal.Sex.MALE, 5, 50, 9500, true)
+                ),
+                List.of(
+                    new Animal("Tamara Burton", Animal.Type.FISH, Animal.Sex.FEMALE, 10, 3, 55, true),
+                    new Animal("Donald Jackson", Animal.Type.FISH, Animal.Sex.MALE, 2, 2, 50, false)
+                )
+            );
 
+            // when
+            Animal heaviestFishMoreThanInTwoLists = AnimalsUtils.heaviestFishMoreThanInTwoLists(animalsMatrix);
+
+            // then
+            assertThat(heaviestFishMoreThanInTwoLists)
+                .isNotNull()
+                .isEqualTo(new Animal("Donna Bryant", Animal.Type.FISH, Animal.Sex.FEMALE, 3, 6, 58, false));
+        }
+
+        @Test
+        @DisplayName("Найти самую тяжелую рыбку в 2-х или более списках. Пустой список.")
+        void heaviestFishMoreThanInTwoListsEmptyList() {
+            // given
+            List<List<Animal>> animalsMatrix = List.of();
+
+            // when
+            Animal heaviestFishMoreThanInTwoLists = AnimalsUtils.heaviestFishMoreThanInTwoLists(animalsMatrix);
+
+            // then
+            assertThat(heaviestFishMoreThanInTwoLists).isNull();
+        }
+
+        @Test
+        @DisplayName("Найти самую тяжелую рыбку в 2-х или более списках. Null-список.")
+        void heaviestFishMoreThanInTwoListsNullList() {
+            // given
+            List<List<Animal>> animalsMatrix = null;
+
+            // when
+            Animal heaviestFishMoreThanInTwoLists = AnimalsUtils.heaviestFishMoreThanInTwoLists(animalsMatrix);
+
+            // then
+            assertThat(heaviestFishMoreThanInTwoLists).isNull();
+        }
+
+        @Test
+        @DisplayName("Найти самую тяжелую рыбку в 2-х или более списках. Пустой вложенный список.")
+        void heaviestFishMoreThanInTwoListsEmptyNestedList() {
+            // given
+            List<List<Animal>> animalsMatrix = List.of(
+                List.of(
+                    new Animal("Lynn Williamson", Animal.Type.FISH, Animal.Sex.FEMALE, 2, 4, 42, false),
+                    new Animal("Donna Bryant", Animal.Type.FISH, Animal.Sex.FEMALE, 3, 6, 58, false),
+                    new Animal("Lynn Wright", Animal.Type.FISH, Animal.Sex.FEMALE, 1, 2, 34, false)
+                ),
+                List.of(),
+                List.of(
+                    new Animal("Donna Bryant", Animal.Type.FISH, Animal.Sex.FEMALE, 3, 6, 58, false),
+                    new Animal("Lori Flores", Animal.Type.CAT, Animal.Sex.MALE, 5, 50, 9500, true)
+                ),
+                List.of(
+                    new Animal("Donna Bryant", Animal.Type.FISH, Animal.Sex.FEMALE, 3, 6, 58, false)
+                )
+            );
+
+            // when
+            Animal heaviestFishMoreThanInTwoLists = AnimalsUtils.heaviestFishMoreThanInTwoLists(animalsMatrix);
+
+            // then
+            assertThat(heaviestFishMoreThanInTwoLists)
+                .isNotNull()
+                .isEqualTo(new Animal("Donna Bryant", Animal.Type.FISH, Animal.Sex.FEMALE, 3, 6, 58, false));
+        }
+
+        @Test
+        @DisplayName("Найти самую тяжелую рыбку в 2-х или более списках. Рыбок нет.")
+        void heaviestFishMoreThanInTwoListsNoFishes() {
+            // given
+            List<List<Animal>> animalsMatrix = List.of(
+                List.of(
+                    new Animal("Laura Stewart", Animal.Type.DOG, Animal.Sex.FEMALE, 5, 75, 9500, false),
+                    new Animal("Christopher Gregory", Animal.Type.CAT, Animal.Sex.MALE, 4, 50, 6750, false)
+                ),
+                List.of(
+                    new Animal("Eileen Lewis", Animal.Type.BIRD, Animal.Sex.MALE, 5, 15, 2400, false),
+                    new Animal("Douglas Yates", Animal.Type.BIRD, Animal.Sex.MALE, 5, 23, 3500, true)
+                ),
+                List.of(
+                    new Animal("Annie Allen", Animal.Type.SPIDER, Animal.Sex.FEMALE, 1, 3, 23, false)
+                )
+            );
+
+            // when
+            Animal heaviestFishMoreThanInTwoLists = AnimalsUtils.heaviestFishMoreThanInTwoLists(animalsMatrix);
+
+            // then
+            assertThat(heaviestFishMoreThanInTwoLists).isNull();
+        }
+    }
+
+    @Nested
+    @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и список ошибок.")
+    class ValidateAnimalRecordsTest {
+        @Test
+        @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и список ошибок.")
+        void validateAnimalRecords() {
+            // given
+            List<Animal> animals = List.of(
+                new Animal(null, Animal.Type.CAT, Animal.Sex.MALE, 5, 60, 4100, true),
+                new Animal("Gloria Gardner", Animal.Type.DOG, Animal.Sex.FEMALE, 100, 110, 12300, false),
+                new Animal("Michael Lynch", null, null, 3, 4, 5, false)
+            );
+
+            // when
+            Map<String, Set<ValidationError>> errors = AnimalsUtils.validateAnimalRecords(animals);
+
+            // then
+            assertThat(errors)
+                .isNotNull()
+                .isEqualTo(new HashMap<String, HashSet<ValidationError>>() {{
+                    put(null, new HashSet<>() {{
+                        add(new ValidationError("имя не может быть пустым!", "Имя"));
+                    }});
+                    put("Gloria Gardner", new HashSet<>() {{
+                        add(new ValidationError("собачки столько не живут =(", "Возраст"));
+                    }});
+                    put("Michael Lynch", new HashSet<>() {{
+                        add(new ValidationError("тип не может быть пустой!", "Тип"));
+                        add(new ValidationError("пол не может быть пустой!", "Пол"));
+                    }});
+                }});
+        }
+
+        @Test
+        @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и список ошибок. Ошибок нет.")
+        void validateAnimalRecordsNoErrors() {
+            // given
+            List<Animal> animals = List.of(
+                new Animal("Constance Mathis", Animal.Type.CAT, Animal.Sex.MALE, 5, 60, 4100, true),
+                new Animal("Gloria Gardner", Animal.Type.DOG, Animal.Sex.FEMALE, 10, 110, 12300, false),
+                new Animal("Michael Lynch", Animal.Type.SPIDER, Animal.Sex.MALE, 1, 4, 15, false)
+            );
+
+            // when
+            Map<String, Set<ValidationError>> errors = AnimalsUtils.validateAnimalRecords(animals);
+
+            // then
+            assertThat(errors).isNotNull().isEmpty();
+        }
+
+        @Test
+        @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и список ошибок. Пустой список.")
+        void validateAnimalRecordsEmptyList() {
+            // given
+            List<Animal> animals = List.of();
+
+            // when
+            Map<String, Set<ValidationError>> errors = AnimalsUtils.validateAnimalRecords(animals);
+
+            // then
+            assertThat(errors).isNotNull().isEmpty();
+        }
+
+        @Test
+        @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и список ошибок. Null-список.")
+        void validateAnimalRecordsNullList() {
+            // given
+            List<Animal> animals = null;
+
+            // when
+            Map<String, Set<ValidationError>> errors = AnimalsUtils.validateAnimalRecords(animals);
+
+            // then
+            assertThat(errors).isNull();
+        }
+    }
+
+    @Nested
+    @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и названия полей с ошибками, объединенные в строку.")
+    class ValidateAnimalRecordsPrettyTest {
+        @Test
+        @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и названия полей с ошибками, объединенные в строку")
+        void validateAnimalRecordsPretty() {
+            // given
+            List<Animal> animals = List.of(
+                new Animal(null, Animal.Type.CAT, Animal.Sex.MALE, 5, 60, 4100, true),
+                new Animal("Gloria Gardner", Animal.Type.DOG, Animal.Sex.FEMALE, 100, 110, 12300, false),
+                new Animal("Michael Lynch", null, null, 3, 4, 5, false)
+            );
+
+            // when
+            Map<String, String> errors = AnimalsUtils.validateAnimalRecordsPretty(animals);
+
+            // then
+            assertThat(errors)
+                .isNotNull()
+                .isEqualTo(new HashMap<String, String>() {{
+                    put(null, "Имя: имя не может быть пустым!");
+                    put("Gloria Gardner", "Возраст: собачки столько не живут =(");
+                    put("Michael Lynch", "Тип: тип не может быть пустой!, Пол: пол не может быть пустой!");
+                }});
+        }
+
+        @Test
+        @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и названия полей с ошибками, объединенные в строку. Ошибок нет.")
+        void validateAnimalRecordsPrettyNoErrors() {
+            // given
+            List<Animal> animals = List.of(
+                new Animal("Constance Mathis", Animal.Type.CAT, Animal.Sex.MALE, 5, 60, 4100, true),
+                new Animal("Gloria Gardner", Animal.Type.DOG, Animal.Sex.FEMALE, 10, 110, 12300, false),
+                new Animal("Michael Lynch", Animal.Type.SPIDER, Animal.Sex.MALE, 1, 4, 15, false)
+            );
+
+            // when
+            Map<String, String> errors = AnimalsUtils.validateAnimalRecordsPretty(animals);
+
+            // then
+            assertThat(errors).isNotNull().isEmpty();
+        }
+
+        @Test
+        @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и названия полей с ошибками, объединенные в строку. Пустой список.")
+        void validateAnimalRecordsPrettyEmptyList() {
+            // given
+            List<Animal> animals = List.of();
+
+            // when
+            Map<String, String> errors = AnimalsUtils.validateAnimalRecordsPretty(animals);
+
+            // then
+            assertThat(errors).isNotNull().isEmpty();
+        }
+
+        @Test
+        @DisplayName("Животные, в записях о которых есть ошибки: вернуть имя и названия полей с ошибками, объединенные в строку Null-список.")
+        void validateAnimalRecordsPrettyNullList() {
+            // given
+            List<Animal> animals = null;
+
+            // when
+            Map<String, String> errors = AnimalsUtils.validateAnimalRecordsPretty(animals);
+
+            // then
+            assertThat(errors).isNull();
         }
     }
 }
