@@ -29,7 +29,15 @@ public class AnimalsUtils {
             .toList();
     }
 
-    public static List<Animal> sortByWeightWithLimit(List<Animal> animals, int limit) {
+    public static List<Animal> sortByWeightWithLimitDesc(List<Animal> animals, int limit) {
+        if (animals == null) {
+            return null;
+        }
+
+        if (limit < 0) {
+            return List.of();
+        }
+
         return animals.stream()
             .sorted(Comparator.comparingInt(Animal::weight).reversed())
             .limit(limit)
@@ -37,6 +45,10 @@ public class AnimalsUtils {
     }
 
     public static Map<Animal.Type, Long> countAnimalByTypes(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .collect(
                 Collectors.groupingBy(Animal::type,
@@ -45,12 +57,20 @@ public class AnimalsUtils {
     }
 
     public static Animal longestName(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .max(Comparator.comparingInt(a -> a.name().length()))
             .orElse(null);
     }
 
     public static Animal.Sex commonSex(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         Map<Animal.Sex, Long> countSex = animals.stream()
             .collect(Collectors.groupingBy(
                 Animal::sex,
@@ -64,6 +84,10 @@ public class AnimalsUtils {
     }
 
     public static Map<Animal.Type, Animal> heaviestAnimalsByTypes(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .collect(Collectors.toMap(
                 Animal::type,
@@ -72,30 +96,50 @@ public class AnimalsUtils {
     }
 
     public static Animal oldestAnimal(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .max(Comparator.comparingInt(Animal::age))
             .orElse(null);
     }
 
     public static Optional<Animal> heaviestAnimalWithHeightBelowK(List<Animal> animals, int k) {
+        if (animals == null) {
+            return Optional.empty();
+        }
+
         return animals.stream()
             .filter(a -> a.height() < k)
             .max(Comparator.comparingInt(Animal::weight));
     }
 
     public static Integer countPaws(List<Animal> animals) {
+        if (animals == null) {
+            return 0;
+        }
+
         return animals.stream()
             .mapToInt(Animal::paws)
             .sum();
     }
 
     public static List<Animal> animalsWithAgeNotEqualToPaws(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .filter(a -> a.paws() != a.age())
             .toList();
     }
 
     public static List<Animal> animalsThatBitesAndHigherThanMeter(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .filter(Animal::bites)
             .filter(a -> a.height() > CENTIMETERS_IN_METER)
@@ -103,6 +147,10 @@ public class AnimalsUtils {
     }
 
     public static Integer countAnimalsWithWeightMoreThanHeight(List<Animal> animals) {
+        if (animals == null) {
+            return 0;
+        }
+
         return animals.stream()
             .filter(a -> a.weight() > a.height())
             .toList()
@@ -110,21 +158,33 @@ public class AnimalsUtils {
     }
 
     public static List<Animal> animalsWithMoreThanTwoWordNames(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .filter(a -> a.name().split(" ").length > 2)
             .toList();
     }
 
     public static boolean hasDogHigherThanK(List<Animal> animals, int height) {
+        if (animals == null) {
+            return false;
+        }
+
         return animals.stream()
             .filter(a -> a.type().equals(Animal.Type.DOG))
             .anyMatch(a -> a.height() > height);
     }
 
     public static Map<Animal.Type, Integer> sumWeightByTypeBetweenKL(List<Animal> animals, int k, int l) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
-            .filter(a -> a.height() > k)
-            .filter(a -> a.height() < l)
+            .filter(a -> a.age() > k)
+            .filter(a -> a.age() < l)
             .collect(Collectors.groupingBy(
                 Animal::type,
                 Collectors.summingInt(Animal::weight)
@@ -132,6 +192,10 @@ public class AnimalsUtils {
     }
 
     public static List<Animal> sortByTypeSexName(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .sorted(Comparator.nullsLast(Comparator.comparing(Animal::type))
                 .thenComparing(Comparator.nullsLast(Comparator.comparing(Animal::sex)))
@@ -140,6 +204,10 @@ public class AnimalsUtils {
     }
 
     public static boolean isSpidersBitesOftenThanDogs(List<Animal> animals) {
+        if (animals == null) {
+            return false;
+        }
+
         Map<Animal.Type, Double> avgSpiderAndDogsBites = animals.stream()
             .filter(a -> a.type() == Animal.Type.SPIDER || a.type() == Animal.Type.DOG)
             .collect(Collectors.groupingBy(
@@ -155,6 +223,10 @@ public class AnimalsUtils {
     }
 
     public static Animal heaviestFishMoreThanInTwoLists(List<List<Animal>> animalsMatrix) {
+        if (animalsMatrix == null) {
+            return null;
+        }
+
         Map<Animal, Integer> heaviestFishesInEveryList = animalsMatrix.stream()
             .map(animals -> animals.stream()
                 .filter(a -> a.type() == Animal.Type.FISH)
@@ -174,6 +246,10 @@ public class AnimalsUtils {
     }
 
     public static Map<String, Set<ValidationError>> validateAnimalRecords(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .collect(Collectors.toMap(
                 Animal::name,
@@ -183,6 +259,10 @@ public class AnimalsUtils {
     }
 
     public static Map<String, String> validateAnimalRecordsPretty(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         Map<String, Set<ValidationError>> validation = validateAnimalRecords(animals);
         Map<String, String> convertSetToString =  validation.entrySet().stream()
             .collect(Collectors.toMap(
