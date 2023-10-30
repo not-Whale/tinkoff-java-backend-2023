@@ -117,7 +117,7 @@ public class AnimalsUtils {
 
     public static Integer countPaws(List<Animal> animals) {
         if (animals == null) {
-            return 0;
+            return null;
         }
 
         return animals.stream()
