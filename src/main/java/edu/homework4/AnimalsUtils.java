@@ -250,11 +250,18 @@ public class AnimalsUtils {
             return null;
         }
 
-        return animals.stream()
+        Map<String, Set<ValidationError>> errors = animals.stream()
             .collect(Collectors.toMap(
                 Animal::name,
                 AnimalsUtils::validateAnimal,
                 (a, b) -> a
+            ));
+
+        return errors.entrySet().stream()
+            .filter(a -> !a.getValue().isEmpty())
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue
             ));
     }
 
@@ -268,7 +275,7 @@ public class AnimalsUtils {
             .collect(Collectors.toMap(
                 Map.Entry::getKey,
                 elem -> elem.getValue().stream()
-                    .map(error -> error.field + ": " + error.message + ", ")
+                    .map(error -> error.field() + ": " + error.message() + ", ")
                     .reduce(String::concat)
                     .orElse("")
             ));
@@ -330,24 +337,5 @@ public class AnimalsUtils {
         }
 
         return errorsSet;
-    }
-
-    private static class ValidationError extends Error {
-        private final String message;
-
-        private final String field;
-
-        ValidationError(String message, String field) {
-            this.message = message;
-            this.field = field;
-        }
-
-        public String message() {
-            return this.message;
-        }
-
-        public String field() {
-            return this.field;
-        }
     }
 }
