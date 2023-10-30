@@ -15,11 +15,15 @@ public class AnimalsUtils {
     private static final int DOG_LIFETIME = 15;
     private static final int BIRD_LIFETIME = 20;
     private static final int FISH_LIFETIME = 7;
-    private static final int SPIDER_LIFETIME = 1;
+    private static final int SPIDER_LIFETIME = 2;
 
     private AnimalsUtils() {}
 
     public static List<Animal> sortByHeight(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+
         return animals.stream()
             .sorted(Comparator.comparingInt(Animal::height))
             .toList();
