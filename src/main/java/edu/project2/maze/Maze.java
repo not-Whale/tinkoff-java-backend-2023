@@ -60,6 +60,27 @@ public final class Maze {
         return cells.toArray(new Cell[]{});
     }
 
+    public Cell[] getWalls() {
+        ArrayList<Cell> cells = new ArrayList<>();
+        for (int i = 1; i < height; i += 2) {
+            for (int j = 2; j < width - 1; j += 2) {
+                Cell currentCell = grid[i][j];
+                if (currentCell.type().equals(Cell.Type.WALL)) {
+                    cells.add(currentCell);
+                }
+            }
+        }
+        for (int i = 2; i < height - 1; i += 2) {
+            for (int j = 1; j < width; j += 2) {
+                Cell currentCell = grid[i][j];
+                if (currentCell.type().equals(Cell.Type.WALL)) {
+                    cells.add(currentCell);
+                }
+            }
+        }
+        return cells.toArray(new Cell[]{});
+    }
+
     public Cell getCell(int i, int j) {
         return grid[i][j];
     }
