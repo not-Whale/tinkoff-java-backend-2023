@@ -103,7 +103,7 @@ public class SimpleRenderer implements Renderer {
         } else if (hasBottom) {
             symbol = "╷";
         } else {
-            symbol = null;
+            throw new RuntimeException("Не может быть стены без \"соседей\"!");
         }
         return symbol;
     }
