@@ -3,6 +3,7 @@ package edu.project2.solvers;
 import edu.project2.maze.Cell;
 import edu.project2.maze.Coordinate;
 import edu.project2.maze.Maze;
+import edu.project2.utils.MazeUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -24,7 +25,7 @@ public class DepthFirstSearchSolver implements Solver {
             Cell[] nearby;
             do {
                 currentCell = stack.pop();
-                nearby = getNearbyMoves(maze, currentCell, remained);
+                nearby = MazeUtils.getMovesWithWhitelist(maze, currentCell, 1, remained);
             } while (nearby.length == 0);
             stack.push(currentCell);
 
@@ -39,39 +40,5 @@ public class DepthFirstSearchSolver implements Solver {
         }
 
         return path;
-    }
-
-    private Cell[] getNearbyMoves(Maze maze, Cell cell, ArrayList<Cell> remained) {
-        ArrayList<Cell> nearbyCells = new ArrayList<>();
-
-        if (cell.row() > 0) {
-            Cell bottomCell = maze.getCell(cell.row() - 1, cell.col());
-            if (remained.contains(bottomCell)) {
-                nearbyCells.add(bottomCell);
-            }
-        }
-
-        if (cell.row() < maze.getHeight() - 1) {
-            Cell topCell = maze.getCell(cell.row() + 1, cell.col());
-            if (remained.contains(topCell)) {
-                nearbyCells.add(topCell);
-            }
-        }
-
-        if (cell.col() > 0) {
-            Cell rightCell = maze.getCell(cell.row(), cell.col() - 1);
-            if (remained.contains(rightCell)) {
-                nearbyCells.add(rightCell);
-            }
-        }
-
-        if (cell.col() < maze.getWidth() - 1) {
-            Cell leftCell = maze.getCell(cell.row(), cell.col() + 1);
-            if (remained.contains(leftCell)) {
-                nearbyCells.add(leftCell);
-            }
-        }
-
-        return nearbyCells.toArray(new Cell[] {});
     }
 }
