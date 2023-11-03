@@ -17,16 +17,7 @@ public class DepthFirstSearchRecSolver implements Solver {
         return bfsRec.search(startCell, endCell);
     }
 
-    private class DepthFirstSearchRec {
-        private List<Cell> remained;
-
-        private Maze maze;
-
-        DepthFirstSearchRec(Maze maze, List<Cell> remained) {
-            this.maze = maze;
-            this.remained = remained;
-        }
-
+    private record DepthFirstSearchRec(Maze maze, List<Cell> remained) {
         public List<Coordinate> search(Cell currentCell, Cell endCell) {
             if (currentCell.equals(endCell)) {
                 return new ArrayList<>() {{
