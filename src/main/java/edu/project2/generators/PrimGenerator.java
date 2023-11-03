@@ -14,7 +14,9 @@ public class PrimGenerator implements Generator {
         Random random = new Random();
         ArrayList<Cell> remained = new ArrayList<>(List.of(maze.getPassages()));
 
-        ArrayList<Cell> visited = new ArrayList<>(){{ add(remained.removeFirst()); }};
+        ArrayList<Cell> visited = new ArrayList<>() {{
+            add(remained.removeFirst());
+        }};
         while (!remained.isEmpty()) {
             Cell currentCell = visited.get(random.nextInt(visited.size()));
             ArrayList<Cell> moves = new ArrayList<>(List.of(MazeUtils.getMovesWithWhitelist(

@@ -17,7 +17,9 @@ public class KruskalGenerator implements Generator {
 
         ArrayList<HashSet<Cell>> cellsSet = new ArrayList<>();
         for (Cell cell : maze.getPassages()) {
-            cellsSet.add(new HashSet<>() {{ add(cell); }});
+            cellsSet.add(new HashSet<>() {{
+                add(cell);
+            }});
         }
 
         for (Cell wall : walls) {
