@@ -109,10 +109,10 @@ public class SimpleRenderer implements Renderer {
     }
 
     private boolean isWall(Cell cell) {
-        return cell.type() == Cell.Type.WALL;
+        return cell.type().equals(Cell.Type.WALL);
     }
 
     private boolean isPassage(Cell cell) {
-        return cell.type() == Cell.Type.PASSAGE;
+        return cell.type().equals(Cell.Type.PASSAGE);
     }
 }
