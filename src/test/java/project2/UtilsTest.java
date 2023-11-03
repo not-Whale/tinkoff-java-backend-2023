@@ -18,7 +18,7 @@ public class UtilsTest {
     void getMovesWithWhitelist() {
         // given
         Maze maze = new Maze(5, 10);
-        Cell cell = maze.getCell(1, 1);
+        Cell cell = maze.getCell(3, 3);
         int delta = 2;
         Cell[] passages = maze.getPassages();
 
@@ -26,7 +26,12 @@ public class UtilsTest {
         Cell[] nearbyMoves = MazeUtils.getMovesWithWhitelist(maze, cell, delta, Arrays.stream(passages).toList());
 
         // then
-        assertThat(nearbyMoves).isNotNull().containsExactly(maze.getCell(3, 1), maze.getCell(1, 3));
+        assertThat(nearbyMoves).isNotNull().containsExactly(
+            maze.getCell(1, 3),
+            maze.getCell(5, 3),
+            maze.getCell(3, 1),
+            maze.getCell(3, 5)
+        );
     }
 
     @Test
