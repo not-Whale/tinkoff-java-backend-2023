@@ -28,30 +28,30 @@ public class MazeUtils {
         ArrayList<Cell> nearbyCells = new ArrayList<>();
 
         if (cell.row() > delta - 1) {
-            Cell bottomCell = maze.getCell(cell.row() - delta, cell.col());
-            if (whitelist.contains(bottomCell)) {
-                nearbyCells.add(bottomCell);
-            }
-        }
-
-        if (cell.row() < maze.getHeight() - delta) {
-            Cell topCell = maze.getCell(cell.row() + delta, cell.col());
+            Cell topCell = maze.getCell(cell.row() - delta, cell.col());
             if (whitelist.contains(topCell)) {
                 nearbyCells.add(topCell);
             }
         }
 
+        if (cell.row() < maze.getHeight() - delta) {
+            Cell bottomCell = maze.getCell(cell.row() + delta, cell.col());
+            if (whitelist.contains(bottomCell)) {
+                nearbyCells.add(bottomCell);
+            }
+        }
+
         if (cell.col() > delta - 1) {
-            Cell rightCell = maze.getCell(cell.row(), cell.col() - delta);
-            if (whitelist.contains(rightCell)) {
-                nearbyCells.add(rightCell);
+            Cell leftCell = maze.getCell(cell.row(), cell.col() - delta);
+            if (whitelist.contains(leftCell)) {
+                nearbyCells.add(leftCell);
             }
         }
 
         if (cell.col() < maze.getWidth() - delta) {
-            Cell leftCell = maze.getCell(cell.row(), cell.col() + delta);
-            if (whitelist.contains(leftCell)) {
-                nearbyCells.add(leftCell);
+            Cell rightCell = maze.getCell(cell.row(), cell.col() + delta);
+            if (whitelist.contains(rightCell)) {
+                nearbyCells.add(rightCell);
             }
         }
 
