@@ -17,10 +17,11 @@ public class RandomMouseSolver implements Solver {
         Cell endCell = maze.getCell(end.row() * 2 + 1, end.col() * 2 + 1);
 
         Cell currentCell = startCell;
+        path.add(new Coordinate(startCell.row(), startCell.col()));
         while (!currentCell.equals(endCell)) {
             Cell[] moves = getNearbyMoves(maze, currentCell);
-            path.add(new Coordinate(currentCell.row(), currentCell.col()));
             currentCell = moves[random.nextInt(moves.length)];
+            path.add(new Coordinate(currentCell.row(), currentCell.col()));
         }
 
         return path;
