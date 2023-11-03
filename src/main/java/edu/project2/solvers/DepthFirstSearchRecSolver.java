@@ -22,14 +22,16 @@ public class DepthFirstSearchRecSolver implements Solver {
 
         private Maze maze;
 
-        public DepthFirstSearchRec(Maze maze, List<Cell> remained) {
+        DepthFirstSearchRec(Maze maze, List<Cell> remained) {
             this.maze = maze;
             this.remained = remained;
         }
 
         public List<Coordinate> search(Cell currentCell, Cell endCell) {
             if (currentCell.equals(endCell)) {
-                return new ArrayList<>(){{ add(new Coordinate(endCell.row(), endCell.col())); }};
+                return new ArrayList<>() {{
+                    add(new Coordinate(endCell.row(), endCell.col()));
+                }};
             }
 
             remained.remove(currentCell);
