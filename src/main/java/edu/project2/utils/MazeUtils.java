@@ -9,6 +9,22 @@ public class MazeUtils {
     private MazeUtils() {}
 
     public static Cell[] getMovesWithWhitelist(Maze maze, Cell cell, int delta, List<Cell> whitelist) {
+        if (maze == null) {
+            throw new IllegalArgumentException("Лабиринт не может быть null!");
+        }
+
+        if (cell == null) {
+            throw new IllegalArgumentException("Ячейка не может быть null!");
+        }
+
+        if (delta < 1) {
+            throw new IllegalArgumentException("Дельта должна быть положительной!");
+        }
+
+        if (whitelist == null) {
+            throw new IllegalArgumentException("Белый список не может быть null!");
+        }
+
         ArrayList<Cell> nearbyCells = new ArrayList<>();
 
         if (cell.row() > delta - 1) {
