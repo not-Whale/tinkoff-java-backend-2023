@@ -7,6 +7,8 @@ public final class Maze {
     private final int width;
     private final Cell[][] grid;
 
+    private static final String NO_SUCH_CELL_MESSAGE = "Такой ячейки не существует!";
+
     public Maze(int height, int width) {
         if (height < 1 || width < 1) {
             throw new IllegalArgumentException("Измерения лабиринта должны быть положительными!");
@@ -33,7 +35,7 @@ public final class Maze {
 
     public void deleteWall(int i, int j) {
         if (i < 0 || i > height - 1 || j < 0 || j > width - 1) {
-            throw new IllegalArgumentException("Такой ячейки не существует!");
+            throw new IllegalArgumentException(NO_SUCH_CELL_MESSAGE);
         }
 
         setCell(i, j, Cell.Type.PASSAGE);
@@ -87,7 +89,7 @@ public final class Maze {
 
     public Cell getCell(int i, int j) {
         if (i < 0 || i > height - 1 || j < 0 || j > width - 1) {
-            throw new IllegalArgumentException("Такой ячейки не существует!");
+            throw new IllegalArgumentException(NO_SUCH_CELL_MESSAGE);
         }
 
         return grid[i][j];
