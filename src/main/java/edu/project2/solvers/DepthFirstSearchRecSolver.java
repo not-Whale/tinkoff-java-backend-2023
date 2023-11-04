@@ -54,30 +54,30 @@ public class DepthFirstSearchRecSolver implements Solver {
             ArrayList<Cell> nearbyCells = new ArrayList<>();
 
             if (cell.row() > 0) {
-                Cell bottomCell = maze.getCell(cell.row() - 1, cell.col());
-                if (remained.contains(bottomCell)) {
-                    nearbyCells.add(bottomCell);
-                }
-            }
-
-            if (cell.row() < maze.getHeight() - 1) {
-                Cell topCell = maze.getCell(cell.row() + 1, cell.col());
+                Cell topCell = maze.getCell(cell.row() - 1, cell.col());
                 if (remained.contains(topCell)) {
                     nearbyCells.add(topCell);
                 }
             }
 
+            if (cell.row() < maze.getHeight() - 1) {
+                Cell bottomCell = maze.getCell(cell.row() + 1, cell.col());
+                if (remained.contains(bottomCell)) {
+                    nearbyCells.add(bottomCell);
+                }
+            }
+
             if (cell.col() > 0) {
-                Cell rightCell = maze.getCell(cell.row(), cell.col() - 1);
-                if (remained.contains(rightCell)) {
-                    nearbyCells.add(rightCell);
+                Cell leftCell = maze.getCell(cell.row(), cell.col() - 1);
+                if (remained.contains(leftCell)) {
+                    nearbyCells.add(leftCell);
                 }
             }
 
             if (cell.col() < maze.getWidth() - 1) {
-                Cell leftCell = maze.getCell(cell.row(), cell.col() + 1);
-                if (remained.contains(leftCell)) {
-                    nearbyCells.add(leftCell);
+                Cell rightCell = maze.getCell(cell.row(), cell.col() + 1);
+                if (remained.contains(rightCell)) {
+                    nearbyCells.add(rightCell);
                 }
             }
 
