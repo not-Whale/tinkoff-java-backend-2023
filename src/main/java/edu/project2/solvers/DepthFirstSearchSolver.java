@@ -20,7 +20,7 @@ public class DepthFirstSearchSolver implements Solver {
         }
 
         if (end == null) {
-            throw new IllegalArgumentException("Начальная координата не может быть нулевой!");
+            throw new IllegalArgumentException("Конечная координата не может быть нулевой!");
         }
 
         List<Coordinate> path = new ArrayList<>();

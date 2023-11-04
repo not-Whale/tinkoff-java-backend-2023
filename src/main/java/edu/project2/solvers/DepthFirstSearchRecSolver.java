@@ -18,7 +18,7 @@ public class DepthFirstSearchRecSolver implements Solver {
         }
 
         if (end == null) {
-            throw new IllegalArgumentException("Начальная координата не может быть нулевой!");
+            throw new IllegalArgumentException("Конечная координата не может быть нулевой!");
         }
 
         ArrayList<Cell> remained = new ArrayList<>(List.of(maze.getPassages()));
