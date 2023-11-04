@@ -9,6 +9,18 @@ import java.util.List;
 public class DepthFirstSearchRecSolver implements Solver {
     @Override
     public List<Coordinate> solve(Maze maze, Coordinate start, Coordinate end) {
+        if (maze == null) {
+            throw new IllegalArgumentException("Лабиринт не может быть null!");
+        }
+
+        if (start == null) {
+            throw new IllegalArgumentException("Начальная координата не может быть нулевой!");
+        }
+
+        if (end == null) {
+            throw new IllegalArgumentException("Начальная координата не может быть нулевой!");
+        }
+
         ArrayList<Cell> remained = new ArrayList<>(List.of(maze.getPassages()));
         Cell startCell = maze.getCell(start.row() * 2 + 1, start.col() * 2 + 1);
         Cell endCell = maze.getCell(end.row() * 2 + 1, end.col() * 2 + 1);

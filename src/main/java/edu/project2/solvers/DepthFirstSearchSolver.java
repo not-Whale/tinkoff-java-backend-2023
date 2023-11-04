@@ -11,6 +11,18 @@ import java.util.Stack;
 public class DepthFirstSearchSolver implements Solver {
     @Override
     public List<Coordinate> solve(Maze maze, Coordinate start, Coordinate end) {
+        if (maze == null) {
+            throw new IllegalArgumentException("Лабиринт не может быть null!");
+        }
+
+        if (start == null) {
+            throw new IllegalArgumentException("Начальная координата не может быть нулевой!");
+        }
+
+        if (end == null) {
+            throw new IllegalArgumentException("Начальная координата не может быть нулевой!");
+        }
+
         List<Coordinate> path = new ArrayList<>();
         Stack<Cell> stack = new Stack<>();
         ArrayList<Cell> remained = new ArrayList<>(List.of(maze.getPassages()));

@@ -10,6 +10,18 @@ import java.util.Random;
 public class RandomMouseSolver implements Solver {
     @Override
     public List<Coordinate> solve(Maze maze, Coordinate start, Coordinate end) {
+        if (maze == null) {
+            throw new IllegalArgumentException("Лабиринт не может быть null!");
+        }
+
+        if (start == null) {
+            throw new IllegalArgumentException("Начальная координата не может быть нулевой!");
+        }
+
+        if (end == null) {
+            throw new IllegalArgumentException("Начальная координата не может быть нулевой!");
+        }
+
         List<Coordinate> path = new ArrayList<>();
         Random random = new Random();
 
