@@ -32,6 +32,10 @@ public final class Maze {
     }
 
     public void deleteWall(int i, int j) {
+        if (i < 0 || i > height - 1 || j < 0 || j > width - 1) {
+            throw new IllegalArgumentException("Такой ячейки не существует!");
+        }
+
         setCell(i, j, Cell.Type.PASSAGE);
     }
 
@@ -82,6 +86,10 @@ public final class Maze {
     }
 
     public Cell getCell(int i, int j) {
+        if (i < 0 || i > height - 1 || j < 0 || j > width - 1) {
+            throw new IllegalArgumentException("Такой ячейки не существует!");
+        }
+
         return grid[i][j];
     }
 
