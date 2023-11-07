@@ -10,6 +10,10 @@ public class ComputerClubAnalytics {
     private ComputerClubAnalytics() {}
 
     public static Duration calculateAverageGameTime(String[] sessions) {
+        if (sessions == null) {
+            throw new IllegalArgumentException("Список сессий не может быть null!");
+        }
+
         String dttm = "yyyy-MM-dd, hh:mm";
         SimpleDateFormat sdf = new SimpleDateFormat(dttm);
 
