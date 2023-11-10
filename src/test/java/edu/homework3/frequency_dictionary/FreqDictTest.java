@@ -3,6 +3,7 @@ package edu.homework3.frequency_dictionary;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
+import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -19,7 +20,7 @@ public class FreqDictTest {
 
         // when
         FreqDict<String> freqDict = new FreqDict<>(inputSeq);
-        HashMap<String, Integer> map = freqDict.getDict();
+        Map<String, Integer> map = freqDict.getDict();
 
         // then
         assertThat(map).isNotNull().isEqualTo(answer);
@@ -36,7 +37,7 @@ public class FreqDictTest {
 
         // when
         FreqDict<Integer> freqDict = new FreqDict<>(inputSeq);
-        HashMap<Integer, Integer> map = freqDict.getDict();
+        Map<Integer, Integer> map = freqDict.getDict();
 
         // then
         assertThat(map).isNotNull().isEqualTo(answer);
@@ -51,7 +52,7 @@ public class FreqDictTest {
 
         // when
         FreqDict<Character> freqDict = new FreqDict<>(inputSeq);
-        HashMap<Character, Integer> map = freqDict.getDict();
+        Map<Character, Integer> map = freqDict.getDict();
 
         // then
         assertThat(map).isNotNull().isEqualTo(answer);

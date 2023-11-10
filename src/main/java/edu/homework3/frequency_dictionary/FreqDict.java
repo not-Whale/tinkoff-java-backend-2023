@@ -1,9 +1,10 @@
 package edu.homework3.frequency_dictionary;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class FreqDict<T> {
-    private final HashMap<T, Integer> frequencyDictionary = new HashMap<>();
+    private final Map<T, Integer> frequencyDictionary = new HashMap<>();
 
     public FreqDict(T[] inputSeq) throws IllegalArgumentException {
         if (inputSeq == null) {
@@ -15,7 +16,7 @@ public class FreqDict<T> {
         }
     }
 
-    public HashMap<T, Integer> getDict() {
+    public Map<T, Integer> getDict() {
         return frequencyDictionary;
     }
 
