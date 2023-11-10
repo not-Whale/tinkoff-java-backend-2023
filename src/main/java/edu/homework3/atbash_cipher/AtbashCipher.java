@@ -37,10 +37,10 @@ public class AtbashCipher {
         UPPERCASE_ALPHABET.put("Z", "A");
 
         LOWERCASE_ALPHABET = new HashMap<>();
-        generateUppercaseMap();
+        generateLowercaseMap();
     }
 
-    private static void generateUppercaseMap() {
+    private static void generateLowercaseMap() {
         for (var key : UPPERCASE_ALPHABET.keySet()) {
             LOWERCASE_ALPHABET.put(key.toLowerCase(), UPPERCASE_ALPHABET.get(key).toLowerCase());
         }
