@@ -15,22 +15,20 @@ public class ContactParser {
             return new Contact[0];
         }
 
-        int n = contactsList.length;
-        Contact[] contacts = new Contact[n];
-
-        for (int i = 0; i < n; i++) {
-            contacts[i] = getContactFromString(contactsList[i]);
-        }
-
-        if (sortType == SortType.ASC) {
-            Arrays.sort(contacts);
-        }
-
         if (sortType == SortType.DESC) {
-            Arrays.sort(contacts, new DescContactsComparator());
+            return Arrays
+                .stream(contactsList)
+                .map(ContactParser::getContactFromString)
+                .sorted(new DescContactsComparator())
+                .toArray(Contact[]::new);
+        } else {
+            return Arrays
+                .stream(contactsList)
+                .map(ContactParser::getContactFromString)
+                .sorted()
+                .toList()
+                .toArray(Contact[]::new);
         }
-
-        return contacts;
     }
 
     private static Contact getContactFromString(String contact) throws IllegalArgumentException {
