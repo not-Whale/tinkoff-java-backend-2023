@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class DaysAgoParser implements Parser {
     private static final String DAY_AGO_PATTERN = "1 day ago";
 
-    private static final String DAYS_AGO_REGEX = "^(\\d) days ago$";
+    private static final String DAYS_AGO_REGEX = "^(\\d*) days ago$";
 
     @Override
     public boolean canFormatDate(String date) {
