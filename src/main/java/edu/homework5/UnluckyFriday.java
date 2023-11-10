@@ -59,6 +59,9 @@ public class UnluckyFriday {
     }
 
     public static LocalDate getNextUnluckyFriday(LocalDate currentDate) {
+        if (currentDate == null) {
+            throw new IllegalArgumentException("Дата не может быть null!");
+        }
         return currentDate.with((temporal -> {
             Temporal nextFriday = temporal.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
             while (nextFriday.get(ChronoField.DAY_OF_MONTH) != UNLUCKY_DAY_OF_MONTH) {
