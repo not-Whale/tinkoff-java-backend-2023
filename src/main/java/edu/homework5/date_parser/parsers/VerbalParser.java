@@ -4,17 +4,17 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.util.HashMap;
+import java.util.Map;
 
 public class VerbalParser implements Parser {
-    private static final HashMap<String, TemporalAdjuster> INACCURATE_TIME_LIST =
-        new HashMap<String, TemporalAdjuster>() {{
-            put("day before yesterday", temporal -> temporal.minus(2, ChronoUnit.DAYS));
-            put("yesterday", temporal -> temporal.minus(1, ChronoUnit.DAYS));
-            put("today", temporal -> temporal);
-            put("now", temporal -> temporal);
-            put("tomorrow", temporal -> temporal.plus(1, ChronoUnit.DAYS));
-            put("day after tomorrow", temporal -> temporal.plus(2, ChronoUnit.DAYS));
-        }};
+    private static final Map<String, TemporalAdjuster> INACCURATE_TIME_LIST = new HashMap<>() {{
+        put("day before yesterday", temporal -> temporal.minus(2, ChronoUnit.DAYS));
+        put("yesterday", temporal -> temporal.minus(1, ChronoUnit.DAYS));
+        put("today", temporal -> temporal);
+        put("now", temporal -> temporal);
+        put("tomorrow", temporal -> temporal.plus(1, ChronoUnit.DAYS));
+        put("day after tomorrow", temporal -> temporal.plus(2, ChronoUnit.DAYS));
+    }};
 
     @Override
     public boolean canFormatDate(String date) {
