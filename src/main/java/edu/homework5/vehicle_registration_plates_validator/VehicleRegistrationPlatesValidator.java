@@ -1,4 +1,4 @@
-package edu.homework5;
+package edu.homework5.vehicle_registration_plates_validator;
 
 public class VehicleRegistrationPlatesValidator {
     private VehicleRegistrationPlatesValidator() { }
