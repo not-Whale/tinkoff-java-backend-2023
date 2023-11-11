@@ -1,4 +1,4 @@
-package edu.homework5;
+package edu.homework5.password_validator;
 
 public class PasswordValidator {
     private PasswordValidator() {}

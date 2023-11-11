@@ -1,4 +1,4 @@
-package edu.homework5;
+package edu.homework5.password_validator;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

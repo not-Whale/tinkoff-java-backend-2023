@@ -1,4 +1,4 @@
-package edu.homework5;
+package edu.homework5.unlucky_friday;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
