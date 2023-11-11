@@ -1,4 +1,4 @@
-package edu.homework5;
+package edu.homework5.subsequence_validator;
 
 public class SubsequenceRegex {
     private SubsequenceRegex() {}
