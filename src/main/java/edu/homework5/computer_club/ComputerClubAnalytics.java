@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class ComputerClubAnalytics {
     private ComputerClubAnalytics() {}
 
-    public static Duration calculateAverageGameTime(String[] sessions) {
+    public static Duration calculateAverageGameTime(String[] sessions) throws IllegalArgumentException {
         if (sessions == null) {
             throw new IllegalArgumentException("Список сессий не может быть null!");
         }
@@ -20,7 +20,7 @@ public class ComputerClubAnalytics {
         return Duration.ofMillis(averageSessionDuration.longValue());
     }
 
-    private static String[] sessionStringToStartEndDate(String sessionString) {
+    private static String[] sessionStringToStartEndDate(String sessionString) throws IllegalArgumentException {
         String[] startEndDate = sessionString.split(" - ");
         if (startEndDate.length != 2) {
             throw new IllegalArgumentException("Формат сессии: \"yyyy-MM-dd, hh:mm - yyyy-MM-dd, hh:mm\"!");
