@@ -17,7 +17,7 @@ public class RegexExPro {
 
     // Количество 0 в строке кратно 3
     public static boolean task3(String s) {
-        String regex = "^((1*01*){3})*$";
+        String regex = "^1*((01*){3})*$";
         return s.matches(regex);
     }
 
