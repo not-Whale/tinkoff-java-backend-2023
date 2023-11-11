@@ -1,4 +1,4 @@
-package edu.homework5;
+package edu.homework5.regex_excercies;
 
 public class RegexEx {
     private RegexEx() {}
