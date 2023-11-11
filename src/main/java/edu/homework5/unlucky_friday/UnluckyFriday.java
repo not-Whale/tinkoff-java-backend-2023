@@ -22,7 +22,7 @@ public class UnluckyFriday {
     private UnluckyFriday() {
     }
 
-    public static Date[] findUnluckyFridaysByYear(int year) {
+    public static Date[] findUnluckyFridaysByYear(int year) throws IllegalArgumentException {
         if (year < 1) {
             throw new IllegalArgumentException("Год должен быть положительным числом!");
         }
@@ -58,7 +58,7 @@ public class UnluckyFriday {
         return unluckyFridays.toArray(new Date[] {});
     }
 
-    public static LocalDate getNextUnluckyFriday(LocalDate currentDate) {
+    public static LocalDate getNextUnluckyFriday(LocalDate currentDate) throws IllegalArgumentException {
         if (currentDate == null) {
             throw new IllegalArgumentException("Дата не может быть null!");
         }
