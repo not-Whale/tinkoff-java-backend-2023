@@ -11,7 +11,7 @@ public class RegexEx {
 
     // Строка начинается и заканчивается одним и тем же символом.
     public static boolean task2(String s) {
-        String regex = "(^0(1*0)*$)|(^1(0*1)*$)";
+        String regex = "^(0(1*0)*)?$|^(1(0*1)*)?$";
         return s.matches(regex);
     }
 
