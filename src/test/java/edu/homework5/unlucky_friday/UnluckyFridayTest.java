@@ -1,10 +1,7 @@
 package edu.homework5.unlucky_friday;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Date;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,19 +15,18 @@ public class UnluckyFridayTest {
     class FindUnluckyFridaysByYear {
         @Test
         @DisplayName("За 1925 год.")
-        void findUnluckyFridaysByYear() throws ParseException {
+        void findUnluckyFridaysByYear() {
             // given
             int year = 1925;
 
             // when
-            Date[] fridays = UnluckyFriday.findUnluckyFridaysByYear(year);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            LocalDate[] fridays = UnluckyFriday.findUnluckyFridaysByYear(year);
 
             // then
             assertThat(fridays).isNotNull().containsExactly(
-                simpleDateFormat.parse("1925-02-13"),
-                simpleDateFormat.parse("1925-03-13"),
-                simpleDateFormat.parse("1925-11-13")
+                LocalDate.of(1925, 2, 13),
+                LocalDate.of(1925, 3, 13),
+                LocalDate.of(1925, 11, 13)
             );
         }
 
