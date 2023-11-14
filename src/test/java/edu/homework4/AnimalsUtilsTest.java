@@ -627,7 +627,7 @@ public class AnimalsUtilsTest {
             );
 
             // when
-            Integer countAnimalsWithWeightMoreThanHeight = AnimalsUtils.countAnimalsWithWeightMoreThanHeight(animals);
+            Long countAnimalsWithWeightMoreThanHeight = AnimalsUtils.countAnimalsWithWeightMoreThanHeight(animals);
 
             // then
             assertThat(countAnimalsWithWeightMoreThanHeight).isNotNull().isEqualTo(5);
@@ -640,7 +640,7 @@ public class AnimalsUtilsTest {
             List<Animal> animals = List.of();
 
             // when
-            Integer countAnimalsWithWeightMoreThanHeight = AnimalsUtils.countAnimalsWithWeightMoreThanHeight(animals);
+            Long countAnimalsWithWeightMoreThanHeight = AnimalsUtils.countAnimalsWithWeightMoreThanHeight(animals);
 
             // then
             assertThat(countAnimalsWithWeightMoreThanHeight).isNotNull().isEqualTo(0);
@@ -653,7 +653,7 @@ public class AnimalsUtilsTest {
             List<Animal> animals = null;
 
             // when
-            Integer countAnimalsWithWeightMoreThanHeight = AnimalsUtils.countAnimalsWithWeightMoreThanHeight(animals);
+            Long countAnimalsWithWeightMoreThanHeight = AnimalsUtils.countAnimalsWithWeightMoreThanHeight(animals);
 
             // then
             assertThat(countAnimalsWithWeightMoreThanHeight).isNotNull().isEqualTo(0);

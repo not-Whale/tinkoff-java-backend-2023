@@ -155,15 +155,14 @@ public class AnimalsUtils {
             .toList();
     }
 
-    public static Integer countAnimalsWithWeightMoreThanHeight(List<Animal> animals) {
+    public static Long countAnimalsWithWeightMoreThanHeight(List<Animal> animals) {
         if (animals == null) {
-            return 0;
+            return 0L;
         }
 
         return animals.stream()
             .filter(a -> a.weight() > a.height())
-            .toList()
-            .size();
+            .count();
     }
 
     public static List<Animal> animalsWithMoreThanTwoWordNames(List<Animal> animals) {
