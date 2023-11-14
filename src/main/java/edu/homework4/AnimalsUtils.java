@@ -1,5 +1,6 @@
 package edu.homework4;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -283,7 +284,13 @@ public class AnimalsUtils {
             .collect(Collectors.toMap(
                 Map.Entry::getKey,
                 elem -> elem.getValue().stream()
-                    .map(error -> error.field() + ": " + error.message() + ", ")
+                    .map(error -> new StringBuilder(
+                        error.field())
+                        .append(": ")
+                        .append(error.message())
+                        .append(", ")
+                        .toString()
+                    )
                     .reduce(String::concat)
                     .orElse("")
             ));
