@@ -1,6 +1,5 @@
 package edu.homework4;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +25,8 @@ public class AnimalsUtils {
 
     private static final String TYPE_FIELD = "Тип";
 
-    private AnimalsUtils() {}
+    private AnimalsUtils() {
+    }
 
     public static List<Animal> sortByHeight(List<Animal> animals) {
         if (animals == null) {
@@ -60,7 +60,8 @@ public class AnimalsUtils {
 
         return animals.stream()
             .collect(
-                Collectors.groupingBy(Animal::type,
+                Collectors.groupingBy(
+                    Animal::type,
                     Collectors.counting()
                 ));
     }
@@ -101,7 +102,8 @@ public class AnimalsUtils {
             .collect(Collectors.toMap(
                 Animal::type,
                 item -> item,
-                (oldItem, newItem) -> oldItem.weight() >= newItem.weight() ? oldItem : newItem));
+                (oldItem, newItem) -> oldItem.weight() >= newItem.weight() ? oldItem : newItem
+            ));
     }
 
     public static Animal oldestAnimal(List<Animal> animals) {
@@ -235,16 +237,16 @@ public class AnimalsUtils {
             return null;
         }
 
-        Map<Animal, Integer> heaviestFishesInEveryList = animalsMatrix.stream()
-            .map(animals -> animals.stream()
-                .filter(a -> a.type() == Animal.Type.FISH)
+        Map<Animal, Integer> heaviestFishesInEveryList = animalsMatrix.stream().flatMap(
+            list -> list.stream()
+                .filter(a -> a.type().equals(Animal.Type.FISH))
                 .max(Comparator.comparingInt(Animal::weight))
-                .orElse(null))
-            .collect(Collectors.toMap(
-                animal -> animal,
-                item -> 1,
-                Integer::sum
-            ));
+                .stream()
+        ).collect(Collectors.toMap(
+            animal -> animal,
+            item -> 1,
+            Integer::sum
+        ));
 
         return heaviestFishesInEveryList.entrySet().stream()
             .filter(a -> a.getValue() >= 2)
@@ -279,7 +281,7 @@ public class AnimalsUtils {
         }
 
         Map<String, Set<ValidationError>> validation = validateAnimalRecords(animals);
-        Map<String, String> convertSetToString =  validation.entrySet().stream()
+        Map<String, String> convertSetToString = validation.entrySet().stream()
             .collect(Collectors.toMap(
                 Map.Entry::getKey,
                 elem -> elem.getValue().stream()
@@ -302,7 +304,7 @@ public class AnimalsUtils {
                     String entryValue = entry.getValue();
                     return entryValue.substring(0, entryValue.length() - 2);
                 }
-        ));
+            ));
     }
 
     private static Set<ValidationError> validateAnimal(Animal animal) {
