@@ -292,7 +292,7 @@ public class AnimalsUtils {
     }
 
     private static Set<ValidationError> validateAnimal(Animal animal) {
-        HashSet<ValidationError> errorsSet = new HashSet<>();
+        Set<ValidationError> errorsSet = new HashSet<>();
         final String ageField  = "Возраст";
         final String sexFiled  = "Пол";
         final String nameField = "Имя";
