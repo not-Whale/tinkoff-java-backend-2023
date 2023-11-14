@@ -17,6 +17,14 @@ public class AnimalsUtils {
     private static final int FISH_LIFETIME = 7;
     private static final int SPIDER_LIFETIME = 2;
 
+    private static final String AGE_FIELD = "Возраст";
+
+    private static final String SEX_FIELD = "Пол";
+
+    private static final String NAME_FIELD = "Имя";
+
+    private static final String TYPE_FIELD = "Тип";
+
     private AnimalsUtils() {}
 
     public static List<Animal> sortByHeight(List<Animal> animals) {
@@ -293,47 +301,43 @@ public class AnimalsUtils {
 
     private static Set<ValidationError> validateAnimal(Animal animal) {
         Set<ValidationError> errorsSet = new HashSet<>();
-        final String ageField  = "Возраст";
-        final String sexFiled  = "Пол";
-        final String nameField = "Имя";
-        final String typeField = "Тип";
 
         if (animal.name() == null) {
-            errorsSet.add(new ValidationError("имя не может быть пустым!", nameField));
+            errorsSet.add(new ValidationError("имя не может быть пустым!", NAME_FIELD));
         }
 
         if (animal.sex() == null) {
-            errorsSet.add(new ValidationError("пол не может быть пустой!", sexFiled));
+            errorsSet.add(new ValidationError("пол не может быть пустой!", SEX_FIELD));
         }
 
         switch (animal.type()) {
             case CAT -> {
                 if (animal.age() > CAT_LIFETIME) {
-                    errorsSet.add(new ValidationError("кошки столько не живут =(", ageField));
+                    errorsSet.add(new ValidationError("кошки столько не живут =(", AGE_FIELD));
                 }
             }
             case DOG -> {
                 if (animal.age() > DOG_LIFETIME) {
-                    errorsSet.add(new ValidationError("собачки столько не живут =(", ageField));
+                    errorsSet.add(new ValidationError("собачки столько не живут =(", AGE_FIELD));
                 }
             }
             case BIRD -> {
                 if (animal.age() > BIRD_LIFETIME) {
-                    errorsSet.add(new ValidationError("птички столько не живут =(", ageField));
+                    errorsSet.add(new ValidationError("птички столько не живут =(", AGE_FIELD));
                 }
             }
             case FISH -> {
                 if (animal.age() > FISH_LIFETIME) {
-                    errorsSet.add(new ValidationError("рыбки столько не живут =(", ageField));
+                    errorsSet.add(new ValidationError("рыбки столько не живут =(", AGE_FIELD));
                 }
             }
             case SPIDER -> {
                 if (animal.age() > SPIDER_LIFETIME) {
-                    errorsSet.add(new ValidationError("пауки столько не живут =(", ageField));
+                    errorsSet.add(new ValidationError("пауки столько не живут =(", AGE_FIELD));
                 }
             }
-            case null -> errorsSet.add(new ValidationError("тип не может быть пустой!", typeField));
-            default -> errorsSet.add(new ValidationError("такой тип не определен!", typeField));
+            case null -> errorsSet.add(new ValidationError("тип не может быть пустой!", TYPE_FIELD));
+            default -> errorsSet.add(new ValidationError("такой тип не определен!", TYPE_FIELD));
         }
 
         return errorsSet;
