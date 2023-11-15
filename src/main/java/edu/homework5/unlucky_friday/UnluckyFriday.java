@@ -17,8 +17,7 @@ public class UnluckyFriday {
     public static final int FIRST_DAY_OF_JANUARY = 1;
     public static final int FRIDAY = 5;
 
-    private UnluckyFriday() {
-    }
+    private UnluckyFriday() {}
 
     public static LocalDate[] findUnluckyFridaysByYear(int year) throws IllegalArgumentException {
         if (year < 1) {
