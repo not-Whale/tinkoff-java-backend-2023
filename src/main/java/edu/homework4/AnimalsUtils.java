@@ -1,6 +1,7 @@
 package edu.homework4;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class AnimalsUtils {
 
     public static List<Animal> sortByHeight(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return List.of();
         }
 
         return animals.stream()
@@ -44,7 +45,7 @@ public class AnimalsUtils {
 
     public static List<Animal> sortByWeightWithLimitDesc(List<Animal> animals, int limit) {
         if (animals == null) {
-            return null;
+            return List.of();
         }
 
         if (limit < 0) {
@@ -59,7 +60,7 @@ public class AnimalsUtils {
 
     public static Map<Animal.Type, Long> countAnimalByTypes(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return new HashMap<>();
         }
 
         return animals.stream()
@@ -99,7 +100,7 @@ public class AnimalsUtils {
 
     public static Map<Animal.Type, Animal> heaviestAnimalsByTypes(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return new HashMap<>();
         }
 
         return animals.stream()
@@ -132,7 +133,7 @@ public class AnimalsUtils {
 
     public static Integer countPaws(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return 0;
         }
 
         return animals.stream()
@@ -142,7 +143,7 @@ public class AnimalsUtils {
 
     public static List<Animal> animalsWithAgeNotEqualToPaws(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return List.of();
         }
 
         return animals.stream()
@@ -152,7 +153,7 @@ public class AnimalsUtils {
 
     public static List<Animal> animalsThatBitesAndHigherThanMeter(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return List.of();
         }
 
         return animals.stream()
@@ -173,7 +174,7 @@ public class AnimalsUtils {
 
     public static List<Animal> animalsWithMoreThanTwoWordNames(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return List.of();
         }
 
         return animals.stream()
@@ -193,7 +194,7 @@ public class AnimalsUtils {
 
     public static Map<Animal.Type, Integer> sumWeightByTypeBetweenKL(List<Animal> animals, int k, int l) {
         if (animals == null) {
-            return null;
+            return new HashMap<>();
         }
 
         return animals.stream()
@@ -207,7 +208,7 @@ public class AnimalsUtils {
 
     public static List<Animal> sortByTypeSexName(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return List.of();
         }
 
         return animals.stream()
@@ -261,7 +262,7 @@ public class AnimalsUtils {
 
     public static Map<String, Set<ValidationError>> validateAnimalRecords(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return new HashMap<>();
         }
 
         Map<String, Set<ValidationError>> errors = animals.stream()
@@ -281,7 +282,7 @@ public class AnimalsUtils {
 
     public static Map<String, String> validateAnimalRecordsPretty(List<Animal> animals) {
         if (animals == null) {
-            return null;
+            return new HashMap<>();
         }
 
         Map<String, Set<ValidationError>> validation = validateAnimalRecords(animals);
