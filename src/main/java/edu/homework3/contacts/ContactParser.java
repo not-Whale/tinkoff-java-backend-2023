@@ -6,11 +6,11 @@ import java.util.Comparator;
 public class ContactParser {
     private ContactParser() {}
 
-    public static Contact[] parseContacts(String[] contactsList) {
-        return parseContacts(contactsList, SortType.ASC);
+    public static Contact[] parseAndSortContacts(String[] contactsList) {
+        return parseAndSortContacts(contactsList, SortType.ASC);
     }
 
-    public static Contact[] parseContacts(String[] contactsList, SortType sortType) {
+    public static Contact[] parseAndSortContacts(String[] contactsList, SortType sortType) {
         if (contactsList == null) {
             return new Contact[0];
         }

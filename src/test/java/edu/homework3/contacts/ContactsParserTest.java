@@ -28,7 +28,7 @@ class ContactsParserTest {
         };
 
         // when
-        Contact[] contacts = ContactParser.parseContacts(contactsList, sortType);
+        Contact[] contacts = ContactParser.parseAndSortContacts(contactsList, sortType);
 
         // then
         assertThat(contacts).isNotNull().isEqualTo(answer);
@@ -51,7 +51,7 @@ class ContactsParserTest {
         };
 
         // when
-        Contact[] contacts = ContactParser.parseContacts(contactsList, sortType);
+        Contact[] contacts = ContactParser.parseAndSortContacts(contactsList, sortType);
 
         // then
         assertThat(contacts).isNotNull().isEqualTo(answer);
@@ -80,7 +80,7 @@ class ContactsParserTest {
         };
 
         // when
-        Contact[] contacts = ContactParser.parseContacts(contactsList);
+        Contact[] contacts = ContactParser.parseAndSortContacts(contactsList);
 
         // then
         assertThat(contacts).isNotNull().isEqualTo(answer);
@@ -94,7 +94,7 @@ class ContactsParserTest {
         Contact[] answer = new Contact[] {};
 
         // when
-        Contact[] contacts = ContactParser.parseContacts(contactsList);
+        Contact[] contacts = ContactParser.parseAndSortContacts(contactsList);
 
         // then
         assertThat(contacts).isNotNull().isEqualTo(answer);
@@ -108,7 +108,7 @@ class ContactsParserTest {
         Contact[] answer = new Contact[] {};
 
         // when
-        Contact[] contacts = ContactParser.parseContacts(contactsList);
+        Contact[] contacts = ContactParser.parseAndSortContacts(contactsList);
 
         // then
         assertThat(contacts).isNotNull().isEqualTo(answer);
@@ -127,7 +127,7 @@ class ContactsParserTest {
         // when
         Exception exception = assertThrows(
             IllegalArgumentException.class,
-            () -> ContactParser.parseContacts(contactsList)
+            () -> ContactParser.parseAndSortContacts(contactsList)
         );
 
         // then
@@ -147,7 +147,7 @@ class ContactsParserTest {
         // when
         Exception exception = assertThrows(
             IllegalArgumentException.class,
-            () -> ContactParser.parseContacts(contactsList)
+            () -> ContactParser.parseAndSortContacts(contactsList)
         );
 
         // then
