@@ -296,8 +296,7 @@ public class AnimalsUtils {
                         .append(", ")
                         .toString()
                     )
-                    .reduce(String::concat)
-                    .orElse("")
+                    .collect(Collectors.joining())
             ));
 
         return convertSetToString.entrySet().stream()
