@@ -1,7 +1,6 @@
 package edu.homework3.parenthesis_cluster;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class ParenthesisCluster {
     private static final Character LEFT_PAREN = '(';
@@ -15,32 +14,32 @@ public class ParenthesisCluster {
             throw new IllegalArgumentException();
         }
 
-        Stack<Integer> stack = new Stack<>();
+        long balance = 0;
         String inputParentSeq = parentSeq.strip();
         StringBuilder currentElem = new StringBuilder();
         ArrayList<String> clusteredParenSeq = new ArrayList<>();
 
         for (Character elem : inputParentSeq.toCharArray()) {
             if (elem.equals(LEFT_PAREN)) {
-                stack.push(1);
                 currentElem.append(LEFT_PAREN);
+                balance++;
             }
 
             if (elem.equals(RIGHT_PAREN)) {
-                if (stack.empty()) {
+                if (balance == 0) {
                     return null;
                 }
-                stack.pop();
                 currentElem.append(RIGHT_PAREN);
+                balance--;
             }
 
-            if (stack.empty()) {
+            if (balance == 0) {
                 clusteredParenSeq.add(currentElem.toString());
                 currentElem = new StringBuilder();
             }
         }
 
-        if (!stack.empty()) {
+        if (balance != 0) {
             return null;
         }
 
