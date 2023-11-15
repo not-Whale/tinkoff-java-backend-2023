@@ -1,5 +1,6 @@
 package edu.homework4;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -242,18 +243,16 @@ public class AnimalsUtils {
             return null;
         }
 
-        Map<Animal, Integer> heaviestFishesInEveryList = animalsMatrix.stream().flatMap(
-            list -> list.stream()
-                .filter(a -> a.type().equals(Animal.Type.FISH))
-                .max(Comparator.comparingInt(Animal::weight))
-                .stream()
-        ).collect(Collectors.toMap(
-            animal -> animal,
-            item -> 1,
-            Integer::sum
-        ));
+        Map<Animal, Integer> fishesFlatMap = animalsMatrix.stream()
+            .flatMap(Collection::stream)
+            .filter(a -> a.type().equals(Animal.Type.FISH))
+            .collect(Collectors.toMap(
+                fish -> fish,
+                item -> 1,
+                Integer::sum
+            ));
 
-        return heaviestFishesInEveryList.entrySet().stream()
+        return fishesFlatMap.entrySet().stream()
             .filter(a -> a.getValue() >= 2)
             .max(Comparator.comparingInt(Map.Entry::getValue))
             .map(Map.Entry::getKey)
