@@ -64,7 +64,7 @@ public class AnimalsUtilsTest {
             List<Animal> animalsSorted = AnimalsUtils.sortByHeight(animals);
 
             // then
-            assertThat(animalsSorted).isNull();
+            assertThat(animalsSorted).isNotNull().isEmpty();
         }
     }
 
@@ -119,7 +119,7 @@ public class AnimalsUtilsTest {
             List<Animal> animalsSorted = AnimalsUtils.sortByWeightWithLimitDesc(animals, 5);
 
             // then
-            assertThat(animalsSorted).isNull();
+            assertThat(animalsSorted).isNotNull().isEmpty();
         }
 
         @Test
@@ -190,7 +190,7 @@ public class AnimalsUtilsTest {
             Map<Animal.Type, Long> typesCounted = AnimalsUtils.countAnimalByTypes(animals);
 
             // then
-            assertThat(typesCounted).isNull();
+            assertThat(typesCounted).isNotNull().isEmpty();
         }
     }
 
@@ -349,7 +349,7 @@ public class AnimalsUtilsTest {
             Map<Animal.Type, Animal> commonSex = AnimalsUtils.heaviestAnimalsByTypes(animals);
 
             // then
-            assertThat(commonSex).isNull();
+            assertThat(commonSex).isNotNull().isEmpty();
         }
     }
 
@@ -500,7 +500,7 @@ public class AnimalsUtilsTest {
             Integer paws = AnimalsUtils.countPaws(animals);
 
             // then
-            assertThat(paws).isNull();
+            assertThat(paws).isNotNull().isEqualTo(0);
         }
     }
 
@@ -555,7 +555,7 @@ public class AnimalsUtilsTest {
             List<Animal> animalsWithAgeNotEqualToPaws = AnimalsUtils.animalsWithAgeNotEqualToPaws(animals);
 
             // then
-            assertThat(animalsWithAgeNotEqualToPaws).isNull();
+            assertThat(animalsWithAgeNotEqualToPaws).isNotNull().isEmpty();
         }
     }
 
@@ -606,7 +606,7 @@ public class AnimalsUtilsTest {
             List<Animal> animalsThatBitesAndHigherThanMeter = AnimalsUtils.animalsThatBitesAndHigherThanMeter(animals);
 
             // then
-            assertThat(animalsThatBitesAndHigherThanMeter).isNull();
+            assertThat(animalsThatBitesAndHigherThanMeter).isNotNull().isEmpty();
         }
     }
 
@@ -710,7 +710,7 @@ public class AnimalsUtilsTest {
             List<Animal> animalsWithMoreThanTwoWordNames = AnimalsUtils.animalsWithMoreThanTwoWordNames(animals);
 
             // then
-            assertThat(animalsWithMoreThanTwoWordNames).isNull();
+            assertThat(animalsWithMoreThanTwoWordNames).isNotNull().isEmpty();
         }
     }
 
@@ -814,7 +814,7 @@ public class AnimalsUtilsTest {
             Map<Animal.Type, Integer> sumWeightByTypeBetweenKL = AnimalsUtils.sumWeightByTypeBetweenKL(animals, 52, 520);
 
             // then
-            assertThat(sumWeightByTypeBetweenKL).isNull();
+            assertThat(sumWeightByTypeBetweenKL).isNotNull().isEmpty();
         }
     }
 
@@ -871,7 +871,7 @@ public class AnimalsUtilsTest {
             List<Animal> animalsSorted = AnimalsUtils.sortByTypeSexName(animals);
 
             // then
-            assertThat(animalsSorted).isNull();
+            assertThat(animalsSorted).isNotNull().isEmpty();
         }
     }
 
@@ -1114,7 +1114,7 @@ public class AnimalsUtilsTest {
             Map<String, Set<ValidationError>> errors = AnimalsUtils.validateAnimalRecords(animals);
 
             // then
-            assertThat(errors).isNull();
+            assertThat(errors).isNotNull().isEmpty();
         }
     }
 
@@ -1184,7 +1184,7 @@ public class AnimalsUtilsTest {
             Map<String, String> errors = AnimalsUtils.validateAnimalRecordsPretty(animals);
 
             // then
-            assertThat(errors).isNull();
+            assertThat(errors).isNotNull().isEmpty();
         }
     }
 }
