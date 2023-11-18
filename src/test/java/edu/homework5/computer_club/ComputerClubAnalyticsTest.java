@@ -1,6 +1,5 @@
 package edu.homework5.computer_club;
 
-import java.time.Duration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,11 +17,10 @@ public class ComputerClubAnalyticsTest {
         };
 
         // when
-        Duration averageSessionDuration = ComputerClubAnalytics.calculateAverageGameTime(sessions);
+        String averageSessionDuration = ComputerClubAnalytics.calculateAverageGameTime(sessions);
 
         // then
-        assertThat(averageSessionDuration).isNotNull();
-        assertThat(averageSessionDuration.toMillis()).isEqualTo((3 * 60 + 40) * 60 * 1000);
+        assertThat(averageSessionDuration).isNotNull().isEqualTo("3ч 40м");
     }
 
     @Test
@@ -35,11 +33,10 @@ public class ComputerClubAnalyticsTest {
         };
 
         // when
-        Duration averageSessionDuration = ComputerClubAnalytics.calculateAverageGameTime(sessions);
+        String averageSessionDuration = ComputerClubAnalytics.calculateAverageGameTime(sessions);
 
         // then
-        assertThat(averageSessionDuration).isNotNull();
-        assertThat(averageSessionDuration.toMillis()).isEqualTo(((48 + 3) * 60 + 40) * 60 * 1000);
+        assertThat(averageSessionDuration).isNotNull().isEqualTo("51ч 40м");
     }
 
     @Test
