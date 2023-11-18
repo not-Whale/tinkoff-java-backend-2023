@@ -27,7 +27,7 @@ public class ParenthesisCluster {
 
             if (elem.equals(RIGHT_PAREN)) {
                 if (balance == 0) {
-                    return null;
+                    return new String[0];
                 }
                 currentElem.append(RIGHT_PAREN);
                 balance--;
@@ -40,7 +40,7 @@ public class ParenthesisCluster {
         }
 
         if (balance != 0) {
-            return null;
+            return new String[0];
         }
 
         return clusteredParenSeq.toArray(new String[0]);

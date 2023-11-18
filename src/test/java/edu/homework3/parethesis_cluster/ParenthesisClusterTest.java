@@ -52,7 +52,7 @@ public class ParenthesisClusterTest {
         String[] clusterizedParenSeq = ParenthesisCluster.clusterize(parenSeq);
 
         // then
-        assertThat(clusterizedParenSeq).isNull();
+        assertThat(clusterizedParenSeq).isNotNull().isEmpty();
     }
 
     static class IncorrectParenSeqProvider implements ArgumentsProvider {
