@@ -24,18 +24,18 @@ public class UnluckyFriday {
             throw new IllegalArgumentException("Год должен быть положительным числом!");
         }
         List<LocalDate> unluckyFridays = new ArrayList<>();
-        boolean reachedFriday = false;
+        boolean reachedUnluckyDay = false;
         LocalDate endDate = LocalDate.of(year, Month.DECEMBER, LAST_DAY_OF_DECEMBER);
         LocalDate currentDate = LocalDate.of(year, Month.JANUARY, FIRST_DAY_OF_JANUARY);
         while (currentDate.isBefore(endDate)) {
-            if (currentDate.get(ChronoField.DAY_OF_WEEK) == FRIDAY) {
-                reachedFriday = true;
-                if (currentDate.getDayOfMonth() == UNLUCKY_DAY_OF_MONTH) {
+            if (currentDate.getDayOfMonth() == UNLUCKY_DAY_OF_MONTH) {
+                reachedUnluckyDay = true;
+                if (currentDate.get(ChronoField.DAY_OF_WEEK) == FRIDAY) {
                     unluckyFridays.add(currentDate);
                 }
             }
-            if (reachedFriday) {
-                currentDate = currentDate.plusWeeks(1);
+            if (reachedUnluckyDay) {
+                currentDate = currentDate.plusMonths(1);
             } else {
                 currentDate = currentDate.plusDays(1);
             }
