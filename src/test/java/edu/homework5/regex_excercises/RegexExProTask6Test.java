@@ -11,6 +11,8 @@ public class RegexExProTask6Test {
     @ParameterizedTest
     @ValueSource(strings = {
         "00",
+        "010",
+        "0010",
         "00000",
         "001",
         "100",
