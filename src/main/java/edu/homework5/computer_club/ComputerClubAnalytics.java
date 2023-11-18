@@ -9,15 +9,18 @@ import java.util.stream.Collectors;
 public class ComputerClubAnalytics {
     private ComputerClubAnalytics() {}
 
-    public static Duration calculateAverageGameTime(String[] sessions) throws IllegalArgumentException {
+    public static String calculateAverageGameTime(String[] sessions) throws IllegalArgumentException {
         if (sessions == null) {
             throw new IllegalArgumentException("Список сессий не может быть null!");
         }
-        Double averageSessionDuration = Arrays.stream(sessions)
+        Double averageSessionTime = Arrays.stream(sessions)
             .map(ComputerClubAnalytics::sessionStringToStartEndDate)
             .map(ComputerClubAnalytics::startEndDateToDuration)
             .collect(Collectors.averagingLong(Duration::toMillis));
-        return Duration.ofMillis(averageSessionDuration.longValue());
+        Duration averageSessionDuration = Duration.ofMillis(averageSessionTime.longValue());
+        long hours = averageSessionDuration.toHours();
+        int minutes = averageSessionDuration.toMinutesPart();
+        return hours + "ч " + minutes + "м";
     }
 
     private static String[] sessionStringToStartEndDate(String sessionString) throws IllegalArgumentException {
