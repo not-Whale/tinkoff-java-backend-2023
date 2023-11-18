@@ -68,12 +68,12 @@ public class UnluckyFridayTest {
         @DisplayName("Null-дата.")
         void getNextUnluckyFridayNullDate() {
             // given
-            LocalDate date = null;
+            // --
 
             // when
             Exception exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> UnluckyFriday.getNextUnluckyFriday(date)
+                () -> UnluckyFriday.getNextUnluckyFriday(null)
             );
 
             // then
