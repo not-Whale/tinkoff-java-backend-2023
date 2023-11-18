@@ -32,7 +32,7 @@ public class SubsequenceRegexTest {
         "abcd, cb",
         "adcd, efg"
     })
-    @DisplayName("Подпоследовательность найдена.")
+    @DisplayName("Подпоследовательность не найдена.")
     void isSubsequenceNotSubsequence(String inputSequence, String inputSubsequence) {
         // given
         String sequence = inputSequence;
