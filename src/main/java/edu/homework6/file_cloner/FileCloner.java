@@ -1,4 +1,4 @@
-package edu.homework6;
+package edu.homework6.file_cloner;
 
 import java.io.File;
 import java.io.IOException;

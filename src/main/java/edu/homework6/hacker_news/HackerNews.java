@@ -1,4 +1,4 @@
-package edu.homework6;
+package edu.homework6.hacker_news;
 
 import java.io.IOException;
 import java.net.URI;
