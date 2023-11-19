@@ -23,7 +23,7 @@ public class HackerNews {
     public static Long[] hackerNewsTopStories() {
         String response = requestNewsTopStoriesEndpoint();
         String storiesList = response.substring(1, response.length() - 1);
-        return Arrays.stream(storiesList.split(", "))
+        return Arrays.stream(storiesList.split(","))
             .map(Long::parseLong)
             .toArray(Long[]::new);
     }
