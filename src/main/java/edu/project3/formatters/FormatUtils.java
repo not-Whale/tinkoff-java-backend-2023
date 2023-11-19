@@ -1,6 +1,7 @@
 package edu.project3.formatters;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class FormatUtils {
     private FormatUtils() {}
@@ -15,13 +16,13 @@ public class FormatUtils {
 
         int maxNameLength = Arrays.stream(names)
             .map(String::length)
-            .max((a, b) -> b - a)
+            .max(Comparator.comparingInt(a -> a))
             .orElse(0);
         maxNameLength = Math.max(maxNameLength, statisticName.length());
 
         int maxValuesLength = Arrays.stream(values)
             .map(String::length)
-            .max((a, b) -> b - a)
+            .max(Comparator.comparingInt(a -> a))
             .orElse(0);
         maxValuesLength = Math.max(maxValuesLength, valuesName.length());
 
@@ -129,13 +130,13 @@ public class FormatUtils {
 
         int maxNameLength = Arrays.stream(names)
             .map(String::length)
-            .max((a, b) -> b - a)
+            .max(Comparator.comparingInt(a -> a))
             .orElse(0);
         maxNameLength = Math.max(maxNameLength, statisticName.length());
 
         int maxValuesLength = Arrays.stream(values)
             .map(String::length)
-            .max((a, b) -> b - a)
+            .max(Comparator.comparingInt(a -> a))
             .orElse(0);
         maxValuesLength = Math.max(maxValuesLength, valuesName.length());
 
