@@ -33,7 +33,7 @@ public class LogFileReader implements Reader {
     }
 
     @Override
-    public String[] readLogs() {
+    public String[] read() {
         if (!canRead()) {
             return new String[0];
         }

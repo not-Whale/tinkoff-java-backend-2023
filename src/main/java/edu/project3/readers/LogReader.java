@@ -3,14 +3,14 @@ package edu.project3.readers;
 public class LogReader {
     private LogReader() {}
 
-    public static String[] parseLogs(String path) {
+    public static String[] read(String path) {
         LogURLReader urlReader = new LogURLReader(path);
         if (urlReader.canRead()) {
-            return urlReader.readLogs();
+            return urlReader.read();
         }
         LogFileReader fileReader = new LogFileReader(path);
         if (fileReader.canRead()) {
-            return fileReader.readLogs();
+            return fileReader.read();
         }
         return new String[0];
     }

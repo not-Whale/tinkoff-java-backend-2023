@@ -31,7 +31,7 @@ public class LogURLReader implements Reader {
     }
 
     @Override
-    public String[] readLogs() {
+    public String[] read() {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(path))
