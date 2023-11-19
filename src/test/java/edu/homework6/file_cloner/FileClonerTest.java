@@ -29,10 +29,10 @@ public class FileClonerTest {
     void cloneFile() {
         // given
         Path file = Path.of(TINKOFF_BANK_BIGGEST_SECRET_FILE_PATH);
-        Path copy = Path.of(TINKOFF_BANK_BIGGEST_SECRET_FIRST_COPY_FILE_PATH);
 
         // when
         FileCloner.cloneFile(file);
+        Path copy = Path.of(TINKOFF_BANK_BIGGEST_SECRET_FIRST_COPY_FILE_PATH);
         try (FileReader fileReader = new FileReader(file.toFile());
              FileReader copyReader = new FileReader(copy.toFile());
              BufferedReader bufferedFileReader = new BufferedReader(fileReader);
@@ -64,11 +64,12 @@ public class FileClonerTest {
     void cloneFileTwice() {
         // given
         Path file = Path.of(TINKOFF_BANK_BIGGEST_SECRET_FILE_PATH);
-        Path copy = Path.of(TINKOFF_BANK_BIGGEST_SECRET_FIRST_COPY_FILE_PATH);
-        Path secondCopy = Path.of(TINKOFF_BANK_BIGGEST_SECRET_SECOND_COPY_FILE_PATH);
 
         // when
         FileCloner.cloneFile(file);
+        FileCloner.cloneFile(file);
+        Path copy = Path.of(TINKOFF_BANK_BIGGEST_SECRET_FIRST_COPY_FILE_PATH);
+        Path secondCopy = Path.of(TINKOFF_BANK_BIGGEST_SECRET_SECOND_COPY_FILE_PATH);
         try (FileReader fileReader = new FileReader(file.toFile());
              FileReader copyReader = new FileReader(copy.toFile());
              FileReader secondCopyReader = new FileReader(copy.toFile());
