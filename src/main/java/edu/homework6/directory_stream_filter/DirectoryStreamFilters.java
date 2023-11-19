@@ -60,6 +60,9 @@ public class DirectoryStreamFilters {
 
     public static AbstractFilter magicNumbers(int...magicNumbers) {
         return (path) -> {
+            if (path.toFile().isDirectory()) {
+                return false;
+            }
             try (FileInputStream fileInputStream = new FileInputStream(path.toFile())) {
                 for (int magicNumber : magicNumbers) {
                     if (fileInputStream.read() != magicNumber) {
