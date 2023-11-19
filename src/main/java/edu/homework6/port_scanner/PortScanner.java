@@ -13,6 +13,7 @@ public class PortScanner {
 
     private static final int END_PORT = 49151;
 
+    @SuppressWarnings("MagicNumber")
     private static final Map<Integer, String> SERVICES_PER_PORT = new HashMap<>() {{
         put(1, "TCP Port Service Multiplexer");
         put(20, "File Transfer [Default Data]");
