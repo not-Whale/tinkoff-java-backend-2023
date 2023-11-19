@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LogReporter {
+    public static final int OK_RESPONSE_CODE = 200;
+
+    public static final int LIMIT = 3;
+    
     private final Log[] logs;
 
     private final String resource;
@@ -91,7 +95,7 @@ public class LogReporter {
 
         return requestsMap.entrySet().stream()
             .sorted((a, b) -> (int) (b.getValue() - a.getValue()))
-            .limit(3)
+            .limit(LIMIT)
             .toList();
     }
 
@@ -118,7 +122,7 @@ public class LogReporter {
             ));
 
         Map<String, Long> requestTypeMap = Arrays.stream(logs)
-            .filter(log -> log.status().equals(200))
+            .filter(log -> log.status().equals(OK_RESPONSE_CODE))
             .collect(Collectors.toMap(
                 Log::resource,
                 item -> 1L,
