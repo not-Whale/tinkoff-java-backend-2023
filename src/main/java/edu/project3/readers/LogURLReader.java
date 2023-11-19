@@ -6,7 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class URLReader implements Reader {
+public class LogURLReader implements Reader {
     private static final String PROTOCOL_DOMAIN_PATTERN =
         "((http|https)://(www.)?)?[a-zA-Z0-9]{2,}(\\.[a-zA-Z0-9]{2,})*";
 
@@ -21,7 +21,7 @@ public class URLReader implements Reader {
 
     private final String path;
 
-    public URLReader(String path) {
+    public LogURLReader(String path) {
         this.path = path;
     }
 
