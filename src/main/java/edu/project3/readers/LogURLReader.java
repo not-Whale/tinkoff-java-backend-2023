@@ -27,11 +27,6 @@ public class LogURLReader implements Reader {
 
     @Override
     public boolean canRead() {
-        try {
-            URI.create(path);
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
         return path.matches(URL_PATTERN);
     }
 
