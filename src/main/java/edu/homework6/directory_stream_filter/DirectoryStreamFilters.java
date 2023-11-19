@@ -10,55 +10,55 @@ import org.apache.commons.io.FilenameUtils;
 public class DirectoryStreamFilters {
     private DirectoryStreamFilters() {}
 
-    public static DirectoryStream.Filter<Path> isDirectory() {
+    public static AbstractFilter isDirectory() {
         return Files::isDirectory;
     }
 
-    public static DirectoryStream.Filter<Path> isRegularFile() {
+    public static AbstractFilter isRegularFile() {
         return Files::isRegularFile;
     }
 
-    public static DirectoryStream.Filter<Path> isReadable() {
+    public static AbstractFilter isReadable() {
         return Files::isReadable;
     }
 
-    public static DirectoryStream.Filter<Path> isWritable() {
+    public static AbstractFilter isWritable() {
         return Files::isWritable;
     }
 
-    public static DirectoryStream.Filter<Path> isExecutable() {
+    public static AbstractFilter isExecutable() {
         return Files::isExecutable;
     }
 
-    public static DirectoryStream.Filter<Path> isHidden() {
+    public static AbstractFilter isHidden() {
         return Files::isHidden;
     }
 
-    public static DirectoryStream.Filter<Path> largerThan(long size) {
+    public static AbstractFilter largerThan(long size) {
         return (path) -> (Files.size(path) > size);
     }
 
-    public static DirectoryStream.Filter<Path> smallerThan(long size) {
+    public static AbstractFilter smallerThan(long size) {
         return (path) -> (Files.size(path) < size);
     }
 
-    public static DirectoryStream.Filter<Path> hasSize(long size) {
+    public static AbstractFilter hasSize(long size) {
         return (path) -> (Files.size(path) == size);
     }
 
-    public static DirectoryStream.Filter<Path> hasExtension(String extension) {
+    public static AbstractFilter hasExtension(String extension) {
         return (path) -> FilenameUtils.isExtension(path.toFile().getAbsolutePath(), extension);
     }
 
-    public static DirectoryStream.Filter<Path> nameMatches(String regex) {
+    public static AbstractFilter nameMatches(String regex) {
         return (path) -> Pattern.matches(regex, path.toFile().getName());
     }
 
-    public static DirectoryStream.Filter<Path> pathMatcher(String regex) {
+    public static AbstractFilter pathMatcher(String regex) {
         return (path) -> Pattern.matches(regex, path.toFile().getPath());
     }
 
-    public static DirectoryStream.Filter<Path> magicNumbers(int...magicNumbers) {
+    public static AbstractFilter magicNumbers(int...magicNumbers) {
         return (path) -> {
             try (FileInputStream fileInputStream = new FileInputStream(path.toFile())) {
                 for (int magicNumber : magicNumbers) {
