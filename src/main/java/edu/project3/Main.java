@@ -94,7 +94,7 @@ public class Main {
             "Значение",
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + formatted);
+        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Общая информация\n\n" + formatted);
     }
 
     private static void printMostStableResources(
@@ -112,7 +112,7 @@ public class Main {
             "Процент успешных запросов",
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + formatted);
+        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Ресурсы с наибольшим процентом успешных запросов\n\n" + formatted);
     }
 
     private static void printRequestsPerResourcesByType(
@@ -130,7 +130,12 @@ public class Main {
             "Количество " + requestType.verbal() + " запросов",
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + formatted);
+        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT
+            + "Ресурсы с наибольшим количеством "
+            + requestType.verbal()
+            + " запросов к ним\n\n"
+            + formatted
+        );
     }
 
     private static void printMostPopularRequestTypes(
@@ -148,7 +153,7 @@ public class Main {
             "Количество запросов",
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + formatted);
+        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Наиболее частые запросы\n\n" + formatted);
     }
 
     private static void printMostPopularResponseCodes(
@@ -166,7 +171,7 @@ public class Main {
             "Количество запросов",
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + formatted);
+        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Наиболее частые коды ответа\n\n" + formatted);
     }
 
     private static void printMostPopularResources(
@@ -184,7 +189,7 @@ public class Main {
             "Количество запросов",
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + formatted);
+        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Самые запрашиваемые ресурсы\n\n" + formatted);
     }
 
     private static String getFormatted(
