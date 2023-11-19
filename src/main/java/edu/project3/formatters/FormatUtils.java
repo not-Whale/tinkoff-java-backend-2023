@@ -5,6 +5,56 @@ import java.util.Arrays;
 public class FormatUtils {
     private FormatUtils() {}
 
+    public static String reportToAdoc(String[] names, String[] values, String statisticName, String valuesName) {
+
+//    # Шапка таблицы
+//        print('[cols="1,1"]')
+//        print('|===')
+//        print(f'|{statistic_name} |{values_name}')
+//        print()
+//        last_name = names[-1]
+//        for name, value in zip(names, values):
+//        print(f'|{name}')
+//        print(f'|{value}')
+//        if name != last_name:
+//        print()
+//        print('|===')
+
+        if (names.length != values.length) {
+            throw new IllegalArgumentException();
+        }
+
+        long tableLength = names.length;
+        long lastLine = tableLength - 1;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+            .append("cols=\"1,1\"\n")
+            .append("|===\n")
+            .append("|")
+            .append(statisticName)
+            .append(" |")
+            .append(valuesName)
+            .append("\n\n");
+
+        for (int i = 0; i < tableLength; i++) {
+            stringBuilder
+                .append("|")
+                .append(names[i])
+                .append("\n")
+                .append("|")
+                .append(values[i])
+                .append("\n");
+            if (i != lastLine) {
+                stringBuilder
+                    .append("\n");
+            }
+            stringBuilder.append("|===\n");
+        }
+
+        return stringBuilder.toString();
+    }
+
     public static String reportToMarkdown(String[] names, String[] values, String statisticName, String valuesName) {
         if (names.length != values.length) {
             throw new IllegalArgumentException();
