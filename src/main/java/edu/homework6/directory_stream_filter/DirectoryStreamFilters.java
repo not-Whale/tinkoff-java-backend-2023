@@ -54,7 +54,7 @@ public class DirectoryStreamFilters {
         return (path) -> Pattern.matches(regex, path.toFile().getName());
     }
 
-    public static AbstractFilter pathMatcher(String regex) {
+    public static AbstractFilter pathMatches(String regex) {
         return (path) -> Pattern.matches(regex, path.toFile().getPath());
     }
 
