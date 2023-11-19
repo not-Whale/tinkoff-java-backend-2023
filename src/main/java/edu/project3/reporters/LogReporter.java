@@ -62,7 +62,7 @@ public class LogReporter {
             ));
 
         return resourcesMap.entrySet().stream()
-            .sorted((a, b) -> (int)(b.getValue() - a.getValue()))
+            .sorted((a, b) -> (int) (b.getValue() - a.getValue()))
             .limit(3)
             .toList();
     }
@@ -76,7 +76,7 @@ public class LogReporter {
             ));
 
         return codesMap.entrySet().stream()
-            .sorted((a, b) -> (int)(b.getValue() - a.getValue()))
+            .sorted((a, b) -> (int) (b.getValue() - a.getValue()))
             .limit(3)
             .toList();
     }
@@ -90,7 +90,7 @@ public class LogReporter {
             ));
 
         return requestsMap.entrySet().stream()
-            .sorted((a, b) -> (int)(b.getValue() - a.getValue()))
+            .sorted((a, b) -> (int) (b.getValue() - a.getValue()))
             .limit(3)
             .toList();
     }
@@ -105,7 +105,7 @@ public class LogReporter {
             ));
 
         return requestTypeMap.entrySet().stream()
-            .sorted((a, b) -> (int)(b.getValue() - a.getValue()))
+            .sorted((a, b) -> (int) (b.getValue() - a.getValue()))
             .toList();
     }
 
@@ -128,7 +128,7 @@ public class LogReporter {
         return resourcesMap.entrySet().stream()
             .map(entry -> Map.entry(
                 entry.getKey(),
-                (double)entry.getValue() / requestTypeMap.get(entry.getKey())))
+                (double) entry.getValue() / requestTypeMap.get(entry.getKey())))
             .sorted((a, b) -> {
                 if (b.getValue() > a.getValue()) {
                     return 1;
