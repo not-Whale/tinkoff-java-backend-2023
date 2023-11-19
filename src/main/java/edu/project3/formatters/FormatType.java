@@ -1,4 +1,4 @@
-package edu.project3.arguments_parser;
+package edu.project3.formatters;
 
 public enum FormatType {
     MARKDOWN,
