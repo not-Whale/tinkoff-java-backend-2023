@@ -18,7 +18,7 @@ public class FileCloner {
 
     private FileCloner() {}
 
-    public static void cloneFile(Path path) throws IOException {
+    public static void cloneFile(Path path) {
         int maxCopyNumber = 0;
         Path parent = path.getParent();
         File[] siblings = parent.toFile().listFiles();
@@ -34,13 +34,17 @@ public class FileCloner {
         }
         Matcher matcher = filePathPattern.matcher(path.toFile().getName());
         if (matcher.find()) {
-            Files.copy(path, Path.of(
-                parent.toFile().getPath(),
-                matcher.group(FILE_NAME_GROUP)
-                    + " - копия "
-                    + (maxCopyNumber + 1)
-                    + matcher.group(FILE_COPY_GROUP)
-            ));
+            try {
+                Files.copy(path, Path.of(
+                    parent.toFile().getPath(),
+                    matcher.group(FILE_NAME_GROUP)
+                        + " - копия "
+                        + (maxCopyNumber + 1)
+                        + matcher.group(FILE_COPY_GROUP)
+                ));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
