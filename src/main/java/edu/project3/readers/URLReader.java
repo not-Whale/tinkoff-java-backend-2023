@@ -19,7 +19,7 @@ public class URLReader implements Reader {
     private static final String URL_PATTERN =
         "^" + PROTOCOL_DOMAIN_PATTERN + SUBDOMAIN_PATTERN + FILE_PATTERN + "$";
 
-    private String path;
+    private final String path;
 
     public URLReader(String path) {
         this.path = path;
