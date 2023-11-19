@@ -48,7 +48,7 @@ public class LogReporter {
             resource,
             from.format(formatter),
             to.format(formatter),
-            logs.length,
+            (long) logs.length,
             calculateAverageResponseSize()
         );
     }
