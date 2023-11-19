@@ -53,6 +53,8 @@ public class CommandLineArgumentParser {
             }
             if (cmd.hasOption(FORMAT_ARGUMENT)) {
                 this.formatType = parseFormatType(cmd.getOptionValue(FORMAT_ARGUMENT));
+            } else {
+                this.formatType = FormatType.STRING;
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
