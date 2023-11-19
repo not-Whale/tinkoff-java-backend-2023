@@ -34,7 +34,7 @@ public class FileCloner {
         }
         Matcher matcher = filePathPattern.matcher(path.toFile().getName());
         if (matcher.find()) {
-            Files.createFile(Path.of(
+            Files.copy(path, Path.of(
                 parent.toFile().getPath(),
                 matcher.group(FILE_NAME_GROUP)
                     + " - копия "
