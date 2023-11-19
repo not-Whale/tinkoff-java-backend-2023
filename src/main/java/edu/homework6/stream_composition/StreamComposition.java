@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.CRC32;
@@ -21,12 +20,21 @@ public class StreamComposition {
 
     public static void compose() {
         File file = createFile();
-        FileOutputStream fileOutputStream = getFileOutputStream(file);
-        CheckedOutputStream checkedOutputStream = getCheckedOutputStream(fileOutputStream);
-        BufferedOutputStream bufferedOutputStream = getBufferedOutputStream(checkedOutputStream);
-        OutputStreamWriter outputStreamWriter = getOutputStreamWriter(bufferedOutputStream);
-        PrintWriter printWriter = getPrintWriter(outputStreamWriter);
-        printWriter.println(QUOTE);
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            CheckedOutputStream checkedOutputStream = new CheckedOutputStream(fileOutputStream, new CRC32());
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(checkedOutputStream);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(bufferedOutputStream);
+            PrintWriter printWriter = new PrintWriter(outputStreamWriter);
+            printWriter.println(QUOTE);
+            printWriter.close();
+            outputStreamWriter.close();
+            bufferedOutputStream.close();
+            checkedOutputStream.close();
+            fileOutputStream.close();
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
     }
 
     public static void deleteFile() {
@@ -44,44 +52,6 @@ public class StreamComposition {
             return Files.createFile(filePath).toFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private static FileOutputStream getFileOutputStream(File file) {
-        try (FileOutputStream fos = new FileOutputStream(file)) {
-            return fos;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static CheckedOutputStream getCheckedOutputStream(FileOutputStream fos) {
-        try (CheckedOutputStream chos = new CheckedOutputStream(fos, new CRC32())) {
-            return chos;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static BufferedOutputStream getBufferedOutputStream(CheckedOutputStream chos) {
-        try (BufferedOutputStream bos = new BufferedOutputStream(chos)) {
-            return bos;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static OutputStreamWriter getOutputStreamWriter(BufferedOutputStream bos) {
-        try (OutputStreamWriter osw = new OutputStreamWriter(bos, StandardCharsets.UTF_8)) {
-            return osw;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static PrintWriter getPrintWriter(OutputStreamWriter osw) {
-        try (PrintWriter printWriter = new PrintWriter(osw)) {
-            return printWriter;
         }
     }
 }
