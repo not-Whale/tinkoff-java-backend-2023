@@ -12,11 +12,12 @@ public class FormatUtils {
 
         long tableLength = names.length;
         long lastLine = tableLength - 1;
+        String border = "|===\n";
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
             .append("cols=\"1,1\"\n")
-            .append("|===\n")
+            .append(border)
             .append("|")
             .append(statisticName)
             .append(" |")
@@ -35,7 +36,7 @@ public class FormatUtils {
                 stringBuilder
                     .append("\n");
             }
-            stringBuilder.append("|===\n");
+            stringBuilder.append(border);
         }
 
         return stringBuilder.toString();
