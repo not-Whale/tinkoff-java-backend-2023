@@ -150,6 +150,7 @@ public class FormatUtils {
             .append("|")
             .append(valuesName)
             .repeat(" ", maxValuesLength - valuesName.length())
+            .append("|")
             .append("\n");
 
         stringBuilder
