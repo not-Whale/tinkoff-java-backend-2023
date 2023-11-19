@@ -67,7 +67,7 @@ public class LogReporter {
 
         return resourcesMap.entrySet().stream()
             .sorted((a, b) -> (int) (b.getValue() - a.getValue()))
-            .limit(3)
+            .limit(LIMIT)
             .toList();
     }
 
@@ -81,7 +81,7 @@ public class LogReporter {
 
         return codesMap.entrySet().stream()
             .sorted((a, b) -> (int) (b.getValue() - a.getValue()))
-            .limit(3)
+            .limit(LIMIT)
             .toList();
     }
 
