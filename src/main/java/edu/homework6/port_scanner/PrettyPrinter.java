@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 public class PrettyPrinter {
     public PrettyPrinter() {}
 
+    @SuppressWarnings("MagicNumber")
     public String getPrettyPortStatusString(PortState[] portStates, Predicate<PortState> predicate) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Протокол    Порт    Статус    Сервис\n");
