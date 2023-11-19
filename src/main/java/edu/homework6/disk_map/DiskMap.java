@@ -1,4 +1,4 @@
-package edu.homework6;
+package edu.homework6.disk_map;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

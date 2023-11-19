@@ -1,4 +1,4 @@
-package edu.homework6;
+package edu.homework6.stream_composition;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
