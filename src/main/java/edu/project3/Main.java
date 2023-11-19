@@ -99,6 +99,9 @@ public class Main {
 
     private static void printMostStableResources(
         List<Map.Entry<String, Double>> mostStableResources, FormatType formatType) {
+        if (mostStableResources.isEmpty()) {
+            return;
+        }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
         for (var entry : mostStableResources) {
@@ -117,6 +120,9 @@ public class Main {
 
     private static void printRequestsPerResourcesByType(
         List<Map.Entry<String, Long>> requestsPerResourcesByType, FormatType formatType, RequestType requestType) {
+        if (requestsPerResourcesByType.isEmpty()) {
+            return;
+        }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
         for (var entry : requestsPerResourcesByType) {
@@ -140,6 +146,9 @@ public class Main {
 
     private static void printMostPopularRequestTypes(
         List<Map.Entry<RequestType, Long>> mostPopularRequestTypes, FormatType formatType) {
+        if (mostPopularRequestTypes.isEmpty()) {
+            return;
+        }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
         for (var entry : mostPopularRequestTypes) {
@@ -158,6 +167,9 @@ public class Main {
 
     private static void printMostPopularResponseCodes(
         List<Map.Entry<Integer, Long>> mostPopularResponseCodes, FormatType formatType) {
+        if (mostPopularResponseCodes.isEmpty()) {
+            return;
+        }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
         for (var entry : mostPopularResponseCodes) {
@@ -176,6 +188,9 @@ public class Main {
 
     private static void printMostPopularResources(
         List<Map.Entry<String, Long>> mostPopularResources, FormatType formatType) {
+        if (mostPopularResources.isEmpty()) {
+            return;
+        }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
         for (var entry : mostPopularResources) {
