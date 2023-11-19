@@ -57,9 +57,13 @@ public class PortScanner {
         return portStates.toArray(PortState[]::new);
     }
 
-    private static PortState getTCPPortState(int port) {
+    private static String getService(int port) {
         String service = SERVICES_PER_PORT.get(port);
-        service = service == null ? "N/A" : service;
+        return service == null ? "N/A" : service;
+    }
+
+    private static PortState getTCPPortState(int port) {
+        String service = getService(port);
         try (ServerSocket tcp = new ServerSocket(port)) {
             return new PortState(Protocol.TCP, port, Status.OPENED, "");
         } catch (BindException e) {
@@ -70,8 +74,7 @@ public class PortScanner {
     }
 
     private static PortState getUDPPortState(int port) {
-        String service = SERVICES_PER_PORT.get(port);
-        service = service == null ? "N/A" : service;
+        String service = getService(port);
         try (DatagramSocket udp = new DatagramSocket(port)) {
             return new PortState(Protocol.UDP, port, Status.OPENED, "");
         } catch (BindException e) {
