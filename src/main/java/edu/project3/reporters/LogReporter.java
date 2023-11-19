@@ -15,7 +15,7 @@ public class LogReporter {
     public static final int OK_RESPONSE_CODE = 200;
 
     public static final int LIMIT = 3;
-    
+
     private final Log[] logs;
 
     private final String resource;
