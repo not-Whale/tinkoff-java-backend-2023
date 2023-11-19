@@ -16,7 +16,7 @@ public enum RequestType {
         this.verbal = verbal;
     }
 
-    String verbal() {
+    public String verbal() {
         return verbal;
     }
 }
