@@ -13,9 +13,9 @@ import java.util.zip.CRC32;
 import java.util.zip.CheckedOutputStream;
 
 public class StreamComposition {
-    private static final String FILE_PATH = "src/main/resources/stream_composition/quote_file.txt";
+    public static final String FILE_PATH = "src/main/resources/stream_composition/quote_file.txt";
 
-    private static final String QUOTE = "Programming is learned by writing programs. ― Brian Kernighan";
+    public static final String QUOTE = "Programming is learned by writing programs. ― Brian Kernighan";
 
     private StreamComposition() {}
 
@@ -27,7 +27,14 @@ public class StreamComposition {
         OutputStreamWriter outputStreamWriter = getOutputStreamWriter(bufferedOutputStream);
         PrintWriter printWriter = getPrintWriter(outputStreamWriter);
         printWriter.println(QUOTE);
-        deleteFile();
+    }
+
+    public static void deleteFile() {
+        try {
+            Files.delete(Path.of(FILE_PATH));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static File createFile() {
@@ -35,14 +42,6 @@ public class StreamComposition {
             Path filePath = Path.of(FILE_PATH);
             Files.createDirectories(filePath.getParent());
             return Files.createFile(filePath).toFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void deleteFile() {
-        try {
-            Files.delete(Path.of(FILE_PATH));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
