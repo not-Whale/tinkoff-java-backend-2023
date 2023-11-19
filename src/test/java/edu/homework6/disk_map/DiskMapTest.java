@@ -241,7 +241,7 @@ public class DiskMapTest {
             Set<String> keySet = diskMap.keySet();
 
             // then
-            assertThat(keySet).isNotNull().containsExactly("k1", "k2");
+            assertThat(keySet).isNotNull().containsOnly("k1", "k2");
         } catch (IOException e) {
             LOGGER.info("Упс... Что-то пошло не так! " + e);
         }
@@ -258,7 +258,7 @@ public class DiskMapTest {
             Collection<String> valueSet = diskMap.values();
 
             // then
-            assertThat(valueSet).isNotNull().containsExactly("v1", "v2");
+            assertThat(valueSet).isNotNull().containsOnly("v1", "v2");
         } catch (IOException e) {
             LOGGER.info("Упс... Что-то пошло не так! " + e);
         }
@@ -275,7 +275,7 @@ public class DiskMapTest {
             Set<Map.Entry<String, String>> entrySet = diskMap.entrySet();
 
             // then
-            assertThat(entrySet).isNotNull().containsExactly(
+            assertThat(entrySet).isNotNull().containsOnly(
                 Map.entry("k2", "v2"),
                 Map.entry("k1", "v1")
             );
