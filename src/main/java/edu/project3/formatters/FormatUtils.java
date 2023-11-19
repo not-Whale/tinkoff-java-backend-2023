@@ -140,8 +140,6 @@ public class FormatUtils {
             .orElse(0);
         maxValuesLength = Math.max(maxValuesLength, valuesName.length());
 
-        long lastLine = tableLength - 1;
-
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
             .append("|")
