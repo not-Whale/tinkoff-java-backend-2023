@@ -20,7 +20,7 @@ public class ComputerClubAnalytics {
         Duration averageSessionDuration = Duration.ofMillis(averageSessionTime.longValue());
         long hours = averageSessionDuration.toHours();
         int minutes = averageSessionDuration.toMinutesPart();
-        return hours + "ч " + minutes + "м";
+        return String.format("%dч %dм", hours, minutes);
     }
 
     private static String[] sessionStringToStartEndDate(String sessionString) throws IllegalArgumentException {
