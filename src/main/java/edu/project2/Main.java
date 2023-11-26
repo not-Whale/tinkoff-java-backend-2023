@@ -13,13 +13,9 @@ import edu.project2.solvers.DepthFirstSearchSolver;
 import edu.project2.solvers.RandomMouseSolver;
 import java.util.List;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Main {
     private Main() {}
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final BinaryTreeGenerator BINARY_TREE_GENERATOR = new BinaryTreeGenerator();
 
@@ -240,6 +236,6 @@ public class Main {
     }
 
     private static void print(String message) {
-        LOGGER.info(WITHOUT_HIGHLIGHT + message);
+        System.out.println(message);
     }
 }
