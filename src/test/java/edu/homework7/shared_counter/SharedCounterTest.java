@@ -1,4 +1,4 @@
-package edu.homework7;
+package edu.homework7.shared_counter;
 
 import java.util.List;
 import java.util.concurrent.Callable;

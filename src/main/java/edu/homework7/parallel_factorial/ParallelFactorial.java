@@ -1,4 +1,4 @@
-package edu.homework7;
+package edu.homework7.parallel_factorial;
 
 import java.util.stream.LongStream;
 
