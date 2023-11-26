@@ -11,13 +11,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("Кэширующий сервис для поиска людей по атрибутам. С учетом чтения-записи.")
-public class PersonDatabaseTest {
+@DisplayName("Кэширующий сервис для поиска людей по атрибутам.")
+public class LockPersonDatabaseTest {
     @Test
     @DisplayName("Многопоточный поиск по атрибутам.")
     void find() throws InterruptedException, ExecutionException {
         // given
-        Database database = new Database();
+        LockDatabase database = new LockDatabase();
         for (int i = 0; i < 1000; i++) {
             database.add(new Person(
                 i,
@@ -62,7 +62,7 @@ public class PersonDatabaseTest {
     @DisplayName("Добавление некорректных записей. Люди с null полями не хранятся.")
     void addIncorrectPerson() {
         // given
-        Database database = new Database();
+        LockDatabase database = new LockDatabase();
         database.add(new Person(
             1,
             null,
