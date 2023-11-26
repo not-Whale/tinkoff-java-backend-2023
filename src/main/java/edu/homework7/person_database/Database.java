@@ -8,15 +8,15 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Database implements PersonDatabase {
-    ReadWriteLock lock = new ReentrantReadWriteLock(true);
+    private final ReadWriteLock lock = new ReentrantReadWriteLock(true);
 
-    Map<String, Person> idMap = new HashMap<>();
+    private final Map<String, Person> idMap = new HashMap<>();
 
-    Map<String, List<Person>> nameMap = new HashMap<>();
+    private final Map<String, List<Person>> nameMap = new HashMap<>();
 
-    Map<String, List<Person>> addressMap = new HashMap<>();
+    private final Map<String, List<Person>> addressMap = new HashMap<>();
 
-    Map<String, List<Person>> phoneMap = new HashMap<>();
+    private final Map<String, List<Person>> phoneMap = new HashMap<>();
 
     private String reverseIdToString(int id) {
         return new StringBuilder(String.valueOf(id)).reverse().toString();
@@ -24,6 +24,10 @@ public class Database implements PersonDatabase {
 
     private String reverseString(String s) {
         return new StringBuilder(s).reverse().toString();
+    }
+
+    public int size() {
+        return idMap.size();
     }
 
     @Override
@@ -49,6 +53,7 @@ public class Database implements PersonDatabase {
                 // phone map add
                 String phoneKey = reverseString(person.phoneNumber());
                 List<Person> phoneList = phoneMap.getOrDefault(phoneKey, new ArrayList<>());
+                phoneList.add(person);
                 phoneMap.put(phoneKey, phoneList);
             } finally {
                 lock.writeLock().unlock();
@@ -91,7 +96,7 @@ public class Database implements PersonDatabase {
     public List<Person> findByName(String name) {
         lock.readLock().lock();
         try {
-            return nameMap.getOrDefault(reverseString(name), List.of());
+            return List.copyOf(nameMap.getOrDefault(reverseString(name), List.of()));
         } finally {
             lock.readLock().unlock();
         }
@@ -101,7 +106,7 @@ public class Database implements PersonDatabase {
     public List<Person> findByAddress(String address) {
         lock.readLock().lock();
         try {
-            return addressMap.getOrDefault(reverseString(address), List.of());
+            return List.copyOf(addressMap.getOrDefault(reverseString(address), List.of()));
         } finally {
             lock.readLock().unlock();
         }
@@ -111,7 +116,7 @@ public class Database implements PersonDatabase {
     public List<Person> findByPhone(String phone) {
         lock.readLock().lock();
         try {
-            return phoneMap.getOrDefault(reverseString(phone), List.of());
+            return List.copyOf(phoneMap.getOrDefault(reverseString(phone), List.of()));
         } finally {
             lock.readLock().unlock();
         }
