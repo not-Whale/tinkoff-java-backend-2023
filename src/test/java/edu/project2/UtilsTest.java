@@ -1,4 +1,4 @@
-package project2;
+package edu.project2;
 
 import edu.project2.maze.Cell;
 import edu.project2.maze.Maze;
