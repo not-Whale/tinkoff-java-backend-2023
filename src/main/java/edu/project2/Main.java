@@ -14,6 +14,7 @@ import edu.project2.solvers.RandomMouseSolver;
 import java.util.List;
 import java.util.Scanner;
 
+@SuppressWarnings("RegexpSinglelineJava")
 public class Main {
     private Main() {}
 
@@ -81,10 +82,10 @@ public class Main {
         boolean exit = false;
         while (!exit) {
             Maze maze = readMaze(scanner);
-            print("Построенный лабиринт:\n" + SIMPLE_RENDERER.render(maze));
+            System.out.println("Построенный лабиринт:\n" + SIMPLE_RENDERER.render(maze));
 
             List<Coordinate> path = readSolution(scanner, maze);
-            print("Построенный путь:\n" + SIMPLE_RENDERER.render(maze, path));
+            System.out.println("Построенный путь:\n" + SIMPLE_RENDERER.render(maze, path));
 
             exit = checkRerun(scanner);
         }
@@ -185,7 +186,7 @@ public class Main {
     }
 
     private static int[] readCoord(Scanner scanner, String message, String coordType) {
-        print(message + "Введите координаты " + coordType + " точки через пробел:");
+        System.out.println(message + "Введите координаты " + coordType + " точки через пробел:");
         String coordString = scanner.nextLine();
         String[] coordStringArray = coordString.strip().split(" ");
         if (coordStringArray.length != 2) {
@@ -198,7 +199,7 @@ public class Main {
     }
 
     private static int[] readMazeSize(Scanner scanner, String message) {
-        print(message + "Введите высоту и длину лабиринта через пробел:");
+        System.out.println(message + "Введите высоту и длину лабиринта через пробел:");
         String sizeString = scanner.nextLine();
         String[] sizeStringArray = sizeString.strip().split(" ");
         if (sizeStringArray.length != 2) {
@@ -211,12 +212,12 @@ public class Main {
     }
 
     private static String readAnotherTimeAnswer(Scanner scanner) {
-        print("Хотите построить и решить новый лабиринт? (yes/no)");
+        System.out.println("Хотите построить и решить новый лабиринт? (yes/no)");
         return scanner.nextLine().strip().toLowerCase();
     }
 
     private static int readSolverNumber(Scanner scanner, String message) {
-        print(message + """
+        System.out.println(message + """
                 Выберите алгоритм для поиска пути в лабиринте:
                 1. Случайный выбор пути (random mouse algorithm)
                 2. Поиск в глубину
@@ -225,7 +226,7 @@ public class Main {
     }
 
     private static int readGeneratorNumber(Scanner scanner, String message) {
-        print(message + """
+        System.out.println(message + """
                 Выберите алгоритм для генерации лабиринта:
                 1. Генерация с помощью построения бинарного дерева
                 2. Генерация методом Sidewinder
@@ -233,9 +234,5 @@ public class Main {
                 4. Генерация с помощью алгоритма Крускаля
                 5. Генерация с помощью алгоритма Прима""");
         return scanner.nextInt();
-    }
-
-    private static void print(String message) {
-        System.out.println(message);
     }
 }
