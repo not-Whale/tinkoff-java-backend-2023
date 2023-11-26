@@ -16,17 +16,15 @@ public class MonteCarloParallel {
 
     private static final int Y_CENTER = 1;
 
-    private static final int CORE_NUMBER = 8;
-
     private static final int PI_CALC_COEFFICIENT = 4;
 
     private MonteCarloParallel() {}
 
-    public static double calcPi(int iter) {
-        int circleCount = 0;
-        Callable<Integer> calcPiPartCalc = getPartCalculation(iter);
+    public static double calcPi(long iter, int coreNumber) {
+        long circleCount = 0;
+        Callable<Integer> calcPiPartCalc = getPartCalculation(iter / coreNumber);
         ExecutorService executorService = Executors.newCachedThreadPool();
-        var tasks = Stream.generate(() -> calcPiPartCalc).limit(CORE_NUMBER).toList();
+        var tasks = Stream.generate(() -> calcPiPartCalc).limit(coreNumber).toList();
         try {
             List<Future<Integer>> futures = executorService.invokeAll(tasks);
             for (Future<Integer> future : futures) {
@@ -40,12 +38,11 @@ public class MonteCarloParallel {
         return PI_CALC_COEFFICIENT * (circleCount / (double) iter);
     }
 
-    private static Callable<Integer> getPartCalculation(int iter) {
+    private static Callable<Integer> getPartCalculation(long iterPart) {
         return () -> {
             ThreadLocalRandom random = ThreadLocalRandom.current();
             int circlePartCount = 0;
-            int iterPart = iter / CORE_NUMBER;
-            for (int i = 0; i < iterPart; i++) {
+            for (long i = 0; i < iterPart; i++) {
                 double xDistance = random.nextDouble(0.0, RADIUS * 2) - X_CENTER;
                 double yDistance = random.nextDouble(0.0, RADIUS * 2) - Y_CENTER;
                 double module = Math.sqrt(xDistance * xDistance + yDistance * yDistance);

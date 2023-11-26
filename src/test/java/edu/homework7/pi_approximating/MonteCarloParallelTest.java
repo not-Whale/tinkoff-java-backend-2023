@@ -14,7 +14,7 @@ public class MonteCarloParallelTest {
         double expected = Math.PI;
 
         // when
-        double pi = MonteCarloParallel.calcPi(1_000_000);
+        double pi = MonteCarloParallel.calcPi(1_000_000, 8);
 
         // then
         assertThat(pi).isCloseTo(expected, Percentage.withPercentage(0.15));

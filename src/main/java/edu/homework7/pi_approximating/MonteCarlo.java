@@ -13,10 +13,10 @@ public class MonteCarlo {
 
     private MonteCarlo() {}
 
-    public static double calcPi(int iter) {
-        int circleCount = 0;
+    public static double calcPi(long iter) {
+        long circleCount = 0;
         SecureRandom random = new SecureRandom();
-        for (int i = 0; i < iter; i++) {
+        for (long i = 0; i < iter; i++) {
             double xDistance = random.nextDouble(0.0, RADIUS * 2) - X_CENTER;
             double yDistance = random.nextDouble(0.0, RADIUS * 2) - Y_CENTER;
             double module = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
