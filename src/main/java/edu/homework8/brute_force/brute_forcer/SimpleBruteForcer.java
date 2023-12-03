@@ -5,9 +5,17 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SimpleBruteForcer {
+    private static final List<String> alphabet = List.of(
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "K",
+        "L", "M", "N", "O", "P", "Q", "R", "S", "T", "V",
+        "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6",
+        "7", "8", "9"
+    );
+
     private static final int HASH_RADIX = 16;
 
     private static final int HASH_SIZE = 32;
@@ -24,14 +32,16 @@ public class SimpleBruteForcer {
     public Map<String, String> decode() {
         try {
             Map<String, String> passwords = new HashMap<>();
-            Generator generator = new Generator(passwordSize);
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            while (generator.hasNext()) {
-                String currentPassword = generator.getNext();
-                md.update(currentPassword.getBytes());
-                String hash = bytesToHashString(md.digest());
-                if (usersMap.get(hash) != null) {
-                    passwords.put(usersMap.get(hash), currentPassword);
+            for (int i = 0; i < passwordSize; i++) {
+                Generator generator = new Generator(alphabet, passwordSize);
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                while (generator.hasNext()) {
+                    String currentPassword = generator.getNext();
+                    md.update(currentPassword.getBytes());
+                    String hash = bytesToHashString(md.digest());
+                    if (usersMap.get(hash) != null) {
+                        passwords.put(usersMap.get(hash), currentPassword);
+                    }
                 }
             }
             return passwords;
