@@ -34,18 +34,6 @@ public class DiskMap implements Map<String, String>, Closeable {
         this.initDiskMapFile();
     }
 
-    private void initDiskMapFile() {
-        Path path = Paths.get(DISK_MAP_DIRECTORY, mapName);
-        if (Files.exists(path)) {
-            throw new RuntimeException("DiskMap " + mapName + " уже существует!");
-        }
-        try {
-            Files.createDirectories(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public int size() {
         return size;
@@ -63,14 +51,6 @@ public class DiskMap implements Map<String, String>, Closeable {
         }
         Path keyPath = getKeyPath(((String) key));
         return Files.exists(keyPath);
-    }
-
-    private Path getKeyPath(String key) {
-        return Paths.get(DISK_MAP_DIRECTORY, this.mapName, key.concat(".txt"));
-    }
-
-    private Path getMapPath() {
-        return Paths.get(DISK_MAP_DIRECTORY, this.mapName);
     }
 
     @Override
@@ -105,23 +85,6 @@ public class DiskMap implements Map<String, String>, Closeable {
         }
         writeValue(keyFile, value);
         return oldValue;
-    }
-
-    private String readValue(File keyFile) {
-        try (FileReader fileReader = new FileReader(keyFile);
-             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-            return bufferedReader.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void writeValue(File keyFile, String value) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(keyFile, false)) {
-            fileOutputStream.write(value.getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -207,5 +170,42 @@ public class DiskMap implements Map<String, String>, Closeable {
         Path path = Paths.get(DISK_MAP_DIRECTORY, mapName);
         Files.delete(path);
         count--;
+    }
+
+    private Path getKeyPath(String key) {
+        return Paths.get(DISK_MAP_DIRECTORY, this.mapName, key.concat(".txt"));
+    }
+
+    private Path getMapPath() {
+        return Paths.get(DISK_MAP_DIRECTORY, this.mapName);
+    }
+
+    private void initDiskMapFile() {
+        Path path = Paths.get(DISK_MAP_DIRECTORY, mapName);
+        if (Files.exists(path)) {
+            throw new RuntimeException("DiskMap " + mapName + " уже существует!");
+        }
+        try {
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String readValue(File keyFile) {
+        try (FileReader fileReader = new FileReader(keyFile);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            return bufferedReader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void writeValue(File keyFile, String value) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(keyFile, false)) {
+            fileOutputStream.write(value.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
