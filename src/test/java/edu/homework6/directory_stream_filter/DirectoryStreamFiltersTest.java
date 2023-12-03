@@ -295,4 +295,31 @@ public class DirectoryStreamFiltersTest {
             LOGGER.info("Упс... Что-то пошло не так! " + e);
         }
     }
+
+    @Test
+    @DisplayName("Цепочка из нескольких and.")
+    void composeAnd() {
+        // given
+        Path file = Path.of(FILE_PATH);
+        Path img = Path.of(IMG_PATH);
+
+        // when
+        try (DirectoryStream<Path> entries =
+                 Files.newDirectoryStream(
+                     file.getParent(),
+                     DirectoryStreamFilters.isRegularFile()
+                         .and(DirectoryStreamFilters.isReadable())
+                         .and(DirectoryStreamFilters.largerThan(100))
+                         .and(DirectoryStreamFilters.nameMatches("[^0-9].*"))
+                         .and(DirectoryStreamFilters.hasExtension("jpg"))
+                         .and(DirectoryStreamFilters.magicNumbers(0xFF, 0xD8, 0xFF, 0xE0, 0x00)))) {
+            List<Path> files = new ArrayList<>();
+            entries.forEach(files::add);
+
+            // then
+            assertThat(files).isNotEmpty().containsOnly(img);
+        } catch (IOException e) {
+            LOGGER.info("Упс... Что-то пошло не так! " + e);
+        }
+    }
 }
