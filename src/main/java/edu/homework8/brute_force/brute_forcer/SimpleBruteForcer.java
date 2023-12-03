@@ -33,7 +33,7 @@ public class SimpleBruteForcer {
         try {
             Map<String, String> passwords = new HashMap<>();
             for (int i = 0; i < passwordSize; i++) {
-                Generator generator = new Generator(alphabet, passwordSize);
+                Generator generator = new Generator(alphabet, i);
                 MessageDigest md = MessageDigest.getInstance("MD5");
                 while (generator.hasNext()) {
                     String currentPassword = generator.getNext();
