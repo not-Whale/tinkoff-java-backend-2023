@@ -13,11 +13,13 @@ import java.util.concurrent.Executors;
 public class Server {
     private static final int SERVER_PORT = 18080;
 
+    private static final int CORE_NUMBER = 8;
+
     public Server() {}
 
     public void run() {
         try (ServerSocket server = new ServerSocket(SERVER_PORT)) {
-            ExecutorService executorService = Executors.newFixedThreadPool(8);
+            ExecutorService executorService = Executors.newFixedThreadPool(CORE_NUMBER);
             while (true) {
                 Socket client = server.accept();
                 executorService.submit(() -> acceptClient(client));

@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Dictionary {
-    private static final Map<String, List<String>> syberbullyingMap = new HashMap<>() {{
+    @SuppressWarnings("MultipleStringLiterals")
+    private static final Map<String, List<String>> SYBERBULLYING_MAP = new HashMap<>() {{
         put("личности",
             List.of("Не переходи на личности там, где их нет"));
         put("личность",
@@ -16,7 +17,8 @@ public class Dictionary {
                 "Если твои противники перешли на личные оскорбления, будь уверена — твоя победа не за горами",
                 "Чем ниже интеллект, тем громче оскорбления"));
         put("глупый",
-            List.of("А я тебе говорил, что ты глупый? Так вот, я забираю свои слова обратно... Ты просто бог идиотизма."));
+            List.of("А я тебе говорил, что ты глупый? Так вот, я забираю свои слова обратно... "
+                + "Ты просто бог идиотизма."));
         put("интеллект",
             List.of("Чем ниже интеллект, тем громче оскорбления"));
     }};
@@ -25,11 +27,11 @@ public class Dictionary {
 
     public static String getQuote(String key) {
         SecureRandom random = new SecureRandom();
-        List<String> quotes = syberbullyingMap.getOrDefault(key.toLowerCase(), List.of("такого я еще не знаю"));
+        List<String> quotes = SYBERBULLYING_MAP.getOrDefault(key.toLowerCase(), List.of("такого я еще не знаю"));
         return quotes.get(random.nextInt(0, quotes.size()));
     }
 
     public static String[] getQuotes(String key) {
-        return syberbullyingMap.get(key).toArray(String[]::new);
+        return SYBERBULLYING_MAP.get(key).toArray(String[]::new);
     }
 }
