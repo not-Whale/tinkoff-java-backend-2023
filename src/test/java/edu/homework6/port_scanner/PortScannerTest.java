@@ -1,8 +1,8 @@
 package edu.homework6.port_scanner;
 
+import java.util.function.Predicate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.function.Predicate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Сканирование портов и определение их занятости.")
