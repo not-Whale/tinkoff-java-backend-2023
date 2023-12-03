@@ -28,4 +28,8 @@ public class Dictionary {
         List<String> quotes = syberbullyingMap.getOrDefault(key.toLowerCase(), List.of("такого я еще не знаю"));
         return quotes.get(random.nextInt(0, quotes.size()));
     }
+
+    public static String[] getQuotes(String key) {
+        return syberbullyingMap.get(key).toArray(String[]::new);
+    }
 }
