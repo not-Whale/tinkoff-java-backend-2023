@@ -17,7 +17,7 @@ public class FilesFilter extends RecursiveTask<Path[]> {
     }
 
     @Override
-    protected Path[] compute() {
+    public Path[] compute() {
         List<Path> filteredFiles = new ArrayList<>();
         List<FilesFilter> tasks = new ArrayList<>();
         String[] nestedFilesNames = path.toFile().list();
