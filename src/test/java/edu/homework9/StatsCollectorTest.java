@@ -11,6 +11,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static edu.homework9.stats_collector.MetricType.AVG;
+import static edu.homework9.stats_collector.MetricType.MAX;
+import static edu.homework9.stats_collector.MetricType.MIN;
+import static edu.homework9.stats_collector.MetricType.SUM;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -22,10 +26,10 @@ public class StatsCollectorTest {
     void correctWrite() {
         // given
         StatsCollector statsCollector = new StatsCollector(true);
-        var addAvgTask = getAddTask(statsCollector, 10_000, 50, MetricType.AVG);
-        var addSumTask = getAddTask(statsCollector, 50_000, 10, MetricType.SUM);
-        var addMinTask = getAddTask(statsCollector, 25_000, 20, MetricType.MIN);
-        var addMaxTask = getAddTask(statsCollector, 10_000, 50, MetricType.MAX);
+        var addAvgTask = getAddTask(statsCollector, 10_000, 50, AVG);
+        var addSumTask = getAddTask(statsCollector, 50_000, 10, SUM);
+        var addMinTask = getAddTask(statsCollector, 25_000, 20, MIN);
+        var addMaxTask = getAddTask(statsCollector, 10_000, 50, MAX);
 
         // when
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -56,10 +60,10 @@ public class StatsCollectorTest {
             for (int j = 0; j < 10; j++) {
                 data[j] = random.nextDouble();
             }
-            statsCollector.push(MetricType.AVG, data);
-            statsCollector.push(MetricType.SUM, data);
-            statsCollector.push(MetricType.MIN, data);
-            statsCollector.push(MetricType.MAX, data);
+            statsCollector.push(AVG, data);
+            statsCollector.push(SUM, data);
+            statsCollector.push(MIN, data);
+            statsCollector.push(MAX, data);
         }
 
         // then
@@ -87,10 +91,10 @@ public class StatsCollectorTest {
             for (int j = 0; j < 10; j++) {
                 data[j] = random.nextDouble();
             }
-            statsCollector.push(MetricType.AVG, data);
-            statsCollector.push(MetricType.SUM, data);
-            statsCollector.push(MetricType.MIN, data);
-            statsCollector.push(MetricType.MAX, data);
+            statsCollector.push(AVG, data);
+            statsCollector.push(SUM, data);
+            statsCollector.push(MIN, data);
+            statsCollector.push(MAX, data);
         }
 
         // then
