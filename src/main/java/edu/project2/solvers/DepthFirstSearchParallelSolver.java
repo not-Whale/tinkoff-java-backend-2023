@@ -45,7 +45,7 @@ public class DepthFirstSearchParallelSolver implements Solver {
 
         private final Cell endCell;
 
-        public PathFinder(Cell currentCell, Cell endCell) {
+        PathFinder(Cell currentCell, Cell endCell) {
             this.currentCell = currentCell;
             this.endCell = endCell;
         }
