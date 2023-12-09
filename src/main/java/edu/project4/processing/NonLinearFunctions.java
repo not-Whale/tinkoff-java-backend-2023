@@ -10,7 +10,7 @@ import static java.lang.Math.sqrt;
 public class NonLinearFunctions {
     private NonLinearFunctions() {}
 
-    public Transformation sinusoidal() {
+    public static Transformation sinusoidal() {
         return (Point p) -> {
             double newX = sin(p.x());
             double newY = sin(p.y());
@@ -18,7 +18,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation spherical() {
+    public static Transformation spherical() {
         return (Point p) -> {
             double r2 = p.x() * p.x() + p.y() * p.y();
             double coeff = 1 / r2;
@@ -28,7 +28,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation swirl() {
+    public static Transformation swirl() {
         return (Point p) -> {
             double r2 = p.x() * p.x() + p.y() * p.y();
             double newX = p.x() * sin(r2) - p.y() * cos(r2);
@@ -37,7 +37,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation horseshoe() {
+    public static Transformation horseshoe() {
         return (Point p) -> {
             double r = sqrt(p.x() * p.x() + p.y() * p.y());
             double coeff = 1 / r;
@@ -47,7 +47,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation polar() {
+    public static Transformation polar() {
         return (Point p) -> {
             double r = sqrt(p.x() * p.x() + p.y() * p.y());
             double coeff = p.y() / p.x();
@@ -57,7 +57,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation handkerchief() {
+    public static Transformation handkerchief() {
         return (Point p) -> {
             double r = sqrt(p.x() * p.x() + p.y() * p.y());
             double coeff = p.y() / p.x();
@@ -67,7 +67,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation heart() {
+    public static Transformation heart() {
         return (Point p) -> {
             double r = sqrt(p.x() * p.x() + p.y() * p.y());
             double coeff = p.y() / p.x();
@@ -77,7 +77,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation disk() {
+    public static Transformation disk() {
         return (Point p) -> {
             double r = sqrt(p.x() * p.x() + p.y() * p.y());
             double coeff = p.y() / p.x();
@@ -88,7 +88,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation spiral() {
+    public static Transformation spiral() {
         return (Point p) -> {
             double r = sqrt(p.x() * p.x() + p.y() * p.y());
             double rCoeff = 1 / r;
@@ -99,7 +99,7 @@ public class NonLinearFunctions {
         };
     }
 
-    public Transformation pdj(double p1, double p2, double p3, double p4) {
+    public static Transformation pdj(double p1, double p2, double p3, double p4) {
         return (Point p) -> {
             double newX = sin(p1 * p.y()) - cos(p2 * p.x());
             double newY = sin(p3 * p.x()) - cos(p4 * p.y());
