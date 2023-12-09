@@ -48,8 +48,8 @@ public class GammaCorrector implements PostProcessor {
 
     @SuppressWarnings("MagicNumber")
     private int correct(int color, double gamma) {
-        double b = color / 256.0;
+        double b = color / 255.0;
         double correctedB = pow(b, 1 / gamma);
-        return (int) correctedB * 256;
+        return (int) correctedB * 255;
     }
 }
