@@ -9,12 +9,12 @@ import java.util.List;
 @FunctionalInterface
 public interface Renderer {
     default FractalImage render(FractalImage canvas, Rect world,
-        List<LinearFunction> affineTransformations, List<Transformation> variations,
+        List<LinearFunction> affineTransformations, List<Transformation> variations, LinearFunction finalAffine,
         int samples, int perSampleIterations) {
-        return render(canvas, world, affineTransformations, variations, samples, perSampleIterations, 1);
+        return render(canvas, world, affineTransformations, variations, finalAffine, samples, perSampleIterations, 1);
     }
 
     FractalImage render(FractalImage canvas, Rect world,
-        List<LinearFunction> affineTransformations, List<Transformation> variations,
+        List<LinearFunction> affineTransformations, List<Transformation> variations, LinearFunction finalAffine,
         int samples, int perSampleIterations, int symmetry);
 }

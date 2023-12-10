@@ -1,6 +1,5 @@
 package edu.project4.render;
 
-import edu.project4.colors.Color;
 import edu.project4.coordinates.Point;
 import edu.project4.coordinates.Rect;
 import edu.project4.fractal.FractalImage;
@@ -16,7 +15,7 @@ import static java.lang.Math.sin;
 public class SimpleRenderer implements Renderer {
     @Override
     public FractalImage render(FractalImage canvas, Rect world,
-        List<LinearFunction> affineTransformations, List<Transformation> variations,
+        List<LinearFunction> affineTransformations, List<Transformation> variations, LinearFunction finalAffine,
         int samples, int perSampleIterations, int symmetry) {
 
         for (int i = 0; i < samples; i++) {
@@ -25,8 +24,7 @@ public class SimpleRenderer implements Renderer {
             for (int step = 0; step < perSampleIterations; step++) {
                 LinearFunction affine = getRandomAffineTransformation(affineTransformations);
                 Transformation variation = getRandomVariation(variations);
-                currentPoint = transformPoint(currentPoint, affine, variation);
-                // TODO: affine FINAL transformation
+                currentPoint = transformPoint(currentPoint, affine, variation, finalAffine);
 
                 double theta = 0.0;
                 for (int s = 0; s < symmetry; s++) {
@@ -77,11 +75,11 @@ public class SimpleRenderer implements Renderer {
         return variations.get(random.nextInt(0, variations.size()));
     }
 
-    private Point transformPoint(Point currentPoint, LinearFunction affineTransformation, Transformation variation) {
+    private Point transformPoint(Point currentPoint, LinearFunction affineTransformation,
+        Transformation variation, LinearFunction finalAffine) {
         Point linearTransform = affineTransformation.transformation().apply(currentPoint);
         Point nonLinearTransform = variation.apply(linearTransform);
-        // TODO: affine post transformation
-        return nonLinearTransform;
+        return finalAffine.transformation().apply(nonLinearTransform);
     }
 
     private Point rotatePoint(Point currentPoint, double theta) {
