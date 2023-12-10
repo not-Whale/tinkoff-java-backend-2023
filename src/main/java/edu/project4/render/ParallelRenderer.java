@@ -53,7 +53,7 @@ public class ParallelRenderer implements Renderer {
                                 Point pointRotated = rotatePoint(currentPoint, theta);
                                 theta += 2 * PI / symmetry;
 
-                                if (!world.contains(pointRotated)) {
+                                if (!threadWorld.contains(pointRotated)) {
                                     continue;
                                 }
 
