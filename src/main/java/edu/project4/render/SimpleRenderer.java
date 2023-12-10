@@ -33,13 +33,12 @@ public class SimpleRenderer implements Renderer {
     @Override
     public FractalImage render(FractalImage canvas, Rect world,
         List<LinearFunction> affineTransformations, List<Transformation> variations,
-        int samples, short perSampleIterations, int symmetry) {
-        // TODO: поправить итерации на семпл до инта
+        int samples, int perSampleIterations, int symmetry) {
 
         for (int i = 0; i < samples; i++) {
             Point currentPoint = getRandomPointFromRect(world);
 
-            for (short step = 0; step < perSampleIterations; step++) {
+            for (int step = 0; step < perSampleIterations; step++) {
                 LinearFunction affine = getRandomAffineTransformation(affineTransformations);
                 Transformation variation = getRandomVariation(variations);
                 currentPoint = transformPoint(currentPoint, affine, variation);
