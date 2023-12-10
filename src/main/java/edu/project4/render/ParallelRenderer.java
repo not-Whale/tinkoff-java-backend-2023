@@ -30,13 +30,13 @@ public class ParallelRenderer implements Renderer {
         int samples, int perSampleIterations, int symmetry) {
 
         try (ExecutorService executorService = Executors.newCachedThreadPool()) {
-            final int samplesPerThread = samples / coreNumber;
+            int samplesPerThread = samples / coreNumber;
             List<Callable<Void>> tasks = new ArrayList<>();
             for (int i = 0; i < coreNumber; i++) {
                 double splitSize = world.width() / coreNumber;
-                final double startPoint = i * (splitSize) + world.x();
-                final double endPoint = (i + 1) * (splitSize) + world.x();
-                final Rect threadWorld = new Rect(startPoint, endPoint, splitSize, world.height());
+                double startPoint = i * (splitSize) + world.x();
+                double endPoint = (i + 1) * (splitSize) + world.x();
+                Rect threadWorld = new Rect(startPoint, endPoint, splitSize, world.height());
                 Callable<Void> splitTask = getSplitTask(canvas, threadWorld,
                     affineTransformations, variations, finalAffine,
                     samplesPerThread, perSampleIterations, symmetry
