@@ -34,6 +34,8 @@ public class SimpleRenderer implements Renderer {
     public FractalImage render(FractalImage canvas, Rect world,
         List<LinearFunction> affineTransformations, Transformation variation,
         int samples, short perSampleIterations, int symmetry) {
+        // TODO: попробовать список вариаций
+        // TODO: поправить итерации на семпл до инта
 
         for (int i = 0; i < samples; i++) {
             Point currentPoint = getRandomPointFromRect(world);
@@ -57,12 +59,7 @@ public class SimpleRenderer implements Renderer {
                     if (pixel == null) {
                         continue;
                     }
-                    if (pixel.hitCount() == 0) {
-                        ThreadLocalRandom random = ThreadLocalRandom.current();
-                        pixel.setColor(COLORS[random.nextInt(0, COLORS.length)]);
-                    } else {
-                        pixel.mixColor(affine.color());
-                    }
+                    pixel.mixColor(affine.color());
                     pixel.hit();
                 }
             }
