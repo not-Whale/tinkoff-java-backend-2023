@@ -124,7 +124,6 @@ public class RenderTest {
 
     private static Pixel getChangedPixel(FractalImage canvas) {
         Pixel changedPixel = null;
-        Pixel[][] data = canvas.data();
         for (int i = 0; i < canvas.width(); i++) {
             for (int j = 0; j < canvas.height(); j++) {
                 Pixel currenPixel = canvas.pixel(i, j);
