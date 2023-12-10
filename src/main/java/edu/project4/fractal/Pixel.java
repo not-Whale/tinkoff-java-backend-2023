@@ -1,8 +1,12 @@
 package edu.project4.fractal;
 
 import edu.project4.colors.Color;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Pixel {
+    public Lock lock = new ReentrantLock();
+
     private Color color;
 
     private int hitCount;
