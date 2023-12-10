@@ -36,9 +36,8 @@ public class ParallelRenderer implements Renderer {
             for (int i = 0; i < coreNumber; i++) {
                 double splitSize = world.width() / coreNumber;
                 double startPoint = i * (splitSize) + world.x();
-                double endPoint = (i + 1) * (splitSize) + world.x();
-                Rect threadWorld = new Rect(startPoint, endPoint, splitSize, world.height());
-                Callable<Void> splitTask = getSplitTask(canvas, threadWorld,
+                Rect threadWorld = new Rect(startPoint, 0, splitSize, world.height());
+                Callable<Void> splitTask = getSplitTask(canvas, threadWorld, world,
                     affineTransformations, variations, finalAffine,
                     samplesPerThread, perSampleIterations, symmetry
                 );
@@ -53,7 +52,7 @@ public class ParallelRenderer implements Renderer {
         }
     }
 
-    private Callable<Void> getSplitTask(FractalImage canvas, Rect threadWorld,
+    private Callable<Void> getSplitTask(FractalImage canvas, Rect threadWorld, Rect world,
         List<LinearFunction> affineTransformations, List<Transformation> variations, LinearFunction finalAffine,
         int samplesPerThread, int perSampleIterations, int symmetry) {
         return () -> {
@@ -70,11 +69,11 @@ public class ParallelRenderer implements Renderer {
                         Point pointRotated = rotatePoint(currentPoint, theta);
                         theta += 2 * PI / symmetry;
 
-                        if (!threadWorld.contains(pointRotated)) {
+                        if (!world.contains(pointRotated)) {
                             continue;
                         }
 
-                        Pixel pixel = mapPointToPixel(canvas, threadWorld, pointRotated);
+                        Pixel pixel = mapPointToPixel(canvas, world, pointRotated);
                         if (pixel == null) {
                             continue;
                         }
