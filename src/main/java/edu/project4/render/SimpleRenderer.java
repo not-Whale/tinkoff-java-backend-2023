@@ -12,6 +12,7 @@ import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
+@SuppressWarnings("ParameterNumber")
 public class SimpleRenderer implements Renderer {
     @Override
     public void render(FractalImage canvas, Rect world,
