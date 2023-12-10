@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 public class ImageUtilsTest {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    @DisplayName("Сохранение картинки.")
     @Test
+    @DisplayName("Сохранение картинки.")
     void saveImage() {
         // given
         FractalImage fractalImage = FractalImage.create(1920, 1080);
@@ -36,8 +36,8 @@ public class ImageUtilsTest {
         }
     }
 
-    @DisplayName("Сохранение в разных форматах.")
     @Test
+    @DisplayName("Сохранение в разных форматах.")
     void saveFormats() {
         // given
         FractalImage fractalImage = FractalImage.create(1920, 1080);
