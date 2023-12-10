@@ -18,7 +18,11 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public class ParallelRenderer implements Renderer {
-    private static final int CORE_NUMBER = 8;
+    private final int coreNumber;
+
+    public ParallelRenderer(int coreNumber) {
+        this.coreNumber = coreNumber;
+    }
 
     @Override
     public void render(FractalImage canvas, Rect world,
@@ -26,11 +30,11 @@ public class ParallelRenderer implements Renderer {
         int samples, int perSampleIterations, int symmetry) {
 
         try (ExecutorService executorService = Executors.newCachedThreadPool()) {
-            final int samplesPerThread = samples / CORE_NUMBER;
+            final int samplesPerThread = samples / coreNumber;
             List<Callable<Void>> tasks = new ArrayList<>();
 
-            for (int i = 0; i < CORE_NUMBER; i++) {
-                double splitSize = world.width() / CORE_NUMBER;
+            for (int i = 0; i < coreNumber; i++) {
+                double splitSize = world.width() / coreNumber;
                 final double startPoint = i * (splitSize) + world.x();
                 final double endPoint = (i + 1) * (splitSize) + world.x();
                 final Rect threadWorld = new Rect(startPoint, endPoint, splitSize, world.height());
