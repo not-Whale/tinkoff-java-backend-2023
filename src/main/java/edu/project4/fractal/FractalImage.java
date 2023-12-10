@@ -3,7 +3,7 @@ package edu.project4.fractal;
 // TODO: сделать лок на коллекцию
 public record FractalImage(Pixel[][] data, int width, int height) {
     public static FractalImage create(int width, int height) {
-        Pixel[][] data = new Pixel[width][height];
+        Pixel[][] data = new Pixel[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 data[i][j] = new Pixel();

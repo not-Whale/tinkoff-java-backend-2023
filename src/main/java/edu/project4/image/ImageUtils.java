@@ -17,8 +17,8 @@ public final class ImageUtils {
 
     public static void save(FractalImage canvas, Path filename, ImageFormat format) {
         BufferedImage image = new BufferedImage(canvas.width(), canvas.height(), BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < canvas.height(); i++) {
-            for (int j = 0; j < canvas.width(); j++) {
+        for (int i = 0; i < canvas.width(); i++) {
+            for (int j = 0; j < canvas.height(); j++) {
                 Pixel pixel = canvas.pixel(i, j);
                 Color color = pixel.color();
                 int rgb = (color.r() << RED_SHIFT) + (color.g() << GREEN_SHIFT) + color.b();
