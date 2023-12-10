@@ -32,45 +32,16 @@ public class ParallelRenderer implements Renderer {
         try (ExecutorService executorService = Executors.newCachedThreadPool()) {
             final int samplesPerThread = samples / coreNumber;
             List<Callable<Void>> tasks = new ArrayList<>();
-
             for (int i = 0; i < coreNumber; i++) {
                 double splitSize = world.width() / coreNumber;
                 final double startPoint = i * (splitSize) + world.x();
                 final double endPoint = (i + 1) * (splitSize) + world.x();
                 final Rect threadWorld = new Rect(startPoint, endPoint, splitSize, world.height());
-
-                Callable<Void> task = () -> {
-                    for (int num = 0; num < samplesPerThread; num++) {
-                        Point currentPoint = getRandomPointFromRect(threadWorld);
-
-                        for (int step = 0; step < perSampleIterations; step++) {
-                            LinearFunction affine = getRandomAffineTransformation(affineTransformations);
-                            Transformation variation = getRandomVariation(variations);
-                            currentPoint = transformPoint(currentPoint, affine, variation, finalAffine);
-
-                            double theta = 0.0;
-                            for (int s = 0; s < symmetry; s++) {
-                                Point pointRotated = rotatePoint(currentPoint, theta);
-                                theta += 2 * PI / symmetry;
-
-                                if (!threadWorld.contains(pointRotated)) {
-                                    continue;
-                                }
-
-                                Pixel pixel = mapPointToPixel(canvas, world, pointRotated);
-                                if (pixel == null) {
-                                    continue;
-                                }
-                                pixel.lock.lock();
-                                pixel.mixColor(affine.color());
-                                pixel.hit();
-                                pixel.lock.unlock();
-                            }
-                        }
-                    }
-                    return null;
-                };
-                tasks.add(task);
+                Callable<Void> splitTask = getSplitTask(canvas, threadWorld,
+                    affineTransformations, variations, finalAffine,
+                    samplesPerThread, perSampleIterations, symmetry
+                );
+                tasks.add(splitTask);
             }
             var futures = executorService.invokeAll(tasks);
             for (var future : futures) {
@@ -79,6 +50,42 @@ public class ParallelRenderer implements Renderer {
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Callable<Void> getSplitTask(FractalImage canvas, Rect threadWorld,
+        List<LinearFunction> affineTransformations, List<Transformation> variations, LinearFunction finalAffine,
+        int samplesPerThread, int perSampleIterations, int symmetry) {
+        return () -> {
+            for (int num = 0; num < samplesPerThread; num++) {
+                Point currentPoint = getRandomPointFromRect(threadWorld);
+
+                for (int step = 0; step < perSampleIterations; step++) {
+                    LinearFunction affine = getRandomAffineTransformation(affineTransformations);
+                    Transformation variation = getRandomVariation(variations);
+                    currentPoint = transformPoint(currentPoint, affine, variation, finalAffine);
+
+                    double theta = 0.0;
+                    for (int s = 0; s < symmetry; s++) {
+                        Point pointRotated = rotatePoint(currentPoint, theta);
+                        theta += 2 * PI / symmetry;
+
+                        if (!threadWorld.contains(pointRotated)) {
+                            continue;
+                        }
+
+                        Pixel pixel = mapPointToPixel(canvas, threadWorld, pointRotated);
+                        if (pixel == null) {
+                            continue;
+                        }
+                        pixel.lock.lock();
+                        pixel.mixColor(affine.color());
+                        pixel.hit();
+                        pixel.lock.unlock();
+                    }
+                }
+            }
+            return null;
+        };
     }
 
     private Point getRandomPointFromRect(Rect world) {
