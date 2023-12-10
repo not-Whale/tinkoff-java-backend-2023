@@ -25,8 +25,13 @@ public final class ImageUtils {
                 image.setRGB(i, j, rgb);
             }
         }
+        String formatName = switch (format) {
+            case PNG -> "png";
+            case BMP -> "bmp";
+            case JPEG -> "jpeg";
+        };
         try {
-            ImageIO.write(image, "png", filename.toFile());
+            ImageIO.write(image, formatName, filename.toFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
