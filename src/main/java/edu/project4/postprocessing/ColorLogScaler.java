@@ -6,6 +6,12 @@ import edu.project4.fractal.Pixel;
 import static java.lang.Math.log10;
 
 public class ColorLogScaler implements PostProcessor {
+    private final int scaleCoefficient;
+
+    public ColorLogScaler(int scale) {
+        this.scaleCoefficient = scale;
+    }
+
     @Override
     public void process(FractalImage canvas) {
         for (int i = 0; i < canvas.height(); i++) {
@@ -25,6 +31,6 @@ public class ColorLogScaler implements PostProcessor {
     }
 
     private int scale(int color, int hitCount) {
-        return (int) (3* color * (log10(hitCount) / hitCount));
+        return (int) (scaleCoefficient * color * (log10(hitCount) / hitCount));
     }
 }
