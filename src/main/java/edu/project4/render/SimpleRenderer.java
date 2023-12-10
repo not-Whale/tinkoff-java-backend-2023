@@ -32,9 +32,8 @@ public class SimpleRenderer implements Renderer {
 
     @Override
     public FractalImage render(FractalImage canvas, Rect world,
-        List<LinearFunction> affineTransformations, Transformation variation,
+        List<LinearFunction> affineTransformations, List<Transformation> variations,
         int samples, short perSampleIterations, int symmetry) {
-        // TODO: попробовать список вариаций
         // TODO: поправить итерации на семпл до инта
 
         for (int i = 0; i < samples; i++) {
@@ -42,6 +41,7 @@ public class SimpleRenderer implements Renderer {
 
             for (short step = 0; step < perSampleIterations; step++) {
                 LinearFunction affine = getRandomAffineTransformation(affineTransformations);
+                Transformation variation = getRandomVariation(variations);
                 currentPoint = transformPoint(currentPoint, affine, variation);
                 // TODO: affine FINAL transformation
 
@@ -87,6 +87,11 @@ public class SimpleRenderer implements Renderer {
             offset += affine.probability();
         }
         return affineTransformations.get(0);
+    }
+
+    private Transformation getRandomVariation(List<Transformation> variations) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        return variations.get(random.nextInt(0, variations.size()));
     }
 
     private Point transformPoint(Point currentPoint, LinearFunction affineTransformation, Transformation variation) {
