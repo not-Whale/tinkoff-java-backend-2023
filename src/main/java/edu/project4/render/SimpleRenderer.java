@@ -35,7 +35,6 @@ public class SimpleRenderer implements Renderer {
                         continue;
                     }
 
-                    // TODO: лок на пиксель во время работы
                     Pixel pixel = mapPointToPixel(canvas, world, pointRotated);
                     if (pixel == null) {
                         continue;
