@@ -17,6 +17,7 @@ import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
+@SuppressWarnings("ParameterNumber")
 public class ParallelRenderer implements Renderer {
     private final int coreNumber;
 

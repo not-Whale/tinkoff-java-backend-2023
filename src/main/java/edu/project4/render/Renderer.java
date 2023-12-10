@@ -6,6 +6,7 @@ import edu.project4.processing.LinearFunction;
 import edu.project4.processing.Transformation;
 import java.util.List;
 
+@SuppressWarnings("ParameterNumber")
 @FunctionalInterface
 public interface Renderer {
     default void render(FractalImage canvas, Rect world,
