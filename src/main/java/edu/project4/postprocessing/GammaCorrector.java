@@ -50,6 +50,6 @@ public class GammaCorrector implements PostProcessor {
     private int correct(int color, double gamma) {
         double b = color / 255.0;
         double correctedB = pow(b, 1 / gamma);
-        return (int) correctedB * 255;
+        return (int) (correctedB * 255);
     }
 }
