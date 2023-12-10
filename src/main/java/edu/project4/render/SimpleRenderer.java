@@ -14,7 +14,7 @@ import static java.lang.Math.sin;
 
 public class SimpleRenderer implements Renderer {
     @Override
-    public FractalImage render(FractalImage canvas, Rect world,
+    public void render(FractalImage canvas, Rect world,
         List<LinearFunction> affineTransformations, List<Transformation> variations, LinearFunction finalAffine,
         int samples, int perSampleIterations, int symmetry) {
 
@@ -45,9 +45,6 @@ public class SimpleRenderer implements Renderer {
                 }
             }
         }
-
-        // TODO: сделать фабрику
-        return canvas;
     }
 
     private Point getRandomPointFromRect(Rect world) {
