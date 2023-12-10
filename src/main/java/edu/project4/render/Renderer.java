@@ -10,11 +10,11 @@ import java.util.List;
 public interface Renderer {
     default FractalImage render(FractalImage canvas, Rect world,
         List<LinearFunction> affineTransformations, List<Transformation> variations,
-        int samples, short perSampleIterations) {
+        int samples, int perSampleIterations) {
         return render(canvas, world, affineTransformations, variations, samples, perSampleIterations, 1);
     }
 
     FractalImage render(FractalImage canvas, Rect world,
         List<LinearFunction> affineTransformations, List<Transformation> variations,
-        int samples, short perSampleIterations, int symmetry);
+        int samples, int perSampleIterations, int symmetry);
 }
