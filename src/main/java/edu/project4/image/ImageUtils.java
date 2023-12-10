@@ -5,6 +5,7 @@ import edu.project4.fractal.FractalImage;
 import edu.project4.fractal.Pixel;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import javax.imageio.ImageIO;
 
@@ -31,6 +32,7 @@ public final class ImageUtils {
             case JPEG -> "jpeg";
         };
         try {
+            Files.createDirectories(filename.getParent());
             ImageIO.write(image, formatName, filename.toFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
