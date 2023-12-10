@@ -30,8 +30,8 @@ public class GammaCorrector implements PostProcessor {
 
     @Override
     public void process(FractalImage canvas) {
-        for (int i = 0; i < canvas.height(); i++) {
-            for (int j = 0; j < canvas.width(); j++) {
+        for (int i = 0; i < canvas.width(); i++) {
+            for (int j = 0; j < canvas.height(); j++) {
                 Pixel pixel = canvas.pixel(i, j);
                 Color color = pixel.color();
                 pixel.setColor(correctColor(color));
