@@ -14,22 +14,6 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public class SimpleRenderer implements Renderer {
-    private static final Color[] COLORS = new Color[] {
-        new Color(0, 0, 0),
-        new Color(0, 0, 255),
-        new Color(0, 255, 0),
-        new Color(255, 0, 0),
-        new Color(255, 0, 255),
-        new Color(255, 255, 0),
-        new Color(0, 255, 255),
-        new Color(128, 0, 255),
-        new Color(128, 255, 0),
-        new Color(0, 128, 255),
-        new Color(255, 128, 0),
-        new Color(0, 255, 128),
-        new Color(255, 0, 128)
-    };
-
     @Override
     public FractalImage render(FractalImage canvas, Rect world,
         List<LinearFunction> affineTransformations, List<Transformation> variations,
