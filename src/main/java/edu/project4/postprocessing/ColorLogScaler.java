@@ -25,6 +25,6 @@ public class ColorLogScaler implements PostProcessor {
     }
 
     private int scale(int color, int hitCount) {
-        return (int) (5 * color * (log10(hitCount) / hitCount));
+        return (int) (3* color * (log10(hitCount) / hitCount));
     }
 }
