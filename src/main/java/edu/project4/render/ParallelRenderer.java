@@ -119,8 +119,8 @@ public class ParallelRenderer implements Renderer {
         if (!world.contains(point)) {
             return null;
         }
-        int pixelX = (int) ((point.x() + 1) * canvas.width() / 2);
-        int pixelY = (int) ((point.y() + 1) * canvas.height() / 2);
+        int pixelX = (int) ((point.x() - world.x()) * canvas.width() / world.width());
+        int pixelY = (int) ((point.y() - world.y()) * canvas.height() / world.height());
         if (!canvas.contains(pixelX, pixelY)) {
             return null;
         }
