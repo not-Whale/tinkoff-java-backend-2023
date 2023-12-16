@@ -157,6 +157,7 @@ public class CacheProxy implements AutoCloseable {
         @Override
         public void close() {
             cachePath.toFile().delete();
+            ROOT_CACHE_PATH.toFile().delete();
         }
     }
 }

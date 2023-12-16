@@ -33,7 +33,7 @@ public class CacheProxyTest {
             proxy1.fib(6);
             assertThat(CACHE_PATH.toFile().list().length).isEqualTo(2);
         }
-        assertThat(CACHE_PATH.toFile().list().length).isEqualTo(0);
+        assertThat(CACHE_PATH.toFile().exists()).isFalse();
     }
 
     @Test
@@ -45,23 +45,23 @@ public class CacheProxyTest {
                 fibonacciCalculator1,
                 FibCalculator.class
             );
-            assertThat(CACHE_PATH.toFile().list().length).isEqualTo(0);
+            assertThat(CACHE_PATH.toFile().exists()).isFalse();
 
             proxy1.fib(10);
             proxy1.fib(10);
-            assertThat(CACHE_PATH.toFile().list().length).isEqualTo(0);
+            assertThat(CACHE_PATH.toFile().exists()).isFalse();
 
             FibCalculator proxy2 = (FibCalculator) cacheProxy.create(
                 fibonacciCalculator2,
                 FibCalculator.class
             );
-            assertThat(CACHE_PATH.toFile().list().length).isEqualTo(0);
+            assertThat(CACHE_PATH.toFile().exists()).isFalse();
 
             proxy1.fib(5);
             proxy1.fib(6);
-            assertThat(CACHE_PATH.toFile().list().length).isEqualTo(0);
+            assertThat(CACHE_PATH.toFile().exists()).isFalse();
         }
-        assertThat(CACHE_PATH.toFile().list().length).isEqualTo(0);
+        assertThat(CACHE_PATH.toFile().exists()).isFalse();
     }
 
     private interface FibCalculator {
