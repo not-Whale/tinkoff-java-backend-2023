@@ -77,33 +77,6 @@ public class StatsCollectorTest {
         });
     }
 
-    @Test
-    @DisplayName("Однопоточный вариант чтения.")
-    void readNotParallel() {
-        // given
-        StatsCollector statsCollector = new StatsCollector(true);
-
-        // when
-        for (int i = 0; i < 1_000; i++) {
-            SecureRandom random = new SecureRandom();
-            double[] data = new double[10];
-            for (int j = 0; j < 10; j++) {
-                data[j] = random.nextDouble();
-            }
-            statsCollector.push(AVG, data);
-            statsCollector.push(SUM, data);
-            statsCollector.push(MIN, data);
-            statsCollector.push(MAX, data);
-        }
-
-        // then
-        for (int i = 0; i < 1_600_000; i++) {
-            for (var metric : statsCollector.stats()) {
-                // some metrics analytics
-            }
-        }
-    }
-
     private static Callable<Void> getReadTasks(StatsCollector statsCollector, int iter) {
         return () -> {
             for (int i = 0; i < iter; i++) {
