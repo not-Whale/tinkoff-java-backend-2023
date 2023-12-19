@@ -14,14 +14,6 @@ public class LockDatabase implements PersonDatabase {
 
     private final Map<String, List<Person>> phoneMap = new HashMap<>();
 
-    private String reverseIdToString(int id) {
-        return new StringBuilder(String.valueOf(id)).reverse().toString();
-    }
-
-    private String reverseString(String s) {
-        return new StringBuilder(s).reverse().toString();
-    }
-
     public int size() {
         return idMap.size();
     }
@@ -91,5 +83,13 @@ public class LockDatabase implements PersonDatabase {
     @Override
     public synchronized List<Person> findByPhone(String phone) {
         return List.copyOf(phoneMap.getOrDefault(reverseString(phone), List.of()));
+    }
+
+    private String reverseIdToString(int id) {
+        return new StringBuilder(String.valueOf(id)).reverse().toString();
+    }
+
+    private String reverseString(String s) {
+        return new StringBuilder(s).reverse().toString();
     }
 }
