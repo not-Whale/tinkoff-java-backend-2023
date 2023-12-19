@@ -21,53 +21,20 @@ public class LockDatabase implements PersonDatabase {
     @Override
     public synchronized void add(Person person) {
         if (person.name() != null && person.address() != null && person.phoneNumber() != null) {
-            // id map add
-            idMap.put(reverseIdToString(person.id()), person);
-
-            // name map add
-            String nameKey = reverseString(person.name());
-            List<Person> nameList = nameMap.getOrDefault(nameKey, new ArrayList<>());
-            nameList.add(person);
-            nameMap.put(nameKey, nameList);
-
-            // address map add
-            String addressKey = reverseString(person.address());
-            List<Person> addressList = addressMap.getOrDefault(addressKey, new ArrayList<>());
-            addressList.add(person);
-            addressMap.put(addressKey, addressList);
-
-            // phone map add
-            String phoneKey = reverseString(person.phoneNumber());
-            List<Person> phoneList = phoneMap.getOrDefault(phoneKey, new ArrayList<>());
-            phoneList.add(person);
-            phoneMap.put(phoneKey, phoneList);
+            addPersonToIdMap(person);
+            addPersonToNameMap(person);
+            addPersonToAddressMap(person);
+            addPersonToPhoneMap(person);
         }
     }
 
     @Override
     public synchronized void delete(int id) {
         Person person = idMap.get(reverseIdToString(id));
-
-        // id map remove
-        idMap.remove(reverseIdToString(id));
-
-        // name map remove
-        String nameKey = reverseString(person.name());
-        List<Person> nameList = nameMap.getOrDefault(nameKey, new ArrayList<>());
-        nameList.remove(person);
-        nameMap.put(nameKey, nameList);
-
-        // address map remove
-        String addressKey = reverseString(person.address());
-        List<Person> addressList = addressMap.getOrDefault(addressKey, new ArrayList<>());
-        addressList.remove(person);
-        addressMap.put(addressKey, addressList);
-
-        // phone map remove
-        String phoneKey = reverseString(person.phoneNumber());
-        List<Person> phoneList = phoneMap.getOrDefault(phoneKey, new ArrayList<>());
-        phoneList.remove(person);
-        phoneMap.put(phoneKey, phoneList);
+        removePersonFromIdMapById(id);
+        removePersonFromNameMap(person);
+        removePersonFromAddressMap(person);
+        removePersonFromPhoneMap(person);
     }
 
     @Override
@@ -83,6 +50,56 @@ public class LockDatabase implements PersonDatabase {
     @Override
     public synchronized List<Person> findByPhone(String phone) {
         return List.copyOf(phoneMap.getOrDefault(reverseString(phone), List.of()));
+    }
+
+    private void removePersonFromPhoneMap(Person person) {
+        String phoneKey = reverseString(person.phoneNumber());
+        List<Person> phoneList = phoneMap.getOrDefault(phoneKey, new ArrayList<>());
+        phoneList.remove(person);
+        phoneMap.put(phoneKey, phoneList);
+    }
+
+    private void removePersonFromAddressMap(Person person) {
+        String addressKey = reverseString(person.address());
+        List<Person> addressList = addressMap.getOrDefault(addressKey, new ArrayList<>());
+        addressList.remove(person);
+        addressMap.put(addressKey, addressList);
+    }
+
+    private void removePersonFromNameMap(Person person) {
+        String nameKey = reverseString(person.name());
+        List<Person> nameList = nameMap.getOrDefault(nameKey, new ArrayList<>());
+        nameList.remove(person);
+        nameMap.put(nameKey, nameList);
+    }
+
+    private void removePersonFromIdMapById(int id) {
+        idMap.remove(reverseIdToString(id));
+    }
+
+    private void addPersonToPhoneMap(Person person) {
+        String phoneKey = reverseString(person.phoneNumber());
+        List<Person> phoneList = phoneMap.getOrDefault(phoneKey, new ArrayList<>());
+        phoneList.add(person);
+        phoneMap.put(phoneKey, phoneList);
+    }
+
+    private void addPersonToAddressMap(Person person) {
+        String addressKey = reverseString(person.address());
+        List<Person> addressList = addressMap.getOrDefault(addressKey, new ArrayList<>());
+        addressList.add(person);
+        addressMap.put(addressKey, addressList);
+    }
+
+    private void addPersonToNameMap(Person person) {
+        String nameKey = reverseString(person.name());
+        List<Person> nameList = nameMap.getOrDefault(nameKey, new ArrayList<>());
+        nameList.add(person);
+        nameMap.put(nameKey, nameList);
+    }
+
+    private void addPersonToIdMap(Person person) {
+        idMap.put(reverseIdToString(person.id()), person);
     }
 
     private String reverseIdToString(int id) {
