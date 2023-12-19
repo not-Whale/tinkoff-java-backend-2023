@@ -17,10 +17,6 @@ public class SharedCounter {
         counter.incrementAndGet();
     }
 
-    public void decrement() {
-        counter.decrementAndGet();
-    }
-
     public long getValue() {
         return counter.get();
     }
