@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayName("Многопоточная система сбора статистики.")
-
 public class StatsCollectorTest {
     @Test
     @DisplayName("Данные записываются корректно.")
@@ -80,7 +79,7 @@ public class StatsCollectorTest {
 
     @Test
     @DisplayName("Однопоточный вариант чтения.")
-    void readNotParallel() throws InterruptedException {
+    void readNotParallel() {
         // given
         StatsCollector statsCollector = new StatsCollector(true);
 
