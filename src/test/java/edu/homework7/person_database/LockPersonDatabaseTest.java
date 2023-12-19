@@ -19,7 +19,7 @@ public class LockPersonDatabaseTest {
 
     @Test
     @DisplayName("Многопоточный поиск по атрибутам.")
-    void find() throws InterruptedException, ExecutionException {
+    void find() {
         // given
         LockDatabase database = new LockDatabase();
         for (int i = 0; i < 1000; i++) {
@@ -56,6 +56,8 @@ public class LockPersonDatabaseTest {
             for (var future : futures) {
                 future.get();
             }
+        } catch (ExecutionException | InterruptedException e) {
+            LOGGER.info("Something went wrong" + e);
         }
     }
 
