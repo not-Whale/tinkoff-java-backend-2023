@@ -17,33 +17,50 @@ public class DirectoryFilesCounter extends RecursiveTask<DirectoryState> {
 
     @Override
     public DirectoryState compute() {
-        int nestedFilesCounter = 0;
-        List<Path> nestedDirectories = new ArrayList<>();
-        List<DirectoryFilesCounter> tasks = new ArrayList<>();
         String[] nestedFilesNames = path.toFile().list();
         if (nestedFilesNames == null) {
             return new DirectoryState(1, new Path[0]);
         }
-        for (String name : nestedFilesNames) {
-            Path currentPath = path.resolve(name);
-            if (currentPath.toFile().isDirectory()) {
-                DirectoryFilesCounter nestedDirTask = new DirectoryFilesCounter(currentPath, nestedFilesRequired);
-                nestedDirTask.fork();
-                tasks.add(nestedDirTask);
-            } else {
-                nestedFilesCounter++;
-            }
-        }
-        for (DirectoryFilesCounter task : tasks) {
+
+        int nestedFilesCounter = getNestedFilesNumber(nestedFilesNames);
+        DirectoryFilesCounter[] recursiveTasks = getRecursiveTasks(nestedFilesNames);
+
+        List<Path> nestedDirectories = new ArrayList<>();
+        for (DirectoryFilesCounter task : recursiveTasks) {
             DirectoryState currentState = task.join();
             if (currentState.nestedFiles() > nestedFilesRequired) {
                 nestedDirectories.addAll(List.of(currentState.nestedDirectories()));
             }
             nestedFilesCounter += currentState.nestedFiles();
         }
+
         if (nestedFilesCounter > nestedFilesRequired) {
             nestedDirectories.add(path);
         }
         return new DirectoryState(nestedFilesCounter, nestedDirectories.toArray(Path[]::new));
+    }
+
+    private int getNestedFilesNumber(String[] nestedFilesNames) {
+        int nestedFilesCounter = 0;
+        for (String name : nestedFilesNames) {
+            Path currentPath = path.resolve(name);
+            if (!currentPath.toFile().isDirectory()) {
+                nestedFilesCounter++;
+            }
+        }
+        return nestedFilesCounter;
+    }
+
+    private DirectoryFilesCounter[] getRecursiveTasks(String[] nestedFilesNames) {
+        List<DirectoryFilesCounter> tasks = new ArrayList<>();
+        for (String name : nestedFilesNames) {
+            Path currentPath = path.resolve(name);
+            if (currentPath.toFile().isDirectory()) {
+                DirectoryFilesCounter nestedDirTask = new DirectoryFilesCounter(currentPath, nestedFilesRequired);
+                nestedDirTask.fork();
+                tasks.add(nestedDirTask);
+            }
+        }
+        return tasks.toArray(DirectoryFilesCounter[]::new);
     }
 }
