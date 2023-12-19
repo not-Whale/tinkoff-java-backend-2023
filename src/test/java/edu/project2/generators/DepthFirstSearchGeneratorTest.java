@@ -61,7 +61,7 @@ public class DepthFirstSearchGeneratorTest {
         }, {
             new Cell(3, 0, WALL),
             new Cell(3, 1, PASSAGE),
-            new Cell(3, 2, WALL),
+            new Cell(3, 2, PASSAGE),
             new Cell(3, 3, PASSAGE),
             new Cell(3, 4, PASSAGE),
             new Cell(3, 5, PASSAGE),
@@ -74,7 +74,7 @@ public class DepthFirstSearchGeneratorTest {
             new Cell(4, 0, WALL),
             new Cell(4, 1, PASSAGE),
             new Cell(4, 2, WALL),
-            new Cell(4, 3, PASSAGE),
+            new Cell(4, 3, WALL),
             new Cell(4, 4, WALL),
             new Cell(4, 5, WALL),
             new Cell(4, 6, WALL),

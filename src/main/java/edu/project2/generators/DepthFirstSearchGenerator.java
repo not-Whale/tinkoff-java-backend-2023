@@ -25,13 +25,14 @@ public class DepthFirstSearchGenerator implements Generator {
         Maze maze = new Maze(height, width);
         Stack<Cell> stack = new Stack<>();
         ArrayList<Cell> remained = new ArrayList<>(List.of(maze.getPassages()));
-        Collections.shuffle(remained);
 
         Random random;
         if (seed == null) {
-           random = new Random();
+            random = new Random();
+            Collections.shuffle(remained);
         } else {
             random = new Random(seed);
+            Collections.shuffle(remained, random);
         }
 
         stack.push(remained.getFirst());
