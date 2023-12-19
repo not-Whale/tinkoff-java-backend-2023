@@ -43,7 +43,6 @@ public class ClientServerTest {
             "интеллект"
         );
         SecureRandom random = new SecureRandom();
-        ExecutorService executorService = Executors.newCachedThreadPool();
         Callable<Void> sendWord = () -> {
             String word = words.get(random.nextInt(0, words.size()));
             Client client = new Client(word);
@@ -52,7 +51,7 @@ public class ClientServerTest {
             return null;
         };
         var tasks = Stream.generate(() -> sendWord).limit(100).toList();
-        try {
+        try (ExecutorService executorService = Executors.newCachedThreadPool()) {
             List<Future<Void>> futures = executorService.invokeAll(tasks);
             for (var future : futures) {
                 future.get();
