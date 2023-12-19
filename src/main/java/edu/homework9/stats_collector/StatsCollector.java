@@ -24,8 +24,11 @@ public class StatsCollector {
         };
         Metric metric = new Metric(type, data, metricValue);
         lock.writeLock().lock();
-        stats.add(metric);
-        lock.writeLock().unlock();
+        try {
+            stats.add(metric);
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 
     public List<Metric> stats() {
