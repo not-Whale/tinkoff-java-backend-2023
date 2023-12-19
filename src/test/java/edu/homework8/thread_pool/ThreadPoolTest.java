@@ -87,20 +87,19 @@ public class ThreadPoolTest {
 
         @Override
         public void run() {
-            long fibonacci = switch (number) {
-                case 0 -> 0;
-                case 1 -> 1;
-                default -> {
-                    long first = 0;
-                    long second = 1;
-                    for (int i = 2; i < number; i++) {
-                        long next = first + second;
-                        first = second;
-                        second = next;
-                    }
-                    yield second;
+            long fibonacci;
+            if (number == 0) {
+                fibonacci = 0;
+            } else {
+                long first = 1;
+                long second = 1;
+                for (int i = 2; i < number; i++) {
+                    long next = first + second;
+                    first = second;
+                    second = next;
                 }
-            };
+                fibonacci = second;
+            }
             assertThat(fibonacci).isEqualTo(this.fibonacci);
         }
     }
