@@ -1,7 +1,6 @@
 package edu.project2.generators;
 
 import edu.project2.maze.Maze;
-import java.security.SecureRandom;
 import java.util.Random;
 
 public class BinaryTreeGenerator implements Generator {
