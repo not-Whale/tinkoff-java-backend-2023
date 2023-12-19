@@ -18,14 +18,6 @@ public class Database implements PersonDatabase {
 
     private final Map<String, List<Person>> phoneMap = new HashMap<>();
 
-    private String reverseIdToString(int id) {
-        return new StringBuilder(String.valueOf(id)).reverse().toString();
-    }
-
-    private String reverseString(String s) {
-        return new StringBuilder(s).reverse().toString();
-    }
-
     public int size() {
         return idMap.size();
     }
@@ -120,5 +112,13 @@ public class Database implements PersonDatabase {
         } finally {
             lock.readLock().unlock();
         }
+    }
+
+    private String reverseIdToString(int id) {
+        return new StringBuilder(String.valueOf(id)).reverse().toString();
+    }
+
+    private String reverseString(String s) {
+        return new StringBuilder(s).reverse().toString();
     }
 }
