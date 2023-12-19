@@ -18,32 +18,45 @@ public class FilesFilter extends RecursiveTask<Path[]> {
 
     @Override
     public Path[] compute() {
-        List<Path> filteredFiles = new ArrayList<>();
-        List<FilesFilter> tasks = new ArrayList<>();
         String[] nestedFilesNames = path.toFile().list();
-
         if (nestedFilesNames == null) {
             if (filter.test(path)) {
-                filteredFiles.add(path);
-            }
-        } else {
-            for (String name : nestedFilesNames) {
-                Path currentPath = path.resolve(name);
-                if (currentPath.toFile().isDirectory()) {
-                    FilesFilter nestedFilesFilterTask = new FilesFilter(currentPath, filter);
-                    nestedFilesFilterTask.fork();
-                    tasks.add(nestedFilesFilterTask);
-                } else {
-                    if (filter.test(currentPath)) {
-                        filteredFiles.add(currentPath);
-                    }
-                }
+                return new Path[] {path};
+            } else {
+                return new Path[0];
             }
         }
+        
+        FilesFilter[] tasks = getRecursiveTasks(nestedFilesNames);
+        List<Path> filteredFiles = new ArrayList<>(List.of(getNestedFilteredFiles(nestedFilesNames)));
         for (FilesFilter task : tasks) {
             Path[] nestedFilteredFiles = task.join();
             filteredFiles.addAll(List.of(nestedFilteredFiles));
         }
         return filteredFiles.toArray(Path[]::new);
+    }
+
+    private Path[] getNestedFilteredFiles(String[] nestedFilesNames) {
+        List<Path> filteredFiles = new ArrayList<>();
+        for (String name : nestedFilesNames) {
+            Path currentPath = path.resolve(name);
+            if (currentPath.toFile().isFile() && filter.test(currentPath)) {
+                filteredFiles.add(currentPath);
+            }
+        }
+        return filteredFiles.toArray(Path[]::new);
+    }
+
+    private FilesFilter[] getRecursiveTasks(String[] nestedFilesNames) {
+        List<FilesFilter> tasks = new ArrayList<>();
+        for (String name : nestedFilesNames) {
+            Path currentPath = path.resolve(name);
+            if (currentPath.toFile().isDirectory()) {
+                FilesFilter nestedFilesFilterTask = new FilesFilter(currentPath, filter);
+                nestedFilesFilterTask.fork();
+                tasks.add(nestedFilesFilterTask);
+            }
+        }
+        return tasks.toArray(FilesFilter[]::new);
     }
 }
