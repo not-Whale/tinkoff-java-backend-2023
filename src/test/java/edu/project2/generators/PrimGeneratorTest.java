@@ -2,7 +2,6 @@ package edu.project2.generators;
 
 import edu.project2.maze.Cell;
 import edu.project2.maze.Maze;
-import edu.project2.render.SimpleRenderer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static edu.project2.maze.Cell.Type.PASSAGE;
