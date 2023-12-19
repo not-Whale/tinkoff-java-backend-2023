@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("Генерация лабиринта.")
 public class DepthFirstSearchGeneratorTest {
     @Test
-    @DisplayName("Генерация лабиринта с помощью обхода в глубину.")
+    @DisplayName("Генерация с помощью обхода в глубину.")
     void depthFirstSearchGeneratorTest() {
         // given
         DepthFirstSearchGenerator generator = new DepthFirstSearchGenerator(1);
