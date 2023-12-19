@@ -26,7 +26,7 @@ public class FilesFilter extends RecursiveTask<Path[]> {
                 return new Path[0];
             }
         }
-        
+
         FilesFilter[] tasks = getRecursiveTasks(nestedFilesNames);
         List<Path> filteredFiles = new ArrayList<>(List.of(getNestedFilteredFiles(nestedFilesNames)));
         for (FilesFilter task : tasks) {

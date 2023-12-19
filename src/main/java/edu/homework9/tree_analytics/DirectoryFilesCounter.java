@@ -44,7 +44,7 @@ public class DirectoryFilesCounter extends RecursiveTask<DirectoryState> {
         int nestedFilesCounter = 0;
         for (String name : nestedFilesNames) {
             Path currentPath = path.resolve(name);
-            if (!currentPath.toFile().isDirectory()) {
+            if (currentPath.toFile().isFile()) {
                 nestedFilesCounter++;
             }
         }
