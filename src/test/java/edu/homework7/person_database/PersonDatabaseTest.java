@@ -7,12 +7,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Кэширующий сервис для поиска людей по атрибутам. С учетом чтения-записи.")
 public class PersonDatabaseTest {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @Test
     @DisplayName("Многопоточный поиск по атрибутам.")
     void find() throws InterruptedException, ExecutionException {
@@ -84,5 +88,51 @@ public class PersonDatabaseTest {
 
         // then
         assertThat(size).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("Добавление и удаление записей.")
+    void addAndRemovePersons() {
+        // given
+        Database database = new Database();
+        for (int i = 0; i < 100_000; i++) {
+            database.add(new Person(
+                i,
+                "name" + i,
+                "address" + i,
+                "number" + i
+            ));
+        }
+
+        // when
+        Callable<Void> addTask = () -> {
+            for (int i = 0; i < 10_000; i++) {
+                database.add(new Person(
+                    i,
+                    "name" + (100_000 + i),
+                    "address" + (100_000 + i),
+                    "number" + (100_000 + i)
+                ));
+            }
+            return null;
+        };
+
+        Callable<Void> removeTask = () -> {
+            for (int i = 0; i < 10_000; i++) {
+                database.delete(i);
+            }
+            return null;
+        };
+        try (ExecutorService executorService = Executors.newCachedThreadPool()) {
+            var futures = executorService.invokeAll(List.of(addTask, removeTask));
+            for (var future : futures) {
+                future.get();
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            LOGGER.info("Something went wrong" + e);
+        }
+
+        // then
+        assertThat(database.size()).isEqualTo(100_000);
     }
 }
