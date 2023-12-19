@@ -77,9 +77,9 @@ public class StatsCollectorTest {
         });
     }
 
-    private static Callable<Void> getReadTasks(StatsCollector statsCollector, int iter) {
+    private static Callable<Void> getReadTasks(StatsCollector statsCollector, int iterations) {
         return () -> {
-            for (int i = 0; i < iter; i++) {
+            for (int i = 0; i < iterations; i++) {
                 for (var metric : statsCollector.stats()) {
                     // some metrics analytics
                 }
@@ -88,9 +88,9 @@ public class StatsCollectorTest {
         };
     }
 
-    private static Callable<Void> getAddTask(StatsCollector statsCollector, int iter, int dataSize, MetricType type) {
+    private static Callable<Void> getAddTask(StatsCollector statsCollector, int iterations, int dataSize, MetricType type) {
         return () -> {
-            for (int i = 0; i < iter; i++) {
+            for (int i = 0; i < iterations; i++) {
                 ThreadLocalRandom random = ThreadLocalRandom.current();
                 double[] data = new double[dataSize];
                 for (int j = 0; j < dataSize; j++) {
