@@ -20,29 +20,26 @@ public class MonteCarloParallel {
 
     private MonteCarloParallel() {}
 
-    public static double calcPi(long iter, int coreNumber) {
+    public static double calcPi(long iterations, int coreNumber) {
         long circleCount = 0;
-        Callable<Integer> calcPiPartCalc = getPartCalculation(iter / coreNumber);
-        ExecutorService executorService = Executors.newCachedThreadPool();
+        Callable<Integer> calcPiPartCalc = getPartCalculation(iterations / coreNumber);
         var tasks = Stream.generate(() -> calcPiPartCalc).limit(coreNumber).toList();
-        try {
+        try (ExecutorService executorService = Executors.newCachedThreadPool()) {
             List<Future<Integer>> futures = executorService.invokeAll(tasks);
             for (Future<Integer> future : futures) {
                 circleCount += future.get();
             }
         } catch (InterruptedException | ExecutionException e) {
             return 0;
-        } finally {
-            executorService.shutdown();
         }
-        return PI_CALC_COEFFICIENT * (circleCount / (double) iter);
+        return PI_CALC_COEFFICIENT * (circleCount / (double) iterations);
     }
 
-    private static Callable<Integer> getPartCalculation(long iterPart) {
+    private static Callable<Integer> getPartCalculation(long iterationsPerThread) {
         return () -> {
             ThreadLocalRandom random = ThreadLocalRandom.current();
             int circlePartCount = 0;
-            for (long i = 0; i < iterPart; i++) {
+            for (long i = 0; i < iterationsPerThread; i++) {
                 double xDistance = random.nextDouble(0.0, RADIUS * 2) - X_CENTER;
                 double yDistance = random.nextDouble(0.0, RADIUS * 2) - Y_CENTER;
                 double module = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
