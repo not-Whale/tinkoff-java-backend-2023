@@ -6,14 +6,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 public class KruskalGenerator implements Generator {
+    private final Long seed;
+
+    public KruskalGenerator() {
+        this.seed = null;
+    }
+
+    public KruskalGenerator(long seed) {
+        this.seed = seed;
+    }
+
     @Override
     public Maze generate(int height, int width) {
         Maze maze = new Maze(height, width);
-
         ArrayList<Cell> walls = new ArrayList<>(List.of(maze.getWalls()));
-        Collections.shuffle(walls);
+
+        if (seed == null) {
+            Collections.shuffle(walls);
+        } else {
+            Random random = new Random(seed);
+            Collections.shuffle(walls, random);
+        }
 
         ArrayList<HashSet<Cell>> cellsSet = new ArrayList<>();
         for (Cell cell : maze.getPassages()) {
