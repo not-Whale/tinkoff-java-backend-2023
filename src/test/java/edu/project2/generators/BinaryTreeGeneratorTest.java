@@ -1,9 +1,7 @@
 package edu.project2.generators;
 
-import edu.project2.generators.BinaryTreeGenerator;
 import edu.project2.maze.Cell;
 import edu.project2.maze.Maze;
-import edu.project2.render.SimpleRenderer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static edu.project2.maze.Cell.Type.PASSAGE;
@@ -20,8 +18,6 @@ public class BinaryTreeGeneratorTest {
 
         // when
         Maze maze = generator.generate(3, 5);
-
-        SimpleRenderer renderer = new SimpleRenderer();
 
         // then
         assertThat(maze.getWidth()).isEqualTo(11);
