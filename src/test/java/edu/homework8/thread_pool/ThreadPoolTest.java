@@ -93,15 +93,12 @@ public class ThreadPoolTest {
                 default -> {
                     long first = 0;
                     long second = 1;
-                    long third = 1;
-                    int counter = 2;
-                    while (counter != number) {
+                    for (int i = 2; i < number; i++) {
+                        long next = first + second;
                         first = second;
-                        second = third;
-                        third = first + second;
-                        counter++;
+                        second = next;
                     }
-                    yield third;
+                    yield second;
                 }
             };
             assertThat(fibonacci).isEqualTo(this.fibonacci);
