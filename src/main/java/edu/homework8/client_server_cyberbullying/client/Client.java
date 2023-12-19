@@ -19,15 +19,12 @@ public class Client {
     }
 
     public String request() {
-        try (Socket clientSocket = new Socket(SERVER_HOST, SERVER_PORT)) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+        try (Socket clientSocket = new Socket(SERVER_HOST, SERVER_PORT);
+             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))) {
             out.write(message + "\n");
             out.flush();
-            String answer = in.readLine();
-            in.close();
-            out.close();
-            return answer;
+            return in.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

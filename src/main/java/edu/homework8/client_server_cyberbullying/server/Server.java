@@ -18,8 +18,8 @@ public class Server {
     public Server() {}
 
     public void run() {
-        try (ServerSocket server = new ServerSocket(SERVER_PORT)) {
-            ExecutorService executorService = Executors.newFixedThreadPool(CORE_NUMBER);
+        try (ServerSocket server = new ServerSocket(SERVER_PORT);
+             ExecutorService executorService = Executors.newFixedThreadPool(CORE_NUMBER)) {
             while (true) {
                 Socket client = server.accept();
                 executorService.submit(() -> acceptClient(client));
@@ -30,16 +30,13 @@ public class Server {
     }
 
     private void acceptClient(Socket client) {
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+        try (client;
+             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()))) {
             String word = in.readLine();
             String answer = Dictionary.getQuote(word);
             out.write(answer + "\n");
             out.flush();
-            client.close();
-            in.close();
-            out.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
