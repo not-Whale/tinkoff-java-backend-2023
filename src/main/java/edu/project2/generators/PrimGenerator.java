@@ -8,11 +8,27 @@ import java.util.List;
 import java.util.Random;
 
 public class PrimGenerator implements Generator {
+    private final Long seed;
+
+    public PrimGenerator() {
+        this.seed = null;
+    }
+
+    public PrimGenerator(long seed) {
+        this.seed = seed;
+    }
+
     @Override
     public Maze generate(int height, int width) {
         Maze maze = new Maze(height, width);
-        Random random = new Random();
         ArrayList<Cell> remained = new ArrayList<>(List.of(maze.getPassages()));
+
+        Random random;
+        if (seed == null) {
+            random = new Random();
+        } else {
+            random = new Random(seed);
+        }
 
         ArrayList<Cell> visited = new ArrayList<>() {{
             add(remained.removeFirst());
