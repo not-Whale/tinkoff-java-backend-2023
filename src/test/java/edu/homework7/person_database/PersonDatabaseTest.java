@@ -29,7 +29,6 @@ public class PersonDatabaseTest {
         assertThat(database.size()).isEqualTo(1000);
 
         // when
-        ExecutorService executorService = Executors.newCachedThreadPool();
         Callable<Void> find = () -> {
             for (int i = 0; i < 1_000_000; i++) {
                 List<Person> names = database.findByName("name" + (i % 10));
@@ -48,13 +47,11 @@ public class PersonDatabaseTest {
         };
 
         var tasks = Stream.generate(() -> find).limit(8).toList();
-        try {
+        try (ExecutorService executorService = Executors.newCachedThreadPool()) {
             List<Future<Void>> futures = executorService.invokeAll(tasks);
             for (var future : futures) {
                 future.get();
             }
-        } finally {
-            executorService.shutdown();
         }
     }
 
