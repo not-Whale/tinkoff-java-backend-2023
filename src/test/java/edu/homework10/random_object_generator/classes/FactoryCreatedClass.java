@@ -13,12 +13,4 @@ public class FactoryCreatedClass {
     public static FactoryCreatedClass create(boolean booleanField, char charField) {
         return new FactoryCreatedClass(booleanField, charField);
     }
-
-    public boolean getBooleanField() {
-        return booleanField;
-    }
-
-    public char getCharField() {
-        return charField;
-    }
 }

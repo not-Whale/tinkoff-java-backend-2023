@@ -15,20 +15,4 @@ public class POJO {
         this.intField = intField;
         this.longField = longField;
     }
-
-    public byte getByteField() {
-        return byteField;
-    }
-
-    public short getShortField() {
-        return shortField;
-    }
-
-    public int getIntField() {
-        return intField;
-    }
-
-    public long getLongField() {
-        return longField;
-    }
 }
