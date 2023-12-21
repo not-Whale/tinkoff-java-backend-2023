@@ -89,8 +89,7 @@ public class ReflectionBenchmark {
             throw new RuntimeException(e);
         }
     }
-
-    // прямой доступ
+    
     @Benchmark
     public void directAccess(Blackhole bh) {
         String name = student.name();
