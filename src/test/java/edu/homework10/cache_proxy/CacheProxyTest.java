@@ -1,8 +1,11 @@
 package edu.homework10.cache_proxy;
 
-import edu.homework10.cache_proxy.annotations.Cache;
-import org.junit.jupiter.api.Test;
+import edu.homework10.cache_proxy.classes.FC;
+import edu.homework10.cache_proxy.classes.FCDisk;
+import edu.homework10.cache_proxy.classes.FibCalculator;
+import edu.homework10.cache_proxy.classes.FibDiskCalculator;
 import java.nio.file.Path;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CacheProxyTest {
@@ -62,55 +65,5 @@ public class CacheProxyTest {
             assertThat(CACHE_PATH.toFile().exists()).isFalse();
         }
         assertThat(CACHE_PATH.toFile().exists()).isFalse();
-    }
-
-    private interface FibCalculator {
-        @Cache(persist = false)
-        public long fib(int number);
-    }
-
-    private interface FibDiskCalculator {
-        @Cache(persist = true)
-        public long fib(int number);
-    }
-
-    private class FCDisk implements FibDiskCalculator {
-        @Override
-        public long fib(int number) {
-            if (number < 1) {
-                throw new IllegalArgumentException();
-            }
-            long first = 0;
-            long second = 1;
-            if (number == 1) {
-                return first;
-            }
-            for (int i = 2; i < number; i++) {
-                long next = first + second;
-                first = second;
-                second = next;
-            }
-            return second;
-        }
-    }
-
-    private class FC implements FibCalculator {
-        @Override
-        public long fib(int number) {
-            if (number < 1) {
-                throw new IllegalArgumentException();
-            }
-            long first = 0;
-            long second = 1;
-            if (number == 1) {
-                return first;
-            }
-            for (int i = 2; i < number; i++) {
-                long next = first + second;
-                first = second;
-                second = next;
-            }
-            return second;
-        }
     }
 }

@@ -1,8 +1,13 @@
 package edu.homework10.random_object_generator;
 
-import edu.homework10.random_object_generator.annotations.Max;
-import edu.homework10.random_object_generator.annotations.Min;
-import edu.homework10.random_object_generator.annotations.NotNull;
+import edu.homework10.random_object_generator.classes.FactoryCreatedClass;
+import edu.homework10.random_object_generator.classes.MaxAnnotatedClass;
+import edu.homework10.random_object_generator.classes.MinAnnotatedClass;
+import edu.homework10.random_object_generator.classes.MinMaxAnnotatedClass;
+import edu.homework10.random_object_generator.classes.POJO;
+import edu.homework10.random_object_generator.classes.Record;
+import edu.homework10.random_object_generator.classes.StringFieldClassWithNull;
+import edu.homework10.random_object_generator.classes.StringFieldClassWithoutNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -120,123 +125,5 @@ public class RandomObjectGeneratorTest {
                 .isGreaterThan(-10)
                 .isLessThan(10);
         });
-    }
-
-    private static class MinAnnotatedClass {
-        private int value;
-
-        public MinAnnotatedClass(@Min(intValue = 100) int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
-    private static class MaxAnnotatedClass {
-        private long value;
-
-        public MaxAnnotatedClass(@Max(longValue = 100) long value) {
-            this.value = value;
-        }
-
-        public long getValue() {
-            return value;
-        }
-    }
-
-    private static class MinMaxAnnotatedClass {
-        private float value;
-
-        public MinMaxAnnotatedClass(@Min(floatValue = -10) @Max(floatValue = 10) float value) {
-            this.value = value;
-        }
-
-        public float getValue() {
-            return value;
-        }
-    }
-
-    private static class FactoryCreatedClass {
-        private final boolean booleanField;
-
-        private final char charField;
-
-        private FactoryCreatedClass(boolean booleanField, char charField) {
-            this.booleanField = booleanField;
-            this.charField = charField;
-        }
-
-        public static FactoryCreatedClass create(boolean booleanField, char charField) {
-            return new FactoryCreatedClass(booleanField, charField);
-        }
-
-        public boolean getBooleanField() {
-            return booleanField;
-        }
-
-        public char getCharField() {
-            return charField;
-        }
-    }
-
-    private static class StringFieldClassWithNull {
-        private final String stringField;
-
-        public StringFieldClassWithNull(String stringField) {
-            this.stringField = stringField;
-        }
-
-        public String getStringField() {
-            return stringField;
-        }
-    }
-
-    private static class StringFieldClassWithoutNull {
-        private final String stringField;
-
-        public StringFieldClassWithoutNull(@NotNull String stringField) {
-            this.stringField = stringField;
-        }
-
-        public String getStringField() {
-            return stringField;
-        }
-    }
-
-    private record Record(float floatField, double doubleField) {}
-
-    private static class POJO {
-        private byte byteField;
-
-        private short shortField;
-
-        private final int intField;
-
-        private final long longField;
-
-        public POJO(byte byteField, short shortField, int intField, long longField) {
-            this.byteField = byteField;
-            this.shortField = shortField;
-            this.intField = intField;
-            this.longField = longField;
-        }
-
-        public byte getByteField() {
-            return byteField;
-        }
-
-        public short getShortField() {
-            return shortField;
-        }
-
-        public int getIntField() {
-            return intField;
-        }
-
-        public long getLongField() {
-            return longField;
-        }
     }
 }
