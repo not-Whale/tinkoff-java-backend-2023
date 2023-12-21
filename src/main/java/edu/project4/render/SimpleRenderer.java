@@ -64,7 +64,7 @@ public class SimpleRenderer implements Renderer {
             }
             offset += affine.probability();
         }
-        return affineTransformations.get(0);
+        return affineTransformations.getFirst();
     }
 
     private Transformation getRandomVariation(List<Transformation> variations) {
