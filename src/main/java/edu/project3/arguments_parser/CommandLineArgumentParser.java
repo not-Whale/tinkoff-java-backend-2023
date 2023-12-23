@@ -12,13 +12,13 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
 public class CommandLineArgumentParser {
-    private String file;
+    private final String file;
 
-    private LocalDateTime from = null;
+    private final LocalDateTime from;
 
-    private LocalDateTime to = null;
+    private final LocalDateTime to;
 
-    private FormatType formatType;
+    private final FormatType formatType;
 
     private static final String PATH_ARGUMENT_NAME = "path";
 
@@ -39,18 +39,18 @@ public class CommandLineArgumentParser {
             CommandLine cmd = parser.parse(options, args);
             if (cmd.hasOption(PATH_ARGUMENT_NAME)) {
                 this.file = cmd.getOptionValue(PATH_ARGUMENT_NAME);
-            }
-            if (cmd.hasOption(FROM_ARGUMENT_NAME)) {
-                this.from = parseLocalDateTime(cmd.getOptionValue(FROM_ARGUMENT_NAME));
-            }
-            if (cmd.hasOption(TO_ARGUMENT_NAME)) {
-                this.to = parseLocalDateTime(cmd.getOptionValue(TO_ARGUMENT_NAME));
-            }
-            if (cmd.hasOption(FORMAT_ARGUMENT_NAME)) {
-                this.formatType = parseFormatType(cmd.getOptionValue(FORMAT_ARGUMENT_NAME));
             } else {
-                this.formatType = FormatType.STRING;
+                throw new IllegalArgumentException("Source file path must be not null!");
             }
+            this.from = cmd.hasOption(FROM_ARGUMENT_NAME)
+                ? parseLocalDateTime(cmd.getOptionValue(FROM_ARGUMENT_NAME))
+                : null;
+            this.to = cmd.hasOption(TO_ARGUMENT_NAME)
+                ? parseLocalDateTime(cmd.getOptionValue(TO_ARGUMENT_NAME))
+                : null;
+            this.formatType = cmd.hasOption(FORMAT_ARGUMENT_NAME)
+                ? parseFormatType(cmd.getOptionValue(FORMAT_ARGUMENT_NAME))
+                : FormatType.STRING;
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
