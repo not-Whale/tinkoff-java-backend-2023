@@ -74,7 +74,9 @@ public class CommandLineArgumentParser {
             this.savePath = cmd.hasOption(SAVE_PATH_OPTION_NAME)
                 ? cmd.getOptionValue(SAVE_PATH_OPTION_NAME)
                 : null;
-            validateSaveFileName();
+            if (savePath != null) {
+                validateSaveFileName();
+            }
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
