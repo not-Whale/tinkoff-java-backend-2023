@@ -21,13 +21,27 @@ public class CommandLineArgumentParser {
 
     private final FormatType formatType;
 
-    private static final String SOURCE_PATH_ARGUMENT_NAME = "path";
+    private static final String SOURCE_PATH_OPTION_NAME = "path";
 
-    private static final String FROM_ARGUMENT_NAME = "from";
+    public static final String SOURCE_PATH_ARGUMENT_DESCRIPTION = "Path template or URL to NGINX log files.";
 
-    private static final String TO_ARGUMENT_NAME = "to";
+    public static final String SOURCE_PATH_ARGUMENT_NAME = "source file path";
 
-    private static final String FORMAT_ARGUMENT_NAME = "format";
+    private static final String FROM_OPTION_NAME = "from";
+
+    public static final String FROM_ARGUMENT_DESCRIPTION = "Log files analytics from date.";
+
+    public static final String FROM_TO_ARGUMENTS_NAME = "ISO8601 date";
+
+    private static final String TO_OPTION_NAME = "to";
+
+    public static final String TO_ARGUMENT_DESCRIPTION = "Log files analytics to date.";
+
+    private static final String FORMAT_OPTION_NAME = "format";
+
+    public static final String FORMAT_ARGUMENT_DESCRIPTION = "Output format. Default: string.";
+
+    public static final String FORMAT_ARGUMENT_NAME = "markdown/adoc/string";
 
     private static final String MARKDOWN_TYPE = "markdown";
 
@@ -38,19 +52,19 @@ public class CommandLineArgumentParser {
         CommandLineParser parser = new PosixParser();
         try {
             CommandLine cmd = parser.parse(options, args);
-            if (cmd.hasOption(SOURCE_PATH_ARGUMENT_NAME)) {
-                this.sourcePath = cmd.getOptionValue(SOURCE_PATH_ARGUMENT_NAME);
+            if (cmd.hasOption(SOURCE_PATH_OPTION_NAME)) {
+                this.sourcePath = cmd.getOptionValue(SOURCE_PATH_OPTION_NAME);
             } else {
                 throw new IllegalArgumentException("Source file path must be not null!");
             }
-            this.from = cmd.hasOption(FROM_ARGUMENT_NAME)
-                ? parseLocalDateTime(cmd.getOptionValue(FROM_ARGUMENT_NAME))
+            this.from = cmd.hasOption(FROM_OPTION_NAME)
+                ? parseLocalDateTime(cmd.getOptionValue(FROM_OPTION_NAME))
                 : null;
-            this.to = cmd.hasOption(TO_ARGUMENT_NAME)
-                ? parseLocalDateTime(cmd.getOptionValue(TO_ARGUMENT_NAME))
+            this.to = cmd.hasOption(TO_OPTION_NAME)
+                ? parseLocalDateTime(cmd.getOptionValue(TO_OPTION_NAME))
                 : null;
-            this.formatType = cmd.hasOption(FORMAT_ARGUMENT_NAME)
-                ? parseFormatType(cmd.getOptionValue(FORMAT_ARGUMENT_NAME))
+            this.formatType = cmd.hasOption(FORMAT_OPTION_NAME)
+                ? parseFormatType(cmd.getOptionValue(FORMAT_OPTION_NAME))
                 : FormatType.STRING;
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -82,26 +96,26 @@ public class CommandLineArgumentParser {
 
     private Options getCmdOptions() {
         Options options = new Options();
-        Option sourcePathOption = Option.builder(SOURCE_PATH_ARGUMENT_NAME)
-            .argName("source file path")
+        Option sourcePathOption = Option.builder(SOURCE_PATH_OPTION_NAME)
+            .argName(SOURCE_PATH_ARGUMENT_NAME)
             .hasArg()
-            .desc("Path template or URL to NGINX log files.")
+            .desc(SOURCE_PATH_ARGUMENT_DESCRIPTION)
             .required()
             .build();
-        Option fromOption = Option.builder(FROM_ARGUMENT_NAME)
-            .argName("ISO8601 date")
+        Option fromOption = Option.builder(FROM_OPTION_NAME)
+            .argName(FROM_TO_ARGUMENTS_NAME)
             .hasArg()
-            .desc("Log files analytics from date.")
+            .desc(FROM_ARGUMENT_DESCRIPTION)
             .build();
-        Option toOption = Option.builder(TO_ARGUMENT_NAME)
-            .argName("ISO8601 date")
+        Option toOption = Option.builder(TO_OPTION_NAME)
+            .argName(FROM_TO_ARGUMENTS_NAME)
             .hasArg()
-            .desc("Log files analytics to date.")
+            .desc(TO_ARGUMENT_DESCRIPTION)
             .build();
-        Option formatOption = Option.builder(FORMAT_ARGUMENT_NAME)
-            .argName("markdown/adoc/string")
+        Option formatOption = Option.builder(FORMAT_OPTION_NAME)
+            .argName(FORMAT_ARGUMENT_NAME)
             .hasArg()
-            .desc("Output format. Default: string.")
+            .desc(FORMAT_ARGUMENT_DESCRIPTION)
             .build();
         options.addOption(sourcePathOption);
         options.addOption(fromOption);
