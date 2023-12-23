@@ -34,7 +34,7 @@ public class FormatUtils {
 
     public static String reportToADOC(String[] names, String[] values, String statisticName, String valuesName) {
         if (names.length != values.length) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Column's names must match values!");
         }
 
         long tableLength = names.length;
@@ -54,7 +54,7 @@ public class FormatUtils {
 
     public static String reportToMarkdown(String[] names, String[] values, String statisticName, String valuesName) {
         if (names.length != values.length) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Column's names must match values!");
         }
 
         long tableLength = names.length;
