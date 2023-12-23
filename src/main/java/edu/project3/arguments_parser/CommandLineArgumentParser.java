@@ -22,27 +22,35 @@ public class CommandLineArgumentParser {
 
     private final FormatType formatType;
 
+    private final String savePath;
+
     private static final String SOURCE_PATH_OPTION_NAME = "path";
 
-    public static final String SOURCE_PATH_ARGUMENT_DESCRIPTION = "Path template or URL to NGINX log files.";
+    private static final String SOURCE_PATH_ARGUMENT_DESCRIPTION = "Path template or URL to input NGINX log files.";
 
-    public static final String SOURCE_PATH_ARGUMENT_NAME = "source file path";
+    private static final String SOURCE_PATH_ARGUMENT_NAME = "source file path";
 
     private static final String FROM_OPTION_NAME = "from";
 
-    public static final String FROM_ARGUMENT_DESCRIPTION = "Log files analytics from date.";
+    private static final String FROM_ARGUMENT_DESCRIPTION = "Log files analytics from date.";
 
-    public static final String FROM_TO_ARGUMENTS_NAME = "ISO8601 date";
+    private static final String FROM_TO_ARGUMENTS_NAME = "ISO8601 date";
 
     private static final String TO_OPTION_NAME = "to";
 
-    public static final String TO_ARGUMENT_DESCRIPTION = "Log files analytics to date.";
+    private static final String TO_ARGUMENT_DESCRIPTION = "Log files analytics to date.";
 
     private static final String FORMAT_OPTION_NAME = "format";
 
-    public static final String FORMAT_ARGUMENT_DESCRIPTION = "Output format. Default: string.";
+    private static final String FORMAT_ARGUMENT_DESCRIPTION = "Output format. Default: string.";
 
-    public static final String FORMAT_ARGUMENT_NAME = "markdown/adoc/string";
+    private static final String FORMAT_ARGUMENT_NAME = "markdown/adoc/string";
+
+    private static final String SAVE_PATH_OPTION_NAME = "save";
+
+    private static final String SAVE_PATH_ARGUMENT_NAME = "save file path";
+
+    private static final String SAVE_PATH_ARGUMENT_DESCRIPTION = "Path to output save file.";
 
     private static final String MARKDOWN_TYPE = "markdown";
 
@@ -67,6 +75,9 @@ public class CommandLineArgumentParser {
             this.formatType = cmd.hasOption(FORMAT_OPTION_NAME)
                 ? parseFormatType(cmd.getOptionValue(FORMAT_OPTION_NAME))
                 : FormatType.STRING;
+            this.savePath = cmd.hasOption(SAVE_PATH_OPTION_NAME)
+                ? cmd.getOptionValue(SAVE_PATH_OPTION_NAME)
+                : null;
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -95,6 +106,10 @@ public class CommandLineArgumentParser {
         return formatType;
     }
 
+    public String savePath() {
+        return savePath;
+    }
+
     private Options getCmdOptions() {
         Options options = new Options();
         Option sourcePathOption = Option.builder(SOURCE_PATH_OPTION_NAME)
@@ -118,10 +133,16 @@ public class CommandLineArgumentParser {
             .hasArg()
             .desc(FORMAT_ARGUMENT_DESCRIPTION)
             .build();
+        Option savePathOption = Option.builder(SAVE_PATH_OPTION_NAME)
+            .argName(SAVE_PATH_ARGUMENT_NAME)
+            .hasArg()
+            .desc(SAVE_PATH_ARGUMENT_DESCRIPTION)
+            .build();
         options.addOption(sourcePathOption);
         options.addOption(fromOption);
         options.addOption(toOption);
         options.addOption(formatOption);
+        options.addOption(savePathOption);
         return options;
     }
 
