@@ -210,7 +210,7 @@ public class Main {
     private static String getFormatted(
         String[] names, String[] values, String statisticsName, String valuesName, FormatType formatType) {
         return switch (formatType) {
-            case ADOC -> FormatUtils.reportToAdoc(
+            case ADOC -> FormatUtils.reportToADOC(
                 names,
                 values,
                 statisticsName,

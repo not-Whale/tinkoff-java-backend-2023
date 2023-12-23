@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class FormatUtils {
-    private FormatUtils() {
-    }
+    private static final String ADOC_BORDER = "|===\n";
+
+    private FormatUtils() {}
 
     public static String reportToString(String[] names, String[] values, String statisticName, String valuesName) {
         if (names.length != values.length) {
@@ -31,40 +32,23 @@ public class FormatUtils {
         return stringBuilder.toString();
     }
 
-    public static String reportToAdoc(String[] names, String[] values, String statisticName, String valuesName) {
+    public static String reportToADOC(String[] names, String[] values, String statisticName, String valuesName) {
         if (names.length != values.length) {
             throw new IllegalArgumentException();
         }
 
         long tableLength = names.length;
         long lastLine = tableLength - 1;
-        String border = "|===\n";
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-            .append("cols=\"1,1\"\n")
-            .append(border)
-            .append("|")
-            .append(statisticName)
-            .append(" |")
-            .append(valuesName)
-            .append("\n\n");
-
+        appendADOCFormattedFirstLine(stringBuilder, statisticName, valuesName);
         for (int i = 0; i < tableLength; i++) {
-            stringBuilder
-                .append("|")
-                .append(names[i])
-                .append("\n")
-                .append("|")
-                .append(values[i])
-                .append("\n");
+            appendADOCFormattedDataLine(stringBuilder, names[i], values[i]);
             if (i != lastLine) {
-                stringBuilder
-                    .append("\n");
+                stringBuilder.append("\n");
             }
-            stringBuilder.append(border);
+            stringBuilder.append(ADOC_BORDER);
         }
-
         return stringBuilder.toString();
     }
 
@@ -114,6 +98,29 @@ public class FormatUtils {
         }
 
         return stringBuilder.toString();
+    }
+
+    private static void appendADOCFormattedDataLine(StringBuilder stringBuilder,
+        String name, String value) {
+        stringBuilder
+            .append("|")
+            .append(name)
+            .append("\n")
+            .append("|")
+            .append(value)
+            .append("\n");
+    }
+
+    private static void appendADOCFormattedFirstLine(StringBuilder stringBuilder,
+        String statisticName, String valuesName) {
+        stringBuilder
+            .append("cols=\"1,1\"\n")
+            .append(ADOC_BORDER)
+            .append("|")
+            .append(statisticName)
+            .append(" |")
+            .append(valuesName)
+            .append("\n\n");
     }
 
     private static void appendStringFormattedLastLine(StringBuilder stringBuilder,
