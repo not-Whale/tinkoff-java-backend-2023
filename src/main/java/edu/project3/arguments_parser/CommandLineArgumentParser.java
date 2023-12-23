@@ -123,28 +123,33 @@ public class CommandLineArgumentParser {
 
     private Options getCmdOptions() {
         Options options = new Options();
-        Option sourcePathOption = Option.builder(SOURCE_PATH_OPTION_NAME)
+        Option sourcePathOption = Option.builder()
+            .longOpt(SOURCE_PATH_OPTION_NAME)
             .argName(SOURCE_PATH_ARGUMENT_NAME)
             .hasArg()
             .desc(SOURCE_PATH_ARGUMENT_DESCRIPTION)
             .required()
             .build();
-        Option fromOption = Option.builder(FROM_OPTION_NAME)
+        Option fromOption = Option.builder()
+            .longOpt(FROM_OPTION_NAME)
             .argName(FROM_TO_ARGUMENTS_NAME)
             .hasArg()
             .desc(FROM_ARGUMENT_DESCRIPTION)
             .build();
-        Option toOption = Option.builder(TO_OPTION_NAME)
+        Option toOption = Option.builder()
+            .longOpt(TO_OPTION_NAME)
             .argName(FROM_TO_ARGUMENTS_NAME)
             .hasArg()
             .desc(TO_ARGUMENT_DESCRIPTION)
             .build();
-        Option formatOption = Option.builder(FORMAT_OPTION_NAME)
+        Option formatOption = Option.builder()
+            .longOpt(FORMAT_OPTION_NAME)
             .argName(FORMAT_ARGUMENT_NAME)
             .hasArg()
             .desc(FORMAT_ARGUMENT_DESCRIPTION)
             .build();
-        Option savePathOption = Option.builder(SAVE_PATH_OPTION_NAME)
+        Option savePathOption = Option.builder()
+            .longOpt(SAVE_PATH_OPTION_NAME)
             .argName(SAVE_PATH_ARGUMENT_NAME)
             .hasArg()
             .desc(SAVE_PATH_ARGUMENT_DESCRIPTION)
