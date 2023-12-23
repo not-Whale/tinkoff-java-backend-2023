@@ -11,6 +11,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.FilenameUtils;
 
 public class CommandLineArgumentParser {
     private final String sourcePath;
@@ -77,6 +78,7 @@ public class CommandLineArgumentParser {
             this.savePath = cmd.hasOption(SAVE_PATH_OPTION_NAME)
                 ? cmd.getOptionValue(SAVE_PATH_OPTION_NAME)
                 : null;
+            validateSaveFileName();
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -107,6 +109,18 @@ public class CommandLineArgumentParser {
 
     public String savePath() {
         return savePath;
+    }
+
+    private void validateSaveFileName() {
+        if (formatType.equals(FormatType.STRING) && !FilenameUtils.getExtension(savePath).equals(".txt")) {
+            throw new IllegalArgumentException("For string output .txt file required!");
+        }
+        if (formatType.equals(FormatType.MARKDOWN) && !FilenameUtils.getExtension(savePath).equals(".md")) {
+            throw new IllegalArgumentException("For markdown output .md file required!");
+        }
+        if (formatType.equals(FormatType.ADOC) && !FilenameUtils.getExtension(savePath).equals(".adoc")) {
+            throw new IllegalArgumentException("For adoc output .adoc file required!");
+        }
     }
 
     private Options getCmdOptions() {
