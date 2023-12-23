@@ -32,7 +32,7 @@ public class CommandLineArgumentParser {
 
     private static final String ADOC_TYPE = "adoc";
 
-    public CommandLineArgumentParser(String[] args) {
+    private CommandLineArgumentParser(String[] args) {
         Options options = getCmdOptions();
         CommandLineParser parser = new PosixParser();
         try {
@@ -54,6 +54,13 @@ public class CommandLineArgumentParser {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public CommandLineArgumentParser with(String[] args) {
+        if (args == null) {
+            throw new IllegalArgumentException("Cmd arguments is null!");
+        }
+        return new CommandLineArgumentParser(args);
     }
 
     public String getFile() {
