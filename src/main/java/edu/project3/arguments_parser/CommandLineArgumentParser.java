@@ -12,6 +12,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FilenameUtils;
+import org.jetbrains.annotations.Nullable;
 
 public class CommandLineArgumentParser {
     private final String sourcePath;
@@ -93,19 +94,19 @@ public class CommandLineArgumentParser {
         return sourcePath;
     }
 
-    public LocalDateTime from() {
+    public @Nullable LocalDateTime from() {
         return from;
     }
 
-    public LocalDateTime to() {
+    public @Nullable LocalDateTime to() {
         return to;
     }
 
-    public FormatType formatType() {
+    public @Nullable FormatType formatType() {
         return formatType;
     }
 
-    public String savePath() {
+    public @Nullable String savePath() {
         return savePath;
     }
 
