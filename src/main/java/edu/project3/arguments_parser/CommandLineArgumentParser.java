@@ -78,7 +78,7 @@ public class CommandLineArgumentParser {
                 validateSaveFileName();
             }
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Arguments parsing failed. Reason: " + e.getMessage());
         }
     }
 
@@ -171,7 +171,7 @@ public class CommandLineArgumentParser {
         try {
             return LocalDate.parse(dateTimeString, DateTimeFormatter.ISO_DATE).atStartOfDay();
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException("Date parsing failed. Reason: " + e.getMessage());
         }
     }
 }
