@@ -61,11 +61,7 @@ public class CommandLineArgumentParser {
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine cmd = parser.parse(options, args);
-            if (cmd.hasOption(SOURCE_PATH_OPTION_NAME)) {
-                this.sourcePath = cmd.getOptionValue(SOURCE_PATH_OPTION_NAME);
-            } else {
-                throw new IllegalArgumentException("Source file path must be not null!");
-            }
+            this.sourcePath = cmd.getOptionValue(SOURCE_PATH_OPTION_NAME);
             this.from = cmd.hasOption(FROM_OPTION_NAME)
                 ? parseLocalDateTime(cmd.getOptionValue(FROM_OPTION_NAME))
                 : null;
