@@ -7,12 +7,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
 public class CommandLineArgumentParser {
-    private final String file;
+    private final String sourcePath;
 
     private final LocalDateTime from;
 
@@ -20,7 +21,7 @@ public class CommandLineArgumentParser {
 
     private final FormatType formatType;
 
-    private static final String PATH_ARGUMENT_NAME = "path";
+    private static final String SOURCE_PATH_ARGUMENT_NAME = "path";
 
     private static final String FROM_ARGUMENT_NAME = "from";
 
@@ -37,8 +38,8 @@ public class CommandLineArgumentParser {
         CommandLineParser parser = new PosixParser();
         try {
             CommandLine cmd = parser.parse(options, args);
-            if (cmd.hasOption(PATH_ARGUMENT_NAME)) {
-                this.file = cmd.getOptionValue(PATH_ARGUMENT_NAME);
+            if (cmd.hasOption(SOURCE_PATH_ARGUMENT_NAME)) {
+                this.sourcePath = cmd.getOptionValue(SOURCE_PATH_ARGUMENT_NAME);
             } else {
                 throw new IllegalArgumentException("Source file path must be not null!");
             }
@@ -56,35 +57,56 @@ public class CommandLineArgumentParser {
         }
     }
 
-    public CommandLineArgumentParser with(String[] args) {
+    public static CommandLineArgumentParser with(String[] args) {
         if (args == null) {
             throw new IllegalArgumentException("Cmd arguments is null!");
         }
         return new CommandLineArgumentParser(args);
     }
 
-    public String getFile() {
-        return file;
+    public String sourcePath() {
+        return sourcePath;
     }
 
-    public LocalDateTime getFrom() {
+    public LocalDateTime from() {
         return from;
     }
 
-    public LocalDateTime getTo() {
+    public LocalDateTime to() {
         return to;
     }
 
-    public FormatType getFormatType() {
+    public FormatType formatType() {
         return formatType;
     }
 
     private Options getCmdOptions() {
         Options options = new Options();
-        options.addOption(PATH_ARGUMENT_NAME, true, "Шаблон пути или URL к NGINX лог-файлам.");
-        options.addOption(FROM_ARGUMENT_NAME, true, "Начальная дата просмотра логов.");
-        options.addOption(TO_ARGUMENT_NAME, true, "Конечная дата просмотра логов.");
-        options.addOption(FORMAT_ARGUMENT_NAME, true, "Формат вывода.");
+        Option sourcePathOption = Option.builder(SOURCE_PATH_ARGUMENT_NAME)
+            .argName("source file path")
+            .hasArg()
+            .desc("Path template or URL to NGINX log files.")
+            .required()
+            .build();
+        Option fromOption = Option.builder(FROM_ARGUMENT_NAME)
+            .argName("ISO8601 date")
+            .hasArg()
+            .desc("Log files analytics from date.")
+            .build();
+        Option toOption = Option.builder(TO_ARGUMENT_NAME)
+            .argName("ISO8601 date")
+            .hasArg()
+            .desc("Log files analytics to date.")
+            .build();
+        Option formatOption = Option.builder(FORMAT_ARGUMENT_NAME)
+            .argName("markdown/adoc/string")
+            .hasArg()
+            .desc("Output format. Default: string.")
+            .build();
+        options.addOption(sourcePathOption);
+        options.addOption(fromOption);
+        options.addOption(toOption);
+        options.addOption(formatOption);
         return options;
     }
 

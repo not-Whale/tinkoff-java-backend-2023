@@ -26,12 +26,12 @@ public class Main {
 
     public static void main(String[] args) {
         // arguments reader
-        CommandLineArgumentParser commandLineArgumentParser = new CommandLineArgumentParser(args);
+        CommandLineArgumentParser commandLineArgumentParser = CommandLineArgumentParser.with(args);
         // get arguments
-        String file = commandLineArgumentParser.getFile();
-        LocalDateTime from = commandLineArgumentParser.getFrom();
-        LocalDateTime to = commandLineArgumentParser.getTo();
-        FormatType formatType = commandLineArgumentParser.getFormatType();
+        String file = commandLineArgumentParser.sourcePath();
+        LocalDateTime from = commandLineArgumentParser.from();
+        LocalDateTime to = commandLineArgumentParser.to();
+        FormatType formatType = commandLineArgumentParser.formatType();
 
         // get logs in strings
         String[] logsStrings = LogReader.read(file);
