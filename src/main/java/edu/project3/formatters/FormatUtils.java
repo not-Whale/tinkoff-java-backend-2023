@@ -58,21 +58,34 @@ public class FormatUtils {
         }
 
         long tableLength = names.length;
-
         int maxNameLength = getMaxNameLength(names, statisticName);
         int maxValuesLength = getMaxValuesLength(values, valuesName);
 
         StringBuilder stringBuilder = new StringBuilder();
+        appendMarkdownFormattedTitle(stringBuilder, maxNameLength, maxValuesLength, statisticName, valuesName);
+        appendMarkdownFormattedTitleDelimiter(stringBuilder, maxNameLength, maxValuesLength);
+        for (int i = 0; i < tableLength; i++) {
+            appendMarkdownFormattedDataLine(stringBuilder, maxNameLength, maxValuesLength, names[i], values[i]);
+        }
+        return stringBuilder.toString();
+    }
+
+    private static void appendMarkdownFormattedDataLine(StringBuilder stringBuilder,
+        int maxNameLength, int maxValuesLength,
+        String name, String value) {
         stringBuilder
             .append("|")
-            .append(statisticName)
-            .repeat(" ", maxNameLength - statisticName.length())
+            .append(name)
+            .repeat(" ", maxNameLength - name.length())
             .append("|")
-            .append(valuesName)
-            .repeat(" ", maxValuesLength - valuesName.length())
+            .append(value)
+            .repeat(" ", maxValuesLength - value.length())
             .append("|")
             .append("\n");
+    }
 
+    private static void appendMarkdownFormattedTitleDelimiter(StringBuilder stringBuilder,
+        int maxNameLength, int maxValuesLength) {
         stringBuilder
             .append("|")
             .append(":")
@@ -84,20 +97,20 @@ public class FormatUtils {
             .append(":")
             .append("|")
             .append("\n");
+    }
 
-        for (int i = 0; i < tableLength; i++) {
-            stringBuilder
-                .append("|")
-                .append(names[i])
-                .repeat(" ", maxNameLength - names[i].length())
-                .append("|")
-                .append(values[i])
-                .repeat(" ", maxValuesLength - values[i].length())
-                .append("|")
-                .append("\n");
-        }
-
-        return stringBuilder.toString();
+    private static void appendMarkdownFormattedTitle(StringBuilder stringBuilder,
+        int maxNameLength, int maxValuesLength,
+        String statisticName, String valuesName) {
+        stringBuilder
+            .append("|")
+            .append(statisticName)
+            .repeat(" ", maxNameLength - statisticName.length())
+            .append("|")
+            .append(valuesName)
+            .repeat(" ", maxValuesLength - valuesName.length())
+            .append("|")
+            .append("\n");
     }
 
     private static void appendADOCFormattedDataLine(StringBuilder stringBuilder,
