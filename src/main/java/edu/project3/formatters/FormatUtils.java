@@ -6,11 +6,13 @@ import java.util.Comparator;
 public class FormatUtils {
     private static final String ADOC_BORDER = "|===\n";
 
+    public static final String NAMES_MUST_MATCH_VALUES_MESSAGE = "Column's names must match values!";
+
     private FormatUtils() {}
 
     public static String reportToString(String[] names, String[] values, String statisticName, String valuesName) {
         if (names.length != values.length) {
-            throw new IllegalArgumentException("Column's names must match values!");
+            throw new IllegalArgumentException(NAMES_MUST_MATCH_VALUES_MESSAGE);
         }
 
         long tableLength = names.length;
@@ -34,7 +36,7 @@ public class FormatUtils {
 
     public static String reportToADOC(String[] names, String[] values, String statisticName, String valuesName) {
         if (names.length != values.length) {
-            throw new IllegalArgumentException("Column's names must match values!");
+            throw new IllegalArgumentException(NAMES_MUST_MATCH_VALUES_MESSAGE);
         }
 
         long tableLength = names.length;
@@ -54,7 +56,7 @@ public class FormatUtils {
 
     public static String reportToMarkdown(String[] names, String[] values, String statisticName, String valuesName) {
         if (names.length != values.length) {
-            throw new IllegalArgumentException("Column's names must match values!");
+            throw new IllegalArgumentException(NAMES_MUST_MATCH_VALUES_MESSAGE);
         }
 
         long tableLength = names.length;
