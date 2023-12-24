@@ -10,13 +10,30 @@ import java.util.Random;
 import java.util.Stack;
 
 public class DepthFirstSearchGenerator implements Generator {
+    private final Long seed;
+
+    public DepthFirstSearchGenerator() {
+        this.seed = null;
+    }
+
+    public DepthFirstSearchGenerator(long seed) {
+        this.seed = seed;
+    }
+
     @Override
     public Maze generate(int height, int width) {
         Maze maze = new Maze(height, width);
-        Random random = new Random();
         Stack<Cell> stack = new Stack<>();
         ArrayList<Cell> remained = new ArrayList<>(List.of(maze.getPassages()));
-        Collections.shuffle(remained);
+
+        Random random;
+        if (seed == null) {
+            random = new Random();
+            Collections.shuffle(remained);
+        } else {
+            random = new Random(seed);
+            Collections.shuffle(remained, random);
+        }
 
         stack.push(remained.getFirst());
         remained.removeFirst();

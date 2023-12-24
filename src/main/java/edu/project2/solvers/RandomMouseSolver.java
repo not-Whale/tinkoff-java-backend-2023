@@ -9,6 +9,16 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomMouseSolver implements Solver {
+    private final Long seed;
+
+    public RandomMouseSolver() {
+        this.seed = null;
+    }
+
+    public RandomMouseSolver(long seed) {
+        this.seed = seed;
+    }
+
     @Override
     public List<Coordinate> solve(Maze maze, Coordinate start, Coordinate end) {
         if (maze == null) {
@@ -24,8 +34,14 @@ public class RandomMouseSolver implements Solver {
         }
 
         List<Coordinate> path = new ArrayList<>();
-        Random random = new Random();
         Cell[] passages = maze.getPassages();
+
+        Random random;
+        if (seed == null) {
+            random = new Random();
+        } else {
+            random = new Random(seed);
+        }
 
         Cell startCell = maze.getCell(start.row() * 2 + 1, start.col() * 2 + 1);
         Cell endCell = maze.getCell(end.row() * 2 + 1, end.col() * 2 + 1);
