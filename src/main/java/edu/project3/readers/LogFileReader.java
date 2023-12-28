@@ -21,6 +21,9 @@ public class LogFileReader implements Reader {
     private final String pathString;
 
     public LogFileReader(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path must be not null!");
+        }
         this.pathString = path;
     }
 
@@ -37,7 +40,7 @@ public class LogFileReader implements Reader {
     @Override
     public String[] read() {
         List<String> logs = new ArrayList<>();
-        Path[] paths = getGlobPaths(pathString);
+        Path[] paths = getGlobPaths();
         for (Path currentPath : paths) {
             String[] currentLogs = readLogsFromFile(currentPath);
             logs.addAll(List.of(currentLogs));
@@ -62,11 +65,11 @@ public class LogFileReader implements Reader {
         return logs.toArray(String[]::new);
     }
 
-    private Path[] getGlobPaths(String glob) {
+    private Path[] getGlobPaths() {
         List<Path> paths = new ArrayList<>();
         try {
-            PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:" + glob);
-            Files.walkFileTree(Path.of(""), new SimpleFileVisitor<Path>() {
+            PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:" + pathString);
+            Files.walkFileTree(Path.of(""), new SimpleFileVisitor<>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     if (pathMatcher.matches(path)) {
