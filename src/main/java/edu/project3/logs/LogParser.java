@@ -13,11 +13,11 @@ import java.util.regex.Pattern;
 public class LogParser {
     private static final String REMOTE_ADDRESS_PATTERN = "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})";
 
-    private static final String REMOTE_USER_PATTERN = "(.*)";
+    private static final String REMOTE_USER_PATTERN = "(\\s\\w*\\s|\\s)";
 
-    private static final String ZONED_DATE_TIME_PATTERN = "([\\w/:+ ]*)";
+    private static final String ZONED_DATE_TIME_PATTERN = "(\\d{2}/[A-Za-z]{3}/\\d{4}:\\d{2}:\\d{2}:\\d{2} \\+\\d{4})";
 
-    private static final String REQUEST_TYPE_PATTERN = "(\\w+)";
+    private static final String REQUEST_TYPE_PATTERN = "(GET|HEAD|POST|PUT|DELETE|CONNECT|TRACE|PATCH)";
 
     private static final Map<String, RequestType> REQUEST_TYPES = new HashMap<>() {{
         put("GET", RequestType.GET);
@@ -32,7 +32,7 @@ public class LogParser {
 
     private static final String URL_SIMPLE_PATTERN = "([\\w:/.?=&#-]*)";
 
-    private static final String HTTP_VERSION = "([\\w/.]+)";
+    private static final String HTTP_VERSION = "(HTTP/\\d(\\.\\d)?)";
 
     private static final String STATUS_PATTERN = "(\\d{3})";
 
@@ -42,9 +42,9 @@ public class LogParser {
 
     private static final String LOG_PATTERN =
         REMOTE_ADDRESS_PATTERN
-            + " - "
+            + " -"
             + REMOTE_USER_PATTERN
-            + " \\["
+            + "- \\["
             + ZONED_DATE_TIME_PATTERN
             + "] \""
             + REQUEST_TYPE_PATTERN
