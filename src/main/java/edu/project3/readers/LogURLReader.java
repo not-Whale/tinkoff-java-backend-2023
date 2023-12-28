@@ -35,6 +35,9 @@ public class LogURLReader implements Reader {
 
     @Override
     public String[] read() {
+        if (!canRead()) {
+            throw new IllegalArgumentException("Incorrect path to read from!");
+        }
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
             .version(HttpClient.Version.HTTP_2)
