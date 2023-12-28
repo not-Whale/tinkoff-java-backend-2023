@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 
 public class LogURLReader implements Reader {
     private static final String PROTOCOL_DOMAIN_PATTERN =
-        "((http|https)://(www.)?)[a-zA-Z0-9]{2,}(\\.[a-zA-Z0-9]{2,})*";
+        "((http|https)://(www\\.)?)[a-zA-Z0-9]{2,}(\\.[a-zA-Z0-9]{2,})*";
 
     private static final String SUBDOMAIN_PATTERN =
         "(/[a-z-A-Z0-9%_-]{2,})*";
