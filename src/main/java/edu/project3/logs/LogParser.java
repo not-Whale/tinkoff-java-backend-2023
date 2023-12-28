@@ -29,6 +29,26 @@ public class LogParser {
 
     private static final String HTTP_USER_AGENT_PATTERN = "([\\w-/.~() ]*)";
 
+    private static final int REMOTE_ADDRESS_GROUP = 1;
+
+    private static final int REMOTE_USER_GROUP = 2;
+
+    private static final int ZONED_DATE_TIME_GROUP = 3;
+
+    private static final int REQUEST_TYPE_GROUP = 4;
+
+    private static final int RESOURCE_GROUP = 5;
+
+    private static final int HTTP_VERSION_GROUP = 6;
+
+    private static final int STATUS_GROUP = 8;
+
+    private static final int BODY_BYTES_SEND_GROUP = 9;
+
+    private static final int HTTP_REFER_GROUP = 10;
+
+    private static final int HTTP_USER_AGENT_GROUP = 11;
+
     private static final String LOG_PATTERN =
         REMOTE_ADDRESS_PATTERN
             + " -"
@@ -64,23 +84,22 @@ public class LogParser {
 
     private LogParser() {}
 
-    @SuppressWarnings("MagicNumber")
     public static Log parse(String logString) {
         Pattern pattern = Pattern.compile(LOG_PATTERN);
         Matcher matcher = pattern.matcher(logString);
         DateTimeFormatter formatter = getZonedDateTimeFormatter();
         if (matcher.find()) {
             return new Log(
-                matcher.group(1),
-                matcher.group(2),
-                ZonedDateTime.parse(matcher.group(3), formatter),
-                REQUEST_TYPES.get(matcher.group(4)),
-                matcher.group(5),
-                matcher.group(6),
-                Integer.parseInt(matcher.group(7)),
-                Long.parseLong(matcher.group(8)),
-                matcher.group(9),
-                matcher.group(10)
+                matcher.group(REMOTE_ADDRESS_GROUP),
+                matcher.group(REMOTE_USER_GROUP),
+                ZonedDateTime.parse(matcher.group(ZONED_DATE_TIME_GROUP), formatter),
+                REQUEST_TYPES.get(matcher.group(REQUEST_TYPE_GROUP)),
+                matcher.group(RESOURCE_GROUP),
+                matcher.group(HTTP_VERSION_GROUP),
+                Integer.parseInt(matcher.group(STATUS_GROUP)),
+                Long.parseLong(matcher.group(BODY_BYTES_SEND_GROUP)),
+                matcher.group(HTTP_REFER_GROUP),
+                matcher.group(HTTP_USER_AGENT_GROUP)
             );
         }
         return null;
@@ -116,7 +135,7 @@ public class LogParser {
             .appendLiteral(":")
             .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
             .appendLiteral(":")
-            .appendValue(ChronoField.SECOND_OF_MINUTE)
+            .appendValue(ChronoField.SECOND_OF_MINUTE, 2)
             .appendLiteral(" ")
             .appendOffset("+HHMM", "GMT")
             .toFormatter();
