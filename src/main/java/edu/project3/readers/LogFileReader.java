@@ -39,6 +39,9 @@ public class LogFileReader implements Reader {
 
     @Override
     public String[] read() {
+        if (!canRead()) {
+            throw new IllegalArgumentException("Incorrect path to read from!");
+        }
         List<String> logs = new ArrayList<>();
         Path[] paths = getGlobPaths();
         for (Path currentPath : paths) {
