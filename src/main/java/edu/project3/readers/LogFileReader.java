@@ -46,16 +46,13 @@ public class LogFileReader implements Reader {
 
     private String[] readLogsFromFile(Path path) {
         ArrayList<String> logs = new ArrayList<>();
-        try (FileReader fileReader = new FileReader(path.toFile());
-             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path.toFile()))) {
             String currentLine;
             while ((currentLine = bufferedReader.readLine()) != null) {
                 logs.add(currentLine);
             }
-        } catch (FileNotFoundException e) {
-            return new String[0];
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("File reading failed. Reason: " + e.getMessage());
         }
         return logs.toArray(String[]::new);
     }
