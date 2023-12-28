@@ -92,7 +92,8 @@ public class FormatUtils {
         }
     }
 
-    private static void appendMarkdownFormattedDataLine(StringBuilder stringBuilder,
+    private static void appendMarkdownFormattedDataLine(
+        StringBuilder stringBuilder,
         int maxNameLength, int maxValuesLength,
         String name, String value) {
         stringBuilder
@@ -106,7 +107,8 @@ public class FormatUtils {
             .append("\n");
     }
 
-    private static void appendMarkdownFormattedTitleDelimiter(StringBuilder stringBuilder,
+    private static void appendMarkdownFormattedTitleDelimiter(
+        StringBuilder stringBuilder,
         int maxNameLength, int maxValuesLength) {
         stringBuilder
             .append("|")
@@ -121,7 +123,8 @@ public class FormatUtils {
             .append("\n");
     }
 
-    private static void appendMarkdownFormattedTitle(StringBuilder stringBuilder,
+    private static void appendMarkdownFormattedTitle(
+        StringBuilder stringBuilder,
         int maxNameLength, int maxValuesLength,
         String statisticName, String valuesName) {
         stringBuilder
@@ -135,7 +138,8 @@ public class FormatUtils {
             .append("\n");
     }
 
-    private static void appendADOCFormattedDataLine(StringBuilder stringBuilder,
+    private static void appendADOCFormattedDataLine(
+        StringBuilder stringBuilder,
         String name, String value) {
         stringBuilder
             .append("|")
@@ -146,7 +150,8 @@ public class FormatUtils {
             .append("\n");
     }
 
-    private static void appendADOCFormattedFirstLine(StringBuilder stringBuilder,
+    private static void appendADOCFormattedFirstLine(
+        StringBuilder stringBuilder,
         String statisticName, String valuesName) {
         stringBuilder
             .append("cols=\"1,1\"\n")
@@ -158,7 +163,8 @@ public class FormatUtils {
             .append("\n\n");
     }
 
-    private static void appendStringFormattedLastLine(StringBuilder stringBuilder,
+    private static void appendStringFormattedLastLine(
+        StringBuilder stringBuilder,
         int maxNameLength, int maxValuesLength) {
         stringBuilder
             .append("└")
@@ -169,7 +175,8 @@ public class FormatUtils {
             .append("\n");
     }
 
-    private static void appendStringFormattedDataLine(StringBuilder stringBuilder,
+    private static void appendStringFormattedDataLine(
+        StringBuilder stringBuilder,
         int maxNameLength, int maxValuesLength,
         String name, String value) {
         stringBuilder
@@ -183,7 +190,8 @@ public class FormatUtils {
             .append("\n");
     }
 
-    private static void appendStringFormattedDelimiter(StringBuilder stringBuilder,
+    private static void appendStringFormattedDelimiter(
+        StringBuilder stringBuilder,
         int maxNameLength, int maxValuesLength) {
         stringBuilder
             .append("├")
@@ -194,7 +202,8 @@ public class FormatUtils {
             .append("\n");
     }
 
-    private static void appendStringFormattedTitle(StringBuilder stringBuilder,
+    private static void appendStringFormattedTitle(
+        StringBuilder stringBuilder,
         int maxNameLength, int maxValuesLength,
         String statisticName, String valuesName) {
         stringBuilder
@@ -208,7 +217,8 @@ public class FormatUtils {
             .append("\n");
     }
 
-    private static void appendStringFormattedFirstLine(StringBuilder stringBuilder,
+    private static void appendStringFormattedFirstLine(
+        StringBuilder stringBuilder,
         int maxNameLength, int maxValuesLength) {
         stringBuilder
             .append("┌")
