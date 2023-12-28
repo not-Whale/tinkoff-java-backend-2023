@@ -22,6 +22,9 @@ public class LogURLReader implements Reader {
     private final String path;
 
     public LogURLReader(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path must be not null!");
+        }
         this.path = path;
     }
 

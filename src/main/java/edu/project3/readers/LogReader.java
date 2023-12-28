@@ -11,6 +11,9 @@ public class LogReader implements Reader {
     }
 
     public static Reader from(String path) {
+        if (path == null) {
+            throw new IllegalArgumentException("Path must be not null!");
+        }
         return new LogReader(path);
     }
 
