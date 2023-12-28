@@ -19,17 +19,6 @@ public class LogParser {
 
     private static final String REQUEST_TYPE_PATTERN = "(GET|HEAD|POST|PUT|DELETE|CONNECT|TRACE|PATCH)";
 
-    private static final Map<String, RequestType> REQUEST_TYPES = new HashMap<>() {{
-        put("GET", RequestType.GET);
-        put("HEAD", RequestType.HEAD);
-        put("POST", RequestType.POST);
-        put("PUT", RequestType.PUT);
-        put("DELETE", RequestType.DELETE);
-        put("CONNECT", RequestType.CONNECT);
-        put("TRACE", RequestType.TRACE);
-        put("PATCH", RequestType.PATCH);
-    }};
-
     private static final String URL_SIMPLE_PATTERN = "([\\w:/.?=&#-]*)";
 
     private static final String HTTP_VERSION = "(HTTP/\\d(\\.\\d)?)";
@@ -61,6 +50,17 @@ public class LogParser {
             + "\" \""
             + HTTP_USER_AGENT_PATTERN
             + "\"";
+
+    private static final Map<String, RequestType> REQUEST_TYPES = new HashMap<>() {{
+        put("GET", RequestType.GET);
+        put("HEAD", RequestType.HEAD);
+        put("POST", RequestType.POST);
+        put("PUT", RequestType.PUT);
+        put("DELETE", RequestType.DELETE);
+        put("CONNECT", RequestType.CONNECT);
+        put("TRACE", RequestType.TRACE);
+        put("PATCH", RequestType.PATCH);
+    }};
 
     private LogParser() {}
 
