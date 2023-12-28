@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.Nullable;
 
 public class LogReporter {
     public static final int OK_RESPONSE_CODE = 200;
@@ -24,22 +25,44 @@ public class LogReporter {
 
     private final LocalDateTime to;
 
-    public LogReporter(Log[] logs, String resource, LocalDateTime from, LocalDateTime to) {
-        this.resource = resource;
+    public LogReporter(Log[] logs, @Nullable String resource, LocalDateTime from, LocalDateTime to) {
+        if (logs == null) {
+            throw new IllegalArgumentException("Logs must not be null!");
+        }
+        if (resource == null || resource.isEmpty()) {
+            this.resource = "unknown";
+        } else {
+            this.resource = resource;
+        }
         this.from = from;
         this.to = to;
         this.logs = filterLogs(logs);
     }
 
     private Log[] filterLogs(Log[] logs) {
-        return Arrays.stream(logs)
-            .filter(log -> {
-                ZoneId zoneId = log.timeLocal().getZone();
-                ZonedDateTime fromZoned = ZonedDateTime.of(from, zoneId);
-                ZonedDateTime toZoned = ZonedDateTime.of(to, zoneId);
-                return log.timeLocal().isBefore(toZoned) && log.timeLocal().isAfter(fromZoned);
-            })
-            .toArray(Log[]::new);
+        if (from == null && to == null) {
+            return logs;
+        }
+        Log[] filteredLogs = Arrays.copyOf(logs, logs.length);
+        if (from != null) {
+            filteredLogs = Arrays.stream(filteredLogs)
+                .filter(log -> {
+                    ZoneId zoneId = log.timeLocal().getZone();
+                    ZonedDateTime fromZoned = ZonedDateTime.of(from, zoneId);
+                    return log.timeLocal().isAfter(fromZoned);
+                })
+                .toArray(Log[]::new);
+        }
+        if (to != null) {
+            filteredLogs = Arrays.stream(filteredLogs)
+                .filter(log -> {
+                    ZoneId zoneId = log.timeLocal().getZone();
+                    ZonedDateTime toZoned = ZonedDateTime.of(to, zoneId);
+                    return log.timeLocal().isBefore(toZoned);
+                })
+                .toArray(Log[]::new);
+        }
+        return filteredLogs;
     }
 
     public GeneralInfo getGeneralInfoReport() {
