@@ -34,16 +34,17 @@ public class LogURLReader implements Reader {
     public String[] read() {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
+            .version(HttpClient.Version.HTTP_2)
             .uri(URI.create(path))
             .GET()
             .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             String responseBody = response.body();
-            return responseBody.split(" ");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+            return responseBody.split("\n");
+        } catch (IOException | SecurityException e) {
+            throw new RuntimeException("URL requesting failed. Reason: " + e.getMessage());
+        } catch (InterruptedException ignored) {
             return new String[0];
         }
     }
