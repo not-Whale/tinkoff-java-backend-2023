@@ -1,17 +1,33 @@
 package edu.project3.readers;
 
-public class LogReader {
-    private LogReader() {}
+public class LogReader implements Reader {
+    private final LogURLReader urlReader;
 
-    public static String[] read(String path) {
-        LogURLReader urlReader = new LogURLReader(path);
+    private final LogFileReader fileReader;
+
+    private LogReader(String path) {
+        this.urlReader = new LogURLReader(path);
+        this.fileReader = new LogFileReader(path);
+    }
+
+    public static Reader from(String path) {
+        return new LogReader(path);
+    }
+
+    @Override
+    public boolean canRead() {
+        return urlReader.canRead() || fileReader.canRead();
+    }
+
+    @Override
+    public String[] read() {
+        if (!canRead()) {
+            throw new IllegalArgumentException("Incorrect path to read from!");
+        }
         if (urlReader.canRead()) {
             return urlReader.read();
-        }
-        LogFileReader fileReader = new LogFileReader(path);
-        if (fileReader.canRead()) {
+        } else {
             return fileReader.read();
         }
-        return new String[0];
     }
 }

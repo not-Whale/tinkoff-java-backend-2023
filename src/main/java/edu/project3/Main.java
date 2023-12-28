@@ -7,6 +7,7 @@ import edu.project3.logs.Log;
 import edu.project3.logs.LogParser;
 import edu.project3.logs.RequestType;
 import edu.project3.readers.LogReader;
+import edu.project3.readers.Reader;
 import edu.project3.reporters.GeneralInfo;
 import edu.project3.reporters.LogReporter;
 import java.time.LocalDateTime;
@@ -34,7 +35,8 @@ public class Main {
         FormatType formatType = commandLineArgumentParser.formatType();
 
         // get logs in strings
-        String[] logsStrings = LogReader.read(file);
+        Reader logReader = LogReader.from(file);
+        String[] logsStrings = logReader.read();
 
         // for each log convert string to object
         List<Log> logsList = new ArrayList<>();
