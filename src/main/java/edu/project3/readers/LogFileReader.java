@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogFileReader implements Reader {
+    private static final String GLOB_PATH_PATTERN = ".*((\\*\\*)|([*?\\[\\]])).*";
+
     private final String pathString;
 
     public LogFileReader(String path) {
@@ -26,7 +28,7 @@ public class LogFileReader implements Reader {
     public boolean canRead() {
         try {
             File target = Path.of(pathString).toFile();
-            return target.exists() && target.isFile() && target.canRead();
+            return isGlob() || (target.exists() && target.isFile() && target.canRead());
         } catch (InvalidPathException e) {
             return false;
         }
@@ -41,6 +43,10 @@ public class LogFileReader implements Reader {
             logs.addAll(List.of(currentLogs));
         }
         return logs.toArray(String[]::new);
+    }
+
+    private boolean isGlob() {
+        return pathString.matches(GLOB_PATH_PATTERN);
     }
 
     private String[] readLogsFromFile(Path path) {
