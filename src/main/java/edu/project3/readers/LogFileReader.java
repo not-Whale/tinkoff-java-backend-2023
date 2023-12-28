@@ -1,6 +1,7 @@
 package edu.project3.readers;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,8 +26,8 @@ public class LogFileReader implements Reader {
     @Override
     public boolean canRead() {
         try {
-            Path.of(pathString);
-            return true;
+            File target = Path.of(pathString).toFile();
+            return target.exists() && target.isFile() && target.canRead();
         } catch (InvalidPathException e) {
             return false;
         }
@@ -34,9 +35,6 @@ public class LogFileReader implements Reader {
 
     @Override
     public String[] read() {
-        if (!canRead()) {
-            return new String[0];
-        }
         List<String> logs = new ArrayList<>();
         Path[] paths = getGlobPaths(pathString);
         for (Path currentPath : paths) {
