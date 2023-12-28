@@ -83,7 +83,9 @@ public class LogReporter {
     }
 
     private Long calculateAverageResponseSize() {
-        return Arrays.stream(logs).collect(Collectors.averagingLong(Log::bodyBytesSend)).longValue();
+        return Arrays.stream(logs)
+            .collect(Collectors.averagingLong(Log::bodyBytesSend))
+            .longValue();
     }
 
     public List<Map.Entry<String, Long>> getMostPopularResources() {
