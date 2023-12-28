@@ -24,10 +24,6 @@ public class LogReader implements Reader {
         if (!canRead()) {
             throw new IllegalArgumentException("Incorrect path to read from!");
         }
-        if (urlReader.canRead()) {
-            return urlReader.read();
-        } else {
-            return fileReader.read();
-        }
+        return urlReader.canRead() ? urlReader.read() : fileReader.read();
     }
 }
