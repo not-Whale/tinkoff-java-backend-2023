@@ -25,7 +25,11 @@ public class LogReporter {
 
     private final LocalDateTime to;
 
-    public LogReporter(Log[] logs, @Nullable String resource, LocalDateTime from, LocalDateTime to) {
+    public LogReporter(
+        Log[] logs,
+        @Nullable String resource,
+        @Nullable LocalDateTime from,
+        @Nullable LocalDateTime to) {
         if (logs == null) {
             throw new IllegalArgumentException("Logs must not be null!");
         }
@@ -67,10 +71,12 @@ public class LogReporter {
 
     public GeneralInfo getGeneralInfoReport() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String fromString = from != null ? from.format(formatter) : "-";
+        String toString = to != null ? to.format(formatter) : "-";
         return new GeneralInfo(
             resource,
-            from.format(formatter),
-            to.format(formatter),
+            fromString,
+            toString,
             (long) logs.length,
             calculateAverageResponseSize()
         );
@@ -155,7 +161,8 @@ public class LogReporter {
         return resourcesMap.entrySet().stream()
             .map(entry -> Map.entry(
                 entry.getKey(),
-                (double) entry.getValue() / requestTypeMap.get(entry.getKey())))
+                (double) entry.getValue() / requestTypeMap.get(entry.getKey())
+            ))
             .sorted((a, b) -> {
                 if (b.getValue() > a.getValue()) {
                     return 1;
