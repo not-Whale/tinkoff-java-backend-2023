@@ -8,12 +8,18 @@ public class FormatUtils {
 
     public static final String NAMES_MUST_MATCH_VALUES_MESSAGE = "Column's names must match values!";
 
+    private static final String NAMES_NULL_ERROR_MESSAGE = "Names must not be null!";
+
+    private static final String VALUES_NULL_ERROR_MESSAGE = "Values must not be null!";
+
+    private static final String STATISTIC_NAME_NULL_ERROR_MESSAGE = "Statistic name must not be null!";
+
+    private static final String VALUES_NAME_NULL_ERROR_MESSAGE = "Values name must not be null!";
+
     private FormatUtils() {}
 
     public static String reportToString(String[] names, String[] values, String statisticName, String valuesName) {
-        if (names.length != values.length) {
-            throw new IllegalArgumentException(NAMES_MUST_MATCH_VALUES_MESSAGE);
-        }
+        validateInputs(names, values, statisticName, valuesName);
 
         long tableLength = names.length;
         long lastLine = tableLength - 1;
@@ -35,9 +41,7 @@ public class FormatUtils {
     }
 
     public static String reportToADOC(String[] names, String[] values, String statisticName, String valuesName) {
-        if (names.length != values.length) {
-            throw new IllegalArgumentException(NAMES_MUST_MATCH_VALUES_MESSAGE);
-        }
+        validateInputs(names, values, statisticName, valuesName);
 
         long tableLength = names.length;
         long lastLine = tableLength - 1;
@@ -55,9 +59,7 @@ public class FormatUtils {
     }
 
     public static String reportToMarkdown(String[] names, String[] values, String statisticName, String valuesName) {
-        if (names.length != values.length) {
-            throw new IllegalArgumentException(NAMES_MUST_MATCH_VALUES_MESSAGE);
-        }
+        validateInputs(names, values, statisticName, valuesName);
 
         long tableLength = names.length;
         int maxNameLength = getMaxNameLength(names, statisticName);
@@ -70,6 +72,24 @@ public class FormatUtils {
             appendMarkdownFormattedDataLine(stringBuilder, maxNameLength, maxValuesLength, names[i], values[i]);
         }
         return stringBuilder.toString();
+    }
+
+    private static void validateInputs(String[] names, String[] values, String statisticName, String valuesName) {
+        if (names == null) {
+            throw new IllegalArgumentException(NAMES_NULL_ERROR_MESSAGE);
+        }
+        if (values == null) {
+            throw new IllegalArgumentException(VALUES_NULL_ERROR_MESSAGE);
+        }
+        if (statisticName == null) {
+            throw new IllegalArgumentException(STATISTIC_NAME_NULL_ERROR_MESSAGE);
+        }
+        if (valuesName == null) {
+            throw new IllegalArgumentException(VALUES_NAME_NULL_ERROR_MESSAGE);
+        }
+        if (names.length != values.length) {
+            throw new IllegalArgumentException(NAMES_MUST_MATCH_VALUES_MESSAGE);
+        }
     }
 
     private static void appendMarkdownFormattedDataLine(StringBuilder stringBuilder,
