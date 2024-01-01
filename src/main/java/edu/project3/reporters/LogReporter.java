@@ -25,7 +25,18 @@ public class LogReporter {
 
     private final LocalDateTime to;
 
-    public LogReporter(
+    private LogReporter(
+        Log[] logs,
+        String resource,
+        @Nullable LocalDateTime from,
+        @Nullable LocalDateTime to) {
+        this.logs = logs;
+        this.resource = resource;
+        this.from = from;
+        this.to = to;
+    }
+
+    public static LogReporter of(
         Log[] logs,
         @Nullable String resource,
         @Nullable LocalDateTime from,
@@ -33,17 +44,12 @@ public class LogReporter {
         if (logs == null) {
             throw new IllegalArgumentException("Logs must not be null!");
         }
-        if (resource == null || resource.isEmpty()) {
-            this.resource = "unknown";
-        } else {
-            this.resource = resource;
-        }
-        this.from = from;
-        this.to = to;
-        this.logs = filterLogs(logs);
+        return resource == null || resource.isEmpty()
+            ? new LogReporter(filterLogs(logs, from, to), "unknown", from, to)
+            : new LogReporter(filterLogs(logs, from, to), resource, from, to);
     }
 
-    private Log[] filterLogs(Log[] logs) {
+    private static Log[] filterLogs(Log[] logs, LocalDateTime from, LocalDateTime to) {
         if (from == null && to == null) {
             return logs;
         }
