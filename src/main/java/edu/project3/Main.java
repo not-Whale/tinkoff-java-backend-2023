@@ -10,120 +10,130 @@ import edu.project3.readers.LogReader;
 import edu.project3.readers.Reader;
 import edu.project3.reporters.GeneralInfo;
 import edu.project3.reporters.LogReporter;
+import edu.project3.writers.LogFileWriter;
+import edu.project3.writers.LogSoutWriter;
+import edu.project3.writers.Writer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-@SuppressWarnings("MultipleStringLiterals")
 public class Main {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final String[] GENERAL_INFO_NAMES = new String[] {
+        "Имя ресурса",
+        "Начальная дата",
+        "Конечная дата",
+        "Запросов отправлено",
+        "Средний размер ответа"
+    };
 
-    private static final String NEW_LINE_WITHOUT_HIGHLIGHT = "\033[0m\n";
+    private static final String EMPTY_REPORT = "-\n\n";
+
+    private static final String GENERAL_INFO_STATISTICS_NAME = "Метрика";
+
+    private static final String RESOURCE_STATISTICS_NAME = "Ресурс";
+
+    private static final String REQUEST_TYPE_STATISTICS_NAME = "Тип запроса";
+
+    private static final String RESPONSE_CODE_STATISTICS_NAME = "Код ответа";
+
+    private static final String GENERAL_INFO_VALUES_NAME = "Значение";
+
+    private static final String SUCCESS_PERCENTAGE_VALUES_NAME = "Успешных запросов, %";
+
+    private static final String REQUESTS_NUMBER_VALUES_NAME = "Количество запросов";
+
+    private static final String MOST_STABLE_RESOURCES_TITLE = "Наиболее стабильные ресурсы.\n\n";
+
+    private static final String MOST_POPULAR_REQUEST_TYPES_TITLE = "Наиболее частые запросы.\n\n";
+
+    private static final String MOST_POPULAR_RESPONSE_CODES_TITLE = "Наиболее частые коды ответа.\n\n";
+
+    private static final String MOST_POPULAR_RESOURCES_TITLE = "Самые запрашиваемые ресурсы.\n\n";
 
     private Main() {}
 
     public static void main(String[] args) {
-        // arguments reader
         CommandLineArgumentParser commandLineArgumentParser = CommandLineArgumentParser.with(args);
-        // get arguments
-        String file = commandLineArgumentParser.sourcePath();
+        String sourcePath = commandLineArgumentParser.sourcePath();
         LocalDateTime from = commandLineArgumentParser.from();
         LocalDateTime to = commandLineArgumentParser.to();
         FormatType formatType = commandLineArgumentParser.formatType();
+        String savePath = commandLineArgumentParser.savePath();
 
-        // get logs in strings
-        Reader logReader = LogReader.from(file);
-        String[] logsStrings = logReader.read();
+        Log[] logs = getLogs(sourcePath);
+        LogReporter logReporter = LogReporter.of(logs, sourcePath, from, to);
 
-        // for each log convert string to object
-        List<Log> logsList = new ArrayList<>();
-        for (String logString : logsStrings) {
-            logsList.add(LogParser.parse(logString));
-        }
-
-        // get reports
-        LogReporter logReporter = new LogReporter(logsList.toArray(Log[]::new), file, from, to);
-        var generalInfo = logReporter.getGeneralInfoReport();
-        var mostPopularResources = logReporter.getMostPopularResources();
-        var mostPopularResponseCodes = logReporter.getMostPopularResponseCodes();
-        var mostPopularRequestTypes = logReporter.getMostPopularRequestTypes();
-        var getRequestsPerResource = logReporter.getRequestsPerResourceByType(RequestType.GET);
-        var headRequestsPerResource = logReporter.getRequestsPerResourceByType(RequestType.HEAD);
-        var postRequestsPerResource = logReporter.getRequestsPerResourceByType(RequestType.POST);
-        var putRequestsPerResource = logReporter.getRequestsPerResourceByType(RequestType.PUT);
-        var deleteRequestsPerResource = logReporter.getRequestsPerResourceByType(RequestType.DELETE);
-        var connectRequestsPerResource = logReporter.getRequestsPerResourceByType(RequestType.CONNECT);
-        var traceRequestsPerResource = logReporter.getRequestsPerResourceByType(RequestType.TRACE);
-        var patchRequestsPerResource = logReporter.getRequestsPerResourceByType(RequestType.PATCH);
-        var mostStableResources = logReporter.getMostStableResources();
-
-        // print reports
-        printGeneralInfo(generalInfo, formatType);
-        printMostPopularResources(mostPopularResources, formatType);
-        printMostPopularResponseCodes(mostPopularResponseCodes, formatType);
-        printMostPopularRequestTypes(mostPopularRequestTypes, formatType);
-        printRequestsPerResourcesByType(getRequestsPerResource, formatType, RequestType.GET);
-        printRequestsPerResourcesByType(headRequestsPerResource, formatType, RequestType.HEAD);
-        printRequestsPerResourcesByType(postRequestsPerResource, formatType, RequestType.POST);
-        printRequestsPerResourcesByType(putRequestsPerResource, formatType, RequestType.PUT);
-        printRequestsPerResourcesByType(deleteRequestsPerResource, formatType, RequestType.DELETE);
-        printRequestsPerResourcesByType(connectRequestsPerResource, formatType, RequestType.CONNECT);
-        printRequestsPerResourcesByType(traceRequestsPerResource, formatType, RequestType.TRACE);
-        printRequestsPerResourcesByType(patchRequestsPerResource, formatType, RequestType.PATCH);
-        printMostStableResources(mostStableResources, formatType);
+        Writer writer = savePath == null ? new LogSoutWriter() : new LogFileWriter(savePath);
+        writeReports(writer, logReporter, formatType);
     }
 
-    private static void printGeneralInfo(GeneralInfo generalInfo, FormatType formatType) {
-        List<String> names = new ArrayList<>();
-        List<String> values = new ArrayList<>();
-        names.add("Ресурс");
-        values.add(generalInfo.resource());
-        names.add("Начальная дата");
-        values.add(generalInfo.from());
-        names.add("Конечная дата");
-        values.add(generalInfo.to());
-        names.add("Количество запросов");
-        values.add(generalInfo.requests().toString());
-        names.add("Средний размер ответа");
-        values.add(generalInfo.averageResponseSize().toString());
-        String formatted = getFormatted(
-            names.toArray(String[]::new),
-            values.toArray(String[]::new),
-            "Метрика",
-            "Значение",
+    private static void writeReports(Writer writer, LogReporter logReporter, FormatType formatType) {
+        writer.write(getGeneralInfoReport(logReporter.generalInfo(), formatType));
+        writer.write(getMostPopularResourcesReport(logReporter.mostPopularResources(), formatType));
+        writer.write(getMostPopularResponseCodesReport(logReporter.mostPopularResponseCodes(), formatType));
+        writer.write(getMostPopularRequestTypesReport(logReporter.mostPopularRequestTypes(), formatType));
+        for (RequestType requestType : RequestType.values()) {
+            writer.write(getRequestsPerResourcesByTypeReport(
+                logReporter.requestsPerResourceByType(requestType),
+                formatType,
+                requestType)
+            );
+        }
+        writer.write(getMostStableResourcesReport(logReporter.mostStableResources(), formatType));
+    }
+
+    private static Log[] getLogs(String sourcePath) {
+        Reader logReader = LogReader.from(sourcePath);
+        String[] logsStrings = logReader.read();
+        List<Log> logs = new ArrayList<>();
+        for (String logString : logsStrings) {
+            logs.add(LogParser.parse(logString));
+        }
+        return logs.toArray(Log[]::new);
+    }
+
+    private static String getGeneralInfoReport(GeneralInfo generalInfo, FormatType formatType) {
+        String[] values = new String[] {
+            generalInfo.resource(),
+            generalInfo.from(),
+            generalInfo.to(),
+            generalInfo.requests().toString(),
+            generalInfo.averageResponseSize().toString()
+        };
+        return getFormatted(
+            GENERAL_INFO_NAMES,
+            values,
+            GENERAL_INFO_STATISTICS_NAME,
+            GENERAL_INFO_VALUES_NAME,
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Общая информация\n\n" + formatted);
     }
 
-    private static void printMostStableResources(
+    private static String getMostStableResourcesReport(
         List<Map.Entry<String, Double>> mostStableResources, FormatType formatType) {
         if (mostStableResources.isEmpty()) {
-            return;
+            return MOST_STABLE_RESOURCES_TITLE + EMPTY_REPORT;
         }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
         for (var entry : mostStableResources) {
             names.add(entry.getKey());
-            values.add(String.format("%.1f", entry.getValue()) + "%");
+            values.add(String.format("%.1f", entry.getValue()));
         }
-        String formatted = getFormatted(
+        return MOST_STABLE_RESOURCES_TITLE + getFormatted(
             names.toArray(String[]::new),
             values.toArray(String[]::new),
-            "Ресурс",
-            "Процент успешных запросов",
+            RESOURCE_STATISTICS_NAME,
+            SUCCESS_PERCENTAGE_VALUES_NAME,
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Ресурсы с наибольшим процентом успешных запросов\n\n" + formatted);
     }
 
-    private static void printRequestsPerResourcesByType(
+    private static String getRequestsPerResourcesByTypeReport(
         List<Map.Entry<String, Long>> requestsPerResourcesByType, FormatType formatType, RequestType requestType) {
         if (requestsPerResourcesByType.isEmpty()) {
-            return;
+            return getRequestPerResourceByTypeTitle(requestType) + EMPTY_REPORT;
         }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
@@ -131,25 +141,19 @@ public class Main {
             names.add(entry.getKey());
             values.add(entry.getValue().toString());
         }
-        String formatted = getFormatted(
+        return getRequestPerResourceByTypeTitle(requestType) + getFormatted(
             names.toArray(String[]::new),
             values.toArray(String[]::new),
-            "Ресурс",
-            "Количество " + requestType.verbal() + " запросов",
+            RESOURCE_STATISTICS_NAME,
+            getRequestPerResourceByTypeValuesName(requestType),
             formatType
-        );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT
-            + "Ресурсы с наибольшим количеством "
-            + requestType.verbal()
-            + " запросов к ним\n\n"
-            + formatted
         );
     }
 
-    private static void printMostPopularRequestTypes(
+    private static String getMostPopularRequestTypesReport(
         List<Map.Entry<RequestType, Long>> mostPopularRequestTypes, FormatType formatType) {
         if (mostPopularRequestTypes.isEmpty()) {
-            return;
+            return MOST_POPULAR_REQUEST_TYPES_TITLE + EMPTY_REPORT;
         }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
@@ -157,20 +161,19 @@ public class Main {
             names.add(entry.getKey().verbal());
             values.add(entry.getValue().toString());
         }
-        String formatted = getFormatted(
+        return MOST_POPULAR_REQUEST_TYPES_TITLE + getFormatted(
             names.toArray(String[]::new),
             values.toArray(String[]::new),
-            "Тип запроса",
-            "Количество запросов",
+            REQUEST_TYPE_STATISTICS_NAME,
+            REQUESTS_NUMBER_VALUES_NAME,
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Наиболее частые запросы\n\n" + formatted);
     }
 
-    private static void printMostPopularResponseCodes(
+    private static String getMostPopularResponseCodesReport(
         List<Map.Entry<Integer, Long>> mostPopularResponseCodes, FormatType formatType) {
         if (mostPopularResponseCodes.isEmpty()) {
-            return;
+            return MOST_POPULAR_RESPONSE_CODES_TITLE + EMPTY_REPORT;
         }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
@@ -178,20 +181,19 @@ public class Main {
             names.add(entry.getKey().toString());
             values.add(entry.getValue().toString());
         }
-        String formatted = getFormatted(
+        return MOST_POPULAR_RESPONSE_CODES_TITLE + getFormatted(
             names.toArray(String[]::new),
             values.toArray(String[]::new),
-            "Код ответа",
-            "Количество запросов",
+            RESPONSE_CODE_STATISTICS_NAME,
+            REQUESTS_NUMBER_VALUES_NAME,
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Наиболее частые коды ответа\n\n" + formatted);
     }
 
-    private static void printMostPopularResources(
+    private static String getMostPopularResourcesReport(
         List<Map.Entry<String, Long>> mostPopularResources, FormatType formatType) {
         if (mostPopularResources.isEmpty()) {
-            return;
+            return MOST_POPULAR_RESOURCES_TITLE + EMPTY_REPORT;
         }
         List<String> names = new ArrayList<>();
         List<String> values = new ArrayList<>();
@@ -199,14 +201,21 @@ public class Main {
             names.add(entry.getKey());
             values.add(entry.getValue().toString());
         }
-        String formatted = getFormatted(
+        return MOST_POPULAR_RESOURCES_TITLE + getFormatted(
             names.toArray(String[]::new),
             values.toArray(String[]::new),
-            "Ресурс",
-            "Количество запросов",
+            RESOURCE_STATISTICS_NAME,
+            REQUESTS_NUMBER_VALUES_NAME,
             formatType
         );
-        LOGGER.info(NEW_LINE_WITHOUT_HIGHLIGHT + "Самые запрашиваемые ресурсы\n\n" + formatted);
+    }
+
+    private static String getRequestPerResourceByTypeValuesName(RequestType requestType) {
+        return "Количество " + requestType.verbal() + " запросов";
+    }
+
+    private static String getRequestPerResourceByTypeTitle(RequestType requestType) {
+        return "Ресурсы с наибольшим количеством " + requestType.verbal() + " запросов к ним.\n\n";
     }
 
     private static String getFormatted(
