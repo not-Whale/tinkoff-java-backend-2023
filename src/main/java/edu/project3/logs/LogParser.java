@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.jetbrains.annotations.Nullable;
 
 public class LogParser {
     private static final String REMOTE_ADDRESS_PATTERN = "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})";
@@ -85,24 +86,35 @@ public class LogParser {
     private LogParser() {}
 
     public static Log parse(String logString) {
+        if (logString == null) {
+            throw new IllegalArgumentException("Log string must not be null!");
+        }
         Pattern pattern = Pattern.compile(LOG_PATTERN);
         Matcher matcher = pattern.matcher(logString);
         DateTimeFormatter formatter = getZonedDateTimeFormatter();
         if (matcher.find()) {
             return new Log(
                 matcher.group(REMOTE_ADDRESS_GROUP),
-                matcher.group(REMOTE_USER_GROUP),
+                getRemoteUser(matcher.group(REMOTE_USER_GROUP)),
                 ZonedDateTime.parse(matcher.group(ZONED_DATE_TIME_GROUP), formatter),
                 REQUEST_TYPES.get(matcher.group(REQUEST_TYPE_GROUP)),
                 matcher.group(RESOURCE_GROUP),
                 matcher.group(HTTP_VERSION_GROUP),
                 Integer.parseInt(matcher.group(STATUS_GROUP)),
                 Long.parseLong(matcher.group(BODY_BYTES_SEND_GROUP)),
-                matcher.group(HTTP_REFER_GROUP),
+                getHttpRefer(matcher.group(HTTP_REFER_GROUP)),
                 matcher.group(HTTP_USER_AGENT_GROUP)
             );
         }
         return null;
+    }
+
+    private static @Nullable String getHttpRefer(String httpRefer) {
+        return httpRefer.equals("-") ? null : httpRefer;
+    }
+
+    private static @Nullable String getRemoteUser(String remoteUser) {
+        return remoteUser.equals(" ") ? null : remoteUser;
     }
 
     // [17/May/2015:08:05:32 +0000]
