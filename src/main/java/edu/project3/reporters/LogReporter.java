@@ -49,33 +49,7 @@ public class LogReporter {
             : new LogReporter(filterLogs(logs, from, to), resource, from, to);
     }
 
-    private static Log[] filterLogs(Log[] logs, LocalDateTime from, LocalDateTime to) {
-        if (from == null && to == null) {
-            return logs;
-        }
-        Log[] filteredLogs = Arrays.copyOf(logs, logs.length);
-        if (from != null) {
-            filteredLogs = Arrays.stream(filteredLogs)
-                .filter(log -> {
-                    ZoneId zoneId = log.timeLocal().getZone();
-                    ZonedDateTime fromZoned = ZonedDateTime.of(from, zoneId);
-                    return log.timeLocal().isAfter(fromZoned);
-                })
-                .toArray(Log[]::new);
-        }
-        if (to != null) {
-            filteredLogs = Arrays.stream(filteredLogs)
-                .filter(log -> {
-                    ZoneId zoneId = log.timeLocal().getZone();
-                    ZonedDateTime toZoned = ZonedDateTime.of(to, zoneId);
-                    return log.timeLocal().isBefore(toZoned);
-                })
-                .toArray(Log[]::new);
-        }
-        return filteredLogs;
-    }
-
-    public GeneralInfo getGeneralInfoReport() {
+    public GeneralInfo generalInfo() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String fromString = from != null ? from.format(formatter) : "-";
         String toString = to != null ? to.format(formatter) : "-";
@@ -88,13 +62,7 @@ public class LogReporter {
         );
     }
 
-    private Long calculateAverageResponseSize() {
-        return Arrays.stream(logs)
-            .collect(Collectors.averagingLong(Log::bodyBytesSend))
-            .longValue();
-    }
-
-    public List<Map.Entry<String, Long>> getMostPopularResources() {
+    public List<Map.Entry<String, Long>> mostPopularResources() {
         Map<String, Long> resourcesMap = Arrays.stream(logs)
             .collect(Collectors.toMap(
                 Log::resource,
@@ -108,7 +76,7 @@ public class LogReporter {
             .toList();
     }
 
-    public List<Map.Entry<Integer, Long>> getMostPopularResponseCodes() {
+    public List<Map.Entry<Integer, Long>> mostPopularResponseCodes() {
         Map<Integer, Long> codesMap = Arrays.stream(logs)
             .collect(Collectors.toMap(
                 Log::status,
@@ -122,7 +90,7 @@ public class LogReporter {
             .toList();
     }
 
-    public List<Map.Entry<RequestType, Long>> getMostPopularRequestTypes() {
+    public List<Map.Entry<RequestType, Long>> mostPopularRequestTypes() {
         Map<RequestType, Long> requestsMap = Arrays.stream(logs)
             .collect(Collectors.toMap(
                 Log::requestType,
@@ -136,7 +104,7 @@ public class LogReporter {
             .toList();
     }
 
-    public List<Map.Entry<String, Long>> getRequestsPerResourceByType(RequestType type) {
+    public List<Map.Entry<String, Long>> requestsPerResourceByType(RequestType type) {
         Map<String, Long> requestTypeMap = Arrays.stream(logs)
             .filter(log -> log.requestType().equals(type))
             .collect(Collectors.toMap(
@@ -150,7 +118,7 @@ public class LogReporter {
             .toList();
     }
 
-    public List<Map.Entry<String, Double>> getMostStableResources() {
+    public List<Map.Entry<String, Double>> mostStableResources() {
         Map<String, Long> resourcesMap = Arrays.stream(logs)
             .collect(Collectors.toMap(
                 Log::resource,
@@ -180,5 +148,37 @@ public class LogReporter {
                 return 0;
             })
             .toList();
+    }
+
+    private Long calculateAverageResponseSize() {
+        return Arrays.stream(logs)
+            .collect(Collectors.averagingLong(Log::bodyBytesSend))
+            .longValue();
+    }
+
+    private static Log[] filterLogs(Log[] logs, LocalDateTime from, LocalDateTime to) {
+        if (from == null && to == null) {
+            return logs;
+        }
+        Log[] filteredLogs = Arrays.copyOf(logs, logs.length);
+        if (from != null) {
+            filteredLogs = Arrays.stream(filteredLogs)
+                .filter(log -> {
+                    ZoneId zoneId = log.timeLocal().getZone();
+                    ZonedDateTime fromZoned = ZonedDateTime.of(from, zoneId);
+                    return log.timeLocal().isAfter(fromZoned);
+                })
+                .toArray(Log[]::new);
+        }
+        if (to != null) {
+            filteredLogs = Arrays.stream(filteredLogs)
+                .filter(log -> {
+                    ZoneId zoneId = log.timeLocal().getZone();
+                    ZonedDateTime toZoned = ZonedDateTime.of(to, zoneId);
+                    return log.timeLocal().isBefore(toZoned);
+                })
+                .toArray(Log[]::new);
+        }
+        return filteredLogs;
     }
 }
