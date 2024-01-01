@@ -57,6 +57,8 @@ public class CommandLineArgumentParser {
 
     private static final String ADOC_TYPE = "adoc";
 
+    private static final String STRING_TYPE = "string";
+
     private CommandLineArgumentParser(String[] args) {
         Options options = getCmdOptions();
         CommandLineParser parser = new DefaultParser();
@@ -169,6 +171,9 @@ public class CommandLineArgumentParser {
         }
         if (formatTypeString.equalsIgnoreCase(ADOC_TYPE)) {
             return FormatType.ADOC;
+        }
+        if (formatTypeString.equalsIgnoreCase(STRING_TYPE)) {
+            return FormatType.STRING;
         }
         throw new IllegalArgumentException("Unknown format type: " + formatTypeString);
     }
