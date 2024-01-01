@@ -111,13 +111,13 @@ public class CommandLineArgumentParser {
     }
 
     private void validateSaveFileName() {
-        if (formatType.equals(FormatType.STRING) && !FilenameUtils.getExtension(savePath).equals(".txt")) {
+        if (formatType.equals(FormatType.STRING) && !FilenameUtils.getExtension(savePath).equals("txt")) {
             throw new IllegalArgumentException("For string output .txt file required!");
         }
-        if (formatType.equals(FormatType.MARKDOWN) && !FilenameUtils.getExtension(savePath).equals(".md")) {
+        if (formatType.equals(FormatType.MARKDOWN) && !FilenameUtils.getExtension(savePath).equals("md")) {
             throw new IllegalArgumentException("For markdown output .md file required!");
         }
-        if (formatType.equals(FormatType.ADOC) && !FilenameUtils.getExtension(savePath).equals(".adoc")) {
+        if (formatType.equals(FormatType.ADOC) && !FilenameUtils.getExtension(savePath).equals("adoc")) {
             throw new IllegalArgumentException("For adoc output .adoc file required!");
         }
     }
