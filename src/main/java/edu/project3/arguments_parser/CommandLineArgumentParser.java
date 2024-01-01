@@ -55,9 +55,15 @@ public class CommandLineArgumentParser {
 
     private static final String MARKDOWN_TYPE = "markdown";
 
-    private static final String ADOC_TYPE = "adoc";
+    private static final String ADOC_TYPE = "ADOC";
 
     private static final String STRING_TYPE = "string";
+
+    private static final String MARKDOWN_EXTENSION = "md";
+
+    private static final String ADOC_EXTENSION = "adoc";
+
+    private static final String STRING_EXTENSION = "txt";
 
     private CommandLineArgumentParser(String[] args) {
         Options options = getCmdOptions();
@@ -113,13 +119,13 @@ public class CommandLineArgumentParser {
     }
 
     private void validateSaveFileName() {
-        if (formatType.equals(FormatType.STRING) && !FilenameUtils.getExtension(savePath).equals("txt")) {
+        if (formatType.equals(FormatType.STRING) && !FilenameUtils.getExtension(savePath).equals(STRING_EXTENSION)) {
             throw new IllegalArgumentException("For string output .txt file required!");
         }
-        if (formatType.equals(FormatType.MARKDOWN) && !FilenameUtils.getExtension(savePath).equals("md")) {
+        if (formatType.equals(FormatType.MARKDOWN) && !FilenameUtils.getExtension(savePath).equals(MARKDOWN_EXTENSION)) {
             throw new IllegalArgumentException("For markdown output .md file required!");
         }
-        if (formatType.equals(FormatType.ADOC) && !FilenameUtils.getExtension(savePath).equals("adoc")) {
+        if (formatType.equals(FormatType.ADOC) && !FilenameUtils.getExtension(savePath).equals(ADOC_EXTENSION)) {
             throw new IllegalArgumentException("For adoc output .adoc file required!");
         }
     }
