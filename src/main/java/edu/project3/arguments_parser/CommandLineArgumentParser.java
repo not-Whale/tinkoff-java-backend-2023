@@ -93,7 +93,7 @@ public class CommandLineArgumentParser {
 
     public static CommandLineArgumentParser with(String[] args) {
         if (args == null) {
-            throw new IllegalArgumentException("Cmd arguments must be not null!");
+            throw new IllegalArgumentException("Cmd arguments must not be null!");
         }
         return new CommandLineArgumentParser(args);
     }
