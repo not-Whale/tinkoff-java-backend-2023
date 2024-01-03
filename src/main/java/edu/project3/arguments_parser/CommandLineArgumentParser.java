@@ -122,7 +122,8 @@ public class CommandLineArgumentParser {
         if (formatType.equals(FormatType.STRING) && !FilenameUtils.getExtension(savePath).equals(STRING_EXTENSION)) {
             throw new IllegalArgumentException("For string output .txt file required!");
         }
-        if (formatType.equals(FormatType.MARKDOWN) && !FilenameUtils.getExtension(savePath).equals(MARKDOWN_EXTENSION)) {
+        if (formatType.equals(FormatType.MARKDOWN)
+            && !FilenameUtils.getExtension(savePath).equals(MARKDOWN_EXTENSION)) {
             throw new IllegalArgumentException("For markdown output .md file required!");
         }
         if (formatType.equals(FormatType.ADOC) && !FilenameUtils.getExtension(savePath).equals(ADOC_EXTENSION)) {
