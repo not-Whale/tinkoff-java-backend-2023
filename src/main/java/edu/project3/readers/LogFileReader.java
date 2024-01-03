@@ -22,7 +22,7 @@ public class LogFileReader implements Reader {
 
     public LogFileReader(String path) {
         if (path == null) {
-            throw new IllegalArgumentException("Path must be not null!");
+            throw new IllegalArgumentException("Path must not be null!");
         }
         this.pathString = path;
     }
