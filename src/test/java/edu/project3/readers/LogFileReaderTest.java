@@ -7,17 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("Чтение логов из файла.")
 public class LogFileReaderTest {
-    private static final String path = "src/test/resources/project3/source.txt";
+    private static final String PATH = "src/test/resources/project3/source.txt";
 
-    private static final String globPath = "src/**/source.txt";
+    private static final String GLOB_PATH = "src/**/source.txt";
 
-    private static final String incorrectPath = "!src\\~a.txt /a/ txt .a";
+    private static final String INCORRECT_PATH = "!src\\~a.txt /a/ txt .a";
 
     @Test
     @DisplayName("Чтение из файла.")
     void readFile() {
         // given
-        Reader reader = new LogFileReader(path);
+        Reader reader = new LogFileReader(PATH);
 
         // when
         assertThat(reader.canRead()).isTrue();
@@ -43,7 +43,7 @@ public class LogFileReaderTest {
     @DisplayName("Чтение из файла по glob-пути.")
     void readGlobPath() {
         // given
-        Reader reader = new LogFileReader(globPath);
+        Reader reader = new LogFileReader(GLOB_PATH);
 
         // when
         assertThat(reader.canRead()).isTrue();
@@ -69,7 +69,7 @@ public class LogFileReaderTest {
     @DisplayName("Неправильный формат пути.")
     void readIncorrectPath() {
         // given
-        Reader reader = new LogFileReader(incorrectPath);
+        Reader reader = new LogFileReader(INCORRECT_PATH);
 
         // when
         assertThat(reader.canRead()).isFalse();
