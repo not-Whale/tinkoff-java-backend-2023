@@ -50,7 +50,7 @@ public class LogReporter {
     }
 
     public GeneralInfo generalInfo() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss");
         String fromString = from != null ? from.format(formatter) : "-";
         String toString = to != null ? to.format(formatter) : "-";
         return new GeneralInfo(
