@@ -49,7 +49,7 @@ public class LogURLReader implements Reader {
             String responseBody = response.body();
             return responseBody.split("\n");
         } catch (IOException | SecurityException e) {
-            throw new RuntimeException("URL requesting failed. Reason: " + e.getMessage());
+            throw new RuntimeException("URL requesting failed. Reason: " + e);
         } catch (InterruptedException ignored) {
             return new String[0];
         }
