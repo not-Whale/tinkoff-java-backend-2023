@@ -3,6 +3,7 @@ package edu.project3.formatters;
 import java.util.Arrays;
 import java.util.Comparator;
 
+// TODO: переписать под мапу
 public class FormatUtils {
     private static final String ADOC_BORDER = "|===\n";
 
