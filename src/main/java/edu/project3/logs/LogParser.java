@@ -103,10 +103,14 @@ public class LogParser {
                 Integer.parseInt(matcher.group(STATUS_GROUP)),
                 Long.parseLong(matcher.group(BODY_BYTES_SEND_GROUP)),
                 getHttpRefer(matcher.group(HTTP_REFER_GROUP)),
-                matcher.group(HTTP_USER_AGENT_GROUP)
+                getHttpUserAgent(matcher.group(HTTP_USER_AGENT_GROUP))
             );
         }
         return null;
+    }
+
+    private static @Nullable String getHttpUserAgent(String httpUserAgent) {
+        return httpUserAgent.equals("-") ? null : httpUserAgent;
     }
 
     private static @Nullable String getHttpRefer(String httpRefer) {

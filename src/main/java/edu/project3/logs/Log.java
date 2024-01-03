@@ -13,5 +13,5 @@ public record Log(
     Integer status,
     Long bodyBytesSend,
     @Nullable String httpRefer,
-    String httpUserAgent
+    @Nullable String httpUserAgent
 ) {}
