@@ -205,6 +205,6 @@ public class CommandLineArgumentParserTest {
 
         // then
         assertThat(exception).isNotNull().isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception).hasMessage("Cmd arguments must be not null!");
+        assertThat(exception).hasMessage("Cmd arguments must not be null!");
     }
 }
