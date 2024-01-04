@@ -10,8 +10,8 @@ import edu.project3.readers.LogReader;
 import edu.project3.readers.Reader;
 import edu.project3.reporters.GeneralInfo;
 import edu.project3.reporters.LogReporter;
-import edu.project3.writers.ReportFileReportWriter;
-import edu.project3.writers.ReportSoutReportWriter;
+import edu.project3.writers.ReportFileWriter;
+import edu.project3.writers.ReportSoutWriter;
 import edu.project3.writers.ReportWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class Main {
         Log[] logs = getLogs(sourcePath);
         LogReporter logReporter = LogReporter.of(logs, sourcePath, from, to);
 
-        ReportWriter reportWriter = savePath == null ? new ReportSoutReportWriter() : new ReportFileReportWriter(savePath);
+        ReportWriter reportWriter = savePath == null ? new ReportSoutWriter() : new ReportFileWriter(savePath);
         writeReports(reportWriter, logReporter, formatType);
     }
 
