@@ -137,7 +137,7 @@ public class LogReporter {
         return resourcesMap.entrySet().stream()
             .map(entry -> Map.entry(
                 entry.getKey(),
-                (double) entry.getValue() / requestTypeMap.get(entry.getKey())
+                (double) requestTypeMap.getOrDefault(entry.getKey(), 0L) / entry.getValue()
             ))
             .sorted((a, b) -> {
                 if (b.getValue() > a.getValue()) {
