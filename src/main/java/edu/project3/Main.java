@@ -10,9 +10,9 @@ import edu.project3.readers.LogReader;
 import edu.project3.readers.Reader;
 import edu.project3.reporters.GeneralInfo;
 import edu.project3.reporters.LogReporter;
-import edu.project3.writers.LogFileWriter;
-import edu.project3.writers.LogSoutWriter;
-import edu.project3.writers.Writer;
+import edu.project3.writers.ReportFileReportWriter;
+import edu.project3.writers.ReportSoutReportWriter;
+import edu.project3.writers.ReportWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,23 +64,23 @@ public class Main {
         Log[] logs = getLogs(sourcePath);
         LogReporter logReporter = LogReporter.of(logs, sourcePath, from, to);
 
-        Writer writer = savePath == null ? new LogSoutWriter() : new LogFileWriter(savePath);
-        writeReports(writer, logReporter, formatType);
+        ReportWriter reportWriter = savePath == null ? new ReportSoutReportWriter() : new ReportFileReportWriter(savePath);
+        writeReports(reportWriter, logReporter, formatType);
     }
 
-    private static void writeReports(Writer writer, LogReporter logReporter, FormatType formatType) {
-        writer.write(getGeneralInfoReport(logReporter.generalInfo(), formatType));
-        writer.write(getMostPopularResourcesReport(logReporter.mostPopularResources(), formatType));
-        writer.write(getMostPopularResponseCodesReport(logReporter.mostPopularResponseCodes(), formatType));
-        writer.write(getMostPopularRequestTypesReport(logReporter.mostPopularRequestTypes(), formatType));
+    private static void writeReports(ReportWriter reportWriter, LogReporter logReporter, FormatType formatType) {
+        reportWriter.write(getGeneralInfoReport(logReporter.generalInfo(), formatType));
+        reportWriter.write(getMostPopularResourcesReport(logReporter.mostPopularResources(), formatType));
+        reportWriter.write(getMostPopularResponseCodesReport(logReporter.mostPopularResponseCodes(), formatType));
+        reportWriter.write(getMostPopularRequestTypesReport(logReporter.mostPopularRequestTypes(), formatType));
         for (RequestType requestType : RequestType.values()) {
-            writer.write(getRequestsPerResourcesByTypeReport(
+            reportWriter.write(getRequestsPerResourcesByTypeReport(
                 logReporter.requestsPerResourceByType(requestType),
                 formatType,
                 requestType)
             );
         }
-        writer.write(getMostStableResourcesReport(logReporter.mostStableResources(), formatType));
+        reportWriter.write(getMostStableResourcesReport(logReporter.mostStableResources(), formatType));
     }
 
     private static Log[] getLogs(String sourcePath) {

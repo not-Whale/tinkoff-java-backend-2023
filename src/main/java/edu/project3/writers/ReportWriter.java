@@ -1,5 +1,5 @@
 package edu.project3.writers;
 
-public interface Writer {
+public interface ReportWriter {
     void write(String report);
 }

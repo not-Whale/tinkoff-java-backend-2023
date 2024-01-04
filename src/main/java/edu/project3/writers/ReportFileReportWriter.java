@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class LogFileWriter implements Writer {
+public class ReportFileReportWriter implements ReportWriter {
     private final String pathString;
 
-    public LogFileWriter(String pathString) {
+    public ReportFileReportWriter(String pathString) {
         if (pathString == null) {
             throw new IllegalArgumentException("Path must not be null!");
         }

@@ -1,8 +1,8 @@
 package edu.project3.writers;
 
 @SuppressWarnings("RegexpSinglelineJava")
-public class LogSoutWriter implements Writer {
-    public LogSoutWriter() {}
+public class ReportSoutReportWriter implements ReportWriter {
+    public ReportSoutReportWriter() {}
 
     @Override
     public void write(String report) {
