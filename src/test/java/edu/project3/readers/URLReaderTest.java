@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("Чтение логов по ссылке.")
-public class LogURLReaderTest {
+public class URLReaderTest {
     private static final int PORT = 18080;
 
     private static final String URL = "http://localhost";
@@ -49,7 +49,7 @@ public class LogURLReaderTest {
     @DisplayName("Чтение по ссылке.")
     void readURL() {
         // given
-        Reader reader = new LogURLReader(URL + ":" + PORT);
+        Reader reader = new URLReader(URL + ":" + PORT);
 
         // when
         assertThat(reader.canRead()).isTrue();
@@ -63,7 +63,7 @@ public class LogURLReaderTest {
     @DisplayName("Чтение по ссылке. Порт для localhost не указан (ошибка подключения).")
     void readLocalhostWithoutPort() {
         // given
-        Reader reader = new LogURLReader(URL);
+        Reader reader = new URLReader(URL);
 
         // when
         assertThat(reader.canRead()).isTrue();
@@ -81,7 +81,7 @@ public class LogURLReaderTest {
     @DisplayName("Неправильный формат ссылки.")
     void readIncorrectURL() {
         // given
-        Reader reader = new LogURLReader(INCORRECT_URL);
+        Reader reader = new URLReader(INCORRECT_URL);
 
         // when
         assertThat(reader.canRead()).isFalse();
@@ -104,7 +104,7 @@ public class LogURLReaderTest {
         // when
         Exception exception = assertThrows(
             IllegalArgumentException.class,
-            () -> new LogURLReader(nullUrl)
+            () -> new URLReader(nullUrl)
         );
 
         // then

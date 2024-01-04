@@ -1,13 +1,13 @@
 package edu.project3.readers;
 
 public class LogReader implements Reader {
-    private final LogURLReader urlReader;
+    private final URLReader urlReader;
 
-    private final LogFileReader fileReader;
+    private final FileReader fileReader;
 
     private LogReader(String path) {
-        this.urlReader = new LogURLReader(path);
-        this.fileReader = new LogFileReader(path);
+        this.urlReader = new URLReader(path);
+        this.fileReader = new FileReader(path);
     }
 
     public static Reader from(String path) {

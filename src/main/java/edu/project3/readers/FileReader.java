@@ -2,7 +2,6 @@ package edu.project3.readers;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
@@ -15,12 +14,12 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogFileReader implements Reader {
+public class FileReader implements Reader {
     private static final String GLOB_PATH_PATTERN = ".*((\\*\\*)|([*?\\[\\]])).*";
 
     private final String pathString;
 
-    public LogFileReader(String path) {
+    public FileReader(String path) {
         if (path == null) {
             throw new IllegalArgumentException("Path must not be null!");
         }
@@ -57,7 +56,7 @@ public class LogFileReader implements Reader {
 
     private String[] readLogsFromFile(Path path) {
         ArrayList<String> logs = new ArrayList<>();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path.toFile()))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new java.io.FileReader(path.toFile()))) {
             String currentLine;
             while ((currentLine = bufferedReader.readLine()) != null) {
                 logs.add(currentLine);

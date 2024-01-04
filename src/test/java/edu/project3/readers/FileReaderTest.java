@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("Чтение логов из файла.")
-public class LogFileReaderTest {
+public class FileReaderTest {
     private static final String PATH = "src/test/resources/project3/source.txt";
 
     private static final String GLOB_PATH = "src/**/source.txt";
@@ -17,7 +17,7 @@ public class LogFileReaderTest {
     @DisplayName("Чтение из файла.")
     void readFile() {
         // given
-        Reader reader = new LogFileReader(PATH);
+        Reader reader = new FileReader(PATH);
 
         // when
         assertThat(reader.canRead()).isTrue();
@@ -43,7 +43,7 @@ public class LogFileReaderTest {
     @DisplayName("Чтение из файла по glob-пути.")
     void readGlobPath() {
         // given
-        Reader reader = new LogFileReader(GLOB_PATH);
+        Reader reader = new FileReader(GLOB_PATH);
 
         // when
         assertThat(reader.canRead()).isTrue();
@@ -69,7 +69,7 @@ public class LogFileReaderTest {
     @DisplayName("Неправильный формат пути.")
     void readIncorrectPath() {
         // given
-        Reader reader = new LogFileReader(INCORRECT_PATH);
+        Reader reader = new FileReader(INCORRECT_PATH);
 
         // when
         assertThat(reader.canRead()).isFalse();
@@ -92,7 +92,7 @@ public class LogFileReaderTest {
         // when
         Exception exception = assertThrows(
             IllegalArgumentException.class,
-            () -> new LogFileReader(nullPath)
+            () -> new FileReader(nullPath)
         );
 
         // then
