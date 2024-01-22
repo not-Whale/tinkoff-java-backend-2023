@@ -24,16 +24,16 @@ public class Database implements PersonDatabase {
 
     @Override
     public void add(Person person) {
-        if (person.name() != null && person.address() != null && person.phoneNumber() != null) {
-            lock.writeLock().lock();
-            try {
+        lock.writeLock().lock();
+        try {
+            if (person.name() != null && person.address() != null && person.phoneNumber() != null) {
                 addPersonToIdMap(person);
                 addPersonToNameMap(person);
                 addPersonToAddressMap(person);
                 addPersonToPhoneMap(person);
-            } finally {
-                lock.writeLock().unlock();
             }
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 
