@@ -110,7 +110,7 @@ public class PersonDatabaseTest {
         Callable<Void> addTask = () -> {
             for (int i = 0; i < 10_000; i++) {
                 database.add(new Person(
-                    i,
+                    (100_000 + i),
                     "name" + (100_000 + i),
                     "address" + (100_000 + i),
                     "number" + (100_000 + i)
