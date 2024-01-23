@@ -3,8 +3,6 @@
 
 Студент: `Резепин Никита Игоревич`
 
-![Build Status](https://github.com/not-Whale/tinkoff-java-backend-2023/actions/workflows/build.yml/badge.svg)
-
 ### Содержание
 1. [Основы Java](./pages/java-basics.md)
 2. [Коллекции и последовательности](./pages/collections.md)
@@ -12,3 +10,5 @@
 4. [Параллелизм и многопоточность](./pages/concurrency.md)
 5. [Продвинутая Java](./pages/java-advanced.md)
 6. Экзамен
+
+![Build Status](https://github.com/not-Whale/tinkoff-java-backend-2023/actions/workflows/build.yml/badge.svg)
